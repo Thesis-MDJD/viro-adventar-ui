@@ -1,12 +1,3 @@
-/**
- * Copyright (c) 2017-present, Viro, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
 import React, { Component } from "react";
 import {
   AppRegistry,
@@ -16,6 +7,7 @@ import {
   PixelRatio,
   TouchableHighlight
 } from "react-native";
+import { VIRO_KEY } from "react-native-dotenv";
 
 import { ViroVRSceneNavigator, ViroARSceneNavigator } from "react-viro";
 
@@ -23,7 +15,7 @@ import { ViroVRSceneNavigator, ViroARSceneNavigator } from "react-viro";
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: process.env.VIRO_KEY
+  apiKey: VIRO_KEY
 };
 
 // Sets the default scene you want for AR and VR

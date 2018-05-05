@@ -94,14 +94,14 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+
+    flavorDimensions "default"
 
     defaultConfig {
         applicationId "com.adventar"
         minSdkVersion 23
         targetSdkVersion 25
-        multiDexEnabled true
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -121,17 +121,6 @@ android {
         gvr {
             resValue 'string', 'app_name', 'AdventaR-gvr'
             buildConfigField 'String', 'VR_PLATFORM', '"GVR"'
-        }
-    }
-    productFlavors {
-        gvr {
-            resValue 'string', 'app_name', 'AdventaR-gvr'
-            buildConfigField 'String', 'VR_PLATFORM', '"GVR"'
-        }
-        ovr {
-            resValue 'string', 'app_name', 'AdventaR-ovr'
-            applicationIdSuffix '.ovr'
-            buildConfigField 'String', 'VR_PLATFORM', '"OVR_MOBILE"'
         }
     }
     buildTypes {
@@ -159,17 +148,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.facebook.react:react-native:+'
-    compile project(':arcore_client') // remove this if AR not required
-    compile project(':gvr_common')
-    compile project(path: ':viro_renderer')
-    compile project(path: ':react_viro')
-    compile 'com.google.android.exoplayer:exoplayer:2.7.1'
-    compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-7'
-    compile 'com.amazonaws:aws-android-sdk-core:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.+'
-    compile 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.2.+'
     compile project(':arcore_client') // remove this if AR not required
     compile project(':gvr_common')
     compile project(path: ':viro_renderer')

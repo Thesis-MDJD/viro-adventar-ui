@@ -1,5 +1,5 @@
 import { AppRegistry } from "react-native";
-import App from "./App.js";
+import App from "./app/App.js";
 
 if (__DEV__) {
   require("react-devtools");

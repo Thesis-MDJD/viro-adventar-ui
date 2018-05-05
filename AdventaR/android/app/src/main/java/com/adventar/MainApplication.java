@@ -10,6 +10,8 @@ import com.facebook.react.shell.MainReactPackage;
 import com.viromedia.bridge.ReactViroPackage;
 
 import com.viromedia.bridge.ReactViroPackage;
+
+import com.viromedia.bridge.ReactViroPackage;
 import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;

@@ -654,6 +654,8 @@
 				8844AE66FDF402ED0C412B53 /* [CP] Copy Pods Resources */,
 				5B831807047F56C7C028C373 /* Execute Ngrok */,
 				FB9B9DCBF9BC37BE31881D1A /* Copy ngrok endpoint */,
+				F65199523F248A33CC2AE131 /* Execute Ngrok */,
+				0206BE0AF89C48D46F2F9146 /* Copy ngrok endpoint */,
 			);
 			buildRules = (
 			);
@@ -1110,6 +1112,21 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		0206BE0AF89C48D46F2F9146 /* Copy ngrok endpoint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy ngrok endpoint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\nendpointfile=\"ngrokendpoint.txt\"\nif [[ -e \"$SRCROOT/$endpointfile\" ]]; then\necho \"Ngrok endpoint file found, copying over...\"\ncp \"$SRCROOT/$endpointfile\" \"$DEST/$endpointfile\"\nbreak;\nfi";
+			showEnvVarsInLog = 1;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1136,7 +1153,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/ngrok_launch.sh;
+			shellScript = "$SRCROOT/ngrok_launch.sh";
 		};
 		8844AE66FDF402ED0C412B53 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1207,6 +1224,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F65199523F248A33CC2AE131 /* Execute Ngrok */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Execute Ngrok";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/ngrok_launch.sh";
+			showEnvVarsInLog = 1;
 		};
 		FB9B9DCBF9BC37BE31881D1A /* Copy ngrok endpoint */ = {
 			isa = PBXShellScriptBuildPhase;

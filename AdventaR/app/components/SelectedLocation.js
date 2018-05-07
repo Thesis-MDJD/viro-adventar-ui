@@ -8,9 +8,9 @@ import {
   StyleSheet,
   StatusBar
  } from 'react-native';
-import SelectedLocPics from './SelectedLocPics';
-import SelectedLocBasicInfo from './SelectedLocBasicInfo';
-import SelectedLocContactInfo from './SelectedLocContactInfo';
+import LocPics from './SelectedLocationSubComponents/LocPics';
+import LocBasicInfo from './SelectedLocationSubComponents/LocBasicInfo';
+import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
 
 
  export default class CurrLocation extends Component {
@@ -51,15 +51,15 @@ import SelectedLocContactInfo from './SelectedLocContactInfo';
       <ScrollView>
         <StatusBar barStyle='light-content' />
           <View>
-            <SelectedLocPics />
+            <LocPics />
           </View>
 
           <View>
-            <SelectedLocBasicInfo />
+            <LocBasicInfo />
           </View>
 
           <View>
-            <SelectedLocContactInfo />
+            <LocContactInfo />
           </View>
       </ScrollView>
     )

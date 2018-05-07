@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text,} from 'react-native';
+
+
 import { Icon } from 'react-native-elements';
 
-export default class SelectedLocBasicInfo extends Component {
+import LocRating from './LocRating';
+
+export default class LocBasicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: 'Restaurant Name', //String
       review_count: 0, //integer
-      rating: 4.5, //Float: A signed double-precision floating-point value.
       price: '1', //String: Optional. Pricing levels to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. The price filter can be a list of comma delimited pricing levels. For example, "1, 2, 3" will filter the results to show the ones that are $, $$, or $$$.
+      // Price level of the business. Value is one of $, $$, $$$ and $$$$ or null if we don't have price available for the business.
       categories: {
         title: '', // String, Title of a category for display purpose.
         alias: '' // String, Alias of a category, when searching for business in certain categories, use alias rather than the title.
@@ -50,7 +54,9 @@ export default class SelectedLocBasicInfo extends Component {
         <Icon name='heart-outline' type='material-community' color='#769db0' />
 
         {/* Star Rating */}
-        <Icon name='star' type='font-awesome' />
+        {/* <LocRating /> */}
+         {/* Star Rating */}
+         <Icon name='star' type='font-awesome' />
         {/* half full */}
         <Icon name='star-half-full' type='font-awesome' />
         {/* empty star */}

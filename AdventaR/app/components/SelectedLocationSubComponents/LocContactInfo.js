@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-export default class SelectedLocContactInfo extends Component {
+export default class LocContactInfo extends Component {
   constructor(props) {
     super(props);
     this.props = {

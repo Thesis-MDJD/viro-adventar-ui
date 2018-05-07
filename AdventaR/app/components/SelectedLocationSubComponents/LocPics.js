@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
 
-export default class SelectedLocPics extends Component {
+export default class LocPics extends Component {
   constructor(props) {
     super(props);
     this.state = {

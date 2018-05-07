@@ -10,6 +10,8 @@ import {
   ViroConstants,
   ViroBox,
   ViroMaterials,
+  Viro3DObject,
+  ViroAmbientLight,
 } from 'react-viro';
 
 export default class HelloWorldSceneAR extends Component {
@@ -24,13 +26,32 @@ export default class HelloWorldSceneAR extends Component {
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
+    this.touched = this.touched.bind(this);
+  }
+
+  touched(position, source){
+    console.log('touched');
+    this.setState({
+      text: "You pressed on the icon!"
+    });
   }
 
   render() {
+    console.log('current');
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
-        <ViroBox position={[0, -.5, -1]} scale={[.3, .3, .1]} materials={["grid"]} />
+        <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0.5, -2]} style={styles.helloWorldTextStyle} />
+        <ViroAmbientLight color="#FFFFFF" />
+        <Viro3DObject source={require('./res/model.vrx')}
+           rotation={[90, 0, 90]}
+           position={[0, -0.5, -2]}
+           scale={[.1, .1, .1]}
+           onClick={this.touched}
+           type="VRX"
+           animation={{name:'Take 001',
+                      run:true,
+                      loop:true}}
+        />
       </ViroARScene>
     );
   }

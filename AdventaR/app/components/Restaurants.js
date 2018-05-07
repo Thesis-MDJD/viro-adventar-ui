@@ -15,6 +15,9 @@ export default class Restaurants extends Component {
     this.state = {
       latitude: "",
       longitude: "",
+      altitude: "",
+      heading: "",
+      speed: "",
       error: "",
       places: []
     };
@@ -40,6 +43,7 @@ export default class Restaurants extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          altitude: position.coords.altitude,
           error: null
         });
         this.getPlaces(position.coords.latitude, position.coords.longitude);
@@ -52,6 +56,7 @@ export default class Restaurants extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          altitude: position.coords.altitude,
           error: null
         });
         this.getPlaces(position.coords.latitude, position.coords.longitude);
@@ -98,6 +103,7 @@ export default class Restaurants extends Component {
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{this.state.latitude}</Text>
         <Text style={styles.instructions}>{this.state.longitude}</Text>
+        <Text style={styles.instructions}>Altitude: {this.state.altitude}</Text>
         <ScrollView style={list.container}>
           {this.state.places.map(place => {
             return (

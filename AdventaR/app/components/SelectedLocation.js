@@ -10,6 +10,7 @@ import {
  } from 'react-native';
 import SelectedLocPics from './SelectedLocPics';
 import SelectedLocBasicInfo from './SelectedLocBasicInfo';
+import SelectedLocContactInfo from './SelectedLocContactInfo';
 
 
  export default class CurrLocation extends Component {
@@ -49,13 +50,17 @@ import SelectedLocBasicInfo from './SelectedLocBasicInfo';
     return(
       <ScrollView>
         <StatusBar barStyle='light-content' />
-        <View>
-          <SelectedLocPics />
-        </View>
+          <View>
+            <SelectedLocPics />
+          </View>
 
-        <View>
-          <SelectedLocBasicInfo />
-        </View>
+          <View>
+            <SelectedLocBasicInfo />
+          </View>
+
+          <View>
+            <SelectedLocContactInfo />
+          </View>
       </ScrollView>
     )
   };
@@ -63,6 +68,8 @@ import SelectedLocBasicInfo from './SelectedLocBasicInfo';
   
 }
 
-// const styles = StyleSheet.create({
-
-// })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+})

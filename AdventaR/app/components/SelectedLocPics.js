@@ -30,7 +30,6 @@ let screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   photo: {
     flex: 1,
-    marginTop: 20, // not needed?
     width: screenWidth,
     justifyContent: 'center',
     alignItems: 'center'

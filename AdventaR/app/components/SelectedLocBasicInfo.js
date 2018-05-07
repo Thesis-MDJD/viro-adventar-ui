@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text,} from 'react-native';
+import { Icon } from 'react-native-elements';
 
 export default class SelectedLocBasicInfo extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ export default class SelectedLocBasicInfo extends Component {
       name: 'Restaurant Name', //String
       review_count: 0, //integer
       rating: 4.5, //Float: A signed double-precision floating-point value.
+      price: '1', //String: Optional. Pricing levels to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. The price filter can be a list of comma delimited pricing levels. For example, "1, 2, 3" will filter the results to show the ones that are $, $$, or $$$.
       categories: {
         title: '', // String, Title of a category for display purpose.
         alias: '' // String, Alias of a category, when searching for business in certain categories, use alias rather than the title.
@@ -40,15 +42,40 @@ export default class SelectedLocBasicInfo extends Component {
           // numberOfLines= {1}
           // ellipsizeMode='tail'
         >
-          {this.state.name} goes here &#x1F5A4;
+          {this.state.name} goes here
         </Text>
+        {/* Favorited Heart */}
+        <Icon name='heart' type='material-community' color='#ff4f7d' />
+        {/* Unfavorited Heart */}
+        <Icon name='heart-outline' type='material-community' color='#769db0' />
 
         {/* Star Rating */}
-        <Text >
-        &#9733;&#9733;&#9733;&#9734;&#9734;{this.state.review_count} &#f089; Reviews
-        </Text>
+        <Icon name='star' type='font-awesome' />
+        {/* half full */}
+        <Icon name='star-half-full' type='font-awesome' />
+        {/* empty star */}
+        <Icon name='star-o' type='font-awesome' color='#cccccc' />
+        {/* one/one.five star */}
+        <Icon name='star' type='font-awesome' color='#f7bd7f' />
+        {/* two/two.five star */}
+        <Icon name='star' type='font-awesome' color='#ffc036' />
+        {/* three/three.five star */}
+        <Icon name='star' type='font-awesome' color='#ff924d' />
+        {/* four/four.five star */}
+        <Icon name='star' type='font-awesome' color='#fa5c53' />
+        {/* five star */}
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
 
-        {/* Price/Money sign goes here */}
+        <Text >
+        {this.state.review_count} Reviews
+        </Text>
+        
+
+        {/* Selected Price Range*/}
+        <Icon name='dollar' type='font-awesome' />
+          {/* Unelected Price Range*/}
+        <Icon name='dollar' type='font-awesome' color='#999999' />
+
         <Text>
           Category(s)
         </Text>
@@ -64,7 +91,9 @@ export default class SelectedLocBasicInfo extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    flex: 1
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    paddingVertical: 15,
   },
 
   name: {

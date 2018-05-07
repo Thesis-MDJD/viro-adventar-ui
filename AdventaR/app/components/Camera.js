@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
+import {GOOGLE_API} from "react-native-dotenv";
 
 export default class Camera extends Component {
   componentDidMount() {}
@@ -17,7 +18,7 @@ export default class Camera extends Component {
     return (
       <View style={styles.container}>
         <ViroARSceneNavigator
-          apiKey="FC26A1B3-C6E1-4015-91A1-E454FB59D0ED"
+          apiKey={GOOGLE_API}
           initialScene={{ scene: arScene }}
           debug={true} // set this to true
         />

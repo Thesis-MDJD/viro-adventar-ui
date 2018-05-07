@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Image} from 'react-native';
+import { StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
 
 export default class SelectedLocPics extends Component {
   constructor(props) {
@@ -12,17 +12,27 @@ export default class SelectedLocPics extends Component {
   render() {
     return(
       <ScrollView
-        horizontal={true}
+      horizontal={true}
+      pagingEnabled={true}
+      // scrollIndicatorInsets={{top: 10, left: 10, bottom: 10, right: 10}} //ios
       >
-        <Image source={require('../../../AdventaR/AppIcon.png')}/>
-        <Image source={require('../../../AdventaR/AppIcon.png')}/>
-        <Image source={require('../../../AdventaR/AppIcon.png')}/>
-
+      {/* map them out eventually */}
+        <Image style={styles.photo} source={require('../../../AdventaR/AppIcon.png')} />
+        <Image style={styles.photo} source={require('../../../AdventaR/AppIcon.png')} />
+        <Image style={styles.photo} source={require('../../../AdventaR/AppIcon.png')} />
       </ScrollView>
     )
   }
 }
 
-// const styles = StyleSheet.create({
-  
-// })
+let screenWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+  photo: {
+    flex: 1,
+    marginTop: 20, // not needed?
+    width: screenWidth,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})

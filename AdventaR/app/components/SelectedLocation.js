@@ -5,7 +5,8 @@ import {
   ScrollView,
   Image,
   Button,
-  StyleSheet
+  StyleSheet,
+  StatusBar
  } from 'react-native';
 import SelectedLocPics from './SelectedLocPics';
 import SelectedLocBasicInfo from './SelectedLocBasicInfo';
@@ -47,13 +48,14 @@ import SelectedLocBasicInfo from './SelectedLocBasicInfo';
   render() {
     return(
       <ScrollView>
+        <StatusBar barStyle='light-content' />
         <View>
           <SelectedLocPics />
         </View>
 
-        {/* <View>
+        <View>
           <SelectedLocBasicInfo />
-        </View> */}
+        </View>
       </ScrollView>
     )
   };

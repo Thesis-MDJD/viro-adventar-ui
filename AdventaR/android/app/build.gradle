@@ -150,6 +150,7 @@ dependencies {
     compile 'com.facebook.react:react-native:+'
     compile project(':arcore_client') // remove this if AR not required
     compile project(':gvr_common')
+    compile project(':react-native-heading')
     compile project(path: ':viro_renderer')
     compile project(path: ':react_viro')
     compile 'com.google.android.exoplayer:exoplayer:2.7.1'

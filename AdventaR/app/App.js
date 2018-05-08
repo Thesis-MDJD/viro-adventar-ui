@@ -29,6 +29,6 @@ export default createStackNavigator(
     }
   },
   {
-    initialRouteName: "Restaurants"
+    initialRouteName: "Camera"
   }
 );

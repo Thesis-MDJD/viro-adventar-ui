@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
@@ -36,6 +35,8 @@ export default class Camera extends Component {
     );
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

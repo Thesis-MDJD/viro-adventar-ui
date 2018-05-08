@@ -6,57 +6,105 @@ export default class LocRating extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rating: 4.5, //Float: A signed double-precision floating-point value.
+      rating: 1.5, //Float: A signed double-precision floating-point value.
     }
   }
 
   render() {
     let rating = this.state.rating;
 
-    const currentRating = (rating === 0) ?
-      <View>
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-      </View>
+    const currentRating = rating === 5 ?
+      <View style={styles.container}>
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
+        <Icon name='star' type='font-awesome' color='#dc2d20' />
+      </View>  
       :
-      (rating === 1) ?
-        <View>
-          <Icon name='star' type='font-awesome' color='#f7bd7f' />
-          <Icon name='star-o' type='font-awesome' color='#cccccc' />
-          <Icon name='star-o' type='font-awesome' color='#cccccc' />
-          <Icon name='star-o' type='font-awesome' color='#cccccc' />
+      rating === 4.5 ?
+        <View style={styles.container}>
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star-half-full' type='font-awesome' color='#fa5c53' />
+        </View>
+        :
+        rating === 4 ?
+        <View style={styles.container}>
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
+          <Icon name='star' type='font-awesome' color='#fa5c53' />
           <Icon name='star-o' type='font-awesome' color='#cccccc' />
         </View>
         :
-        <View>
-        
-        </View>
-        
-
+        rating === 3.5 ?
+          <View style={styles.container}>
+            <Icon name='star' type='font-awesome' color='#ff924d' />
+            <Icon name='star' type='font-awesome' color='#ff924d' />
+            <Icon name='star' type='font-awesome' color='#ff924d' />
+            <Icon name='star-half-full' type='font-awesome' color='#ff924d'/>
+            <Icon name='star-o' type='font-awesome' color='#cccccc' />
+          </View>
+          :
+          rating === 3 ?
+            <View style={styles.container}>
+              <Icon name='star' type='font-awesome' color='#ff924d' />
+              <Icon name='star' type='font-awesome' color='#ff924d' />
+              <Icon name='star' type='font-awesome' color='#ff924d' />
+              <Icon name='star-o' type='font-awesome' color='#cccccc' /> 
+              <Icon name='star-o' type='font-awesome' color='#cccccc' /> 
+            </View>
+            :
+            rating === 2.5 ?
+              <View>
+                <Icon name='star' type='font-awesome' color='#ffc036' />
+                <Icon name='star' type='font-awesome' color='#ffc036' />
+                <Icon name='star-half-full' type='font-awesome' color='#ffc036'/>
+                <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                <Icon name='star-o' type='font-awesome' color='#cccccc' />
+              </View>
+              :
+              rating === 2 ?
+                <View style={styles.container}>
+                  <Icon name='star' type='font-awesome' color='#ffc036' />
+                  <Icon name='star' type='font-awesome' color='#ffc036' />
+                  <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                  <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                  <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                </View>
+                :
+                rating === 1.5 ?
+                  <View style={styles.container}>
+                    <Icon name='star' type='font-awesome' color='#f7bd7f' /> 
+                    <Icon name='star-half-full' type='font-awesome' color='#f7bd7f'/>
+                    <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                    <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                    <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                  </View>
+                  :
+                  rating === 1 ?
+                    <View style={styles.container}>
+                      <Icon name='star' type='font-awesome' color='#f7bd7f' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                    </View>
+                    :  
+                    <View style={styles.container}>
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                      <Icon name='star-o' type='font-awesome' color='#cccccc' />
+                    </View>
 
     return(
-      <View style={styles.container}>
-
-        {/* Star Rating */}
-        <Icon name='star' type='font-awesome' />
-        {/* half full */}
-        <Icon name='star-half-full' type='font-awesome' />
-        {/* empty star */}
-        <Icon name='star-o' type='font-awesome' color='#cccccc' />
-        {/* one/one.five star */}
-        <Icon name='star' type='font-awesome' color='#f7bd7f' />
-        {/* two/two.five star */}
-        <Icon name='star' type='font-awesome' color='#ffc036' />
-        {/* three/three.five star */}
-        <Icon name='star' type='font-awesome' color='#ff924d' />
-        {/* four/four.five star */}
-        <Icon name='star' type='font-awesome' color='#fa5c53' />
-        {/* five star */}
-        <Icon name='star' type='font-awesome' color='#dc2d20' />
-
+      <View>
+        {currentRating}
       </View>
     )
   }

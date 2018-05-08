@@ -3,6 +3,7 @@ package com.adventar;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.auth0.react.A0Auth0Package;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -30,9 +31,10 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM)),
-          new ReactNativeHeadingPackage()
+        new ReactNativeHeadingPackage(),
+        new MainReactPackage(),
+        new A0Auth0Package(),
+        new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
       );
     }
 

@@ -153,6 +153,7 @@ dependencies {
     compile project(':react-native-heading')
     compile project(path: ':viro_renderer')
     compile project(path: ':react_viro')
+    compile project(':react-native-auth0')
     compile 'com.google.android.exoplayer:exoplayer:2.7.1'
     compile 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-7'
     compile 'com.amazonaws:aws-android-sdk-core:2.2.+'

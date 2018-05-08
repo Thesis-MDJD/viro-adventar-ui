@@ -6,7 +6,7 @@ export default class LocRating extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rating: 1.5, //Float: A signed double-precision floating-point value.
+      rating: 4, //Float: A signed double-precision floating-point value.
     }
   }
 

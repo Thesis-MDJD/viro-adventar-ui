@@ -37,13 +37,13 @@ import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
       },
       // go back to camera view
       headerLeft: (
-        <Button onPress={params.goToCamera} title="Camera" color="#fff" />
+        <Button onPress={params.goToRestaurants} title="Restaurants" color="#fff" />
       )
     };
   };
 
-  goToCamera = () => {
-    this.props.navigation.navigate("Camera");
+  goToRestaurants = () => {
+    this.props.navigation.navigate("Restaurants");
   };
 
   render() {
@@ -71,5 +71,7 @@ import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   }
 })

@@ -6,20 +6,52 @@ export default class LocPriceRange extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: '1', //String: Optional. Pricing levels to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. The price filter can be a list of comma delimited pricing levels. For example, "1, 2, 3" will filter the results to show the ones that are $, $$, or $$$.
+      price: "$", 
       // Price level of the business. Value is one of $, $$, $$$ and $$$$ or null if we don't have price available for the business.
     }
   }
 
   render() {
-    return(
-      <View>
-        {/* Selected Price Range*/}
-        <Icon name='dollar' type='font-awesome' />
-          {/* UnSelected Price Range*/}
-        <Icon name='dollar' type='font-awesome' color='#999999' />
-
+    const priceRange = this.state.price === '$$$$' ?
+      <View style={styles.container}>
+        <Icon name='dollar' type='font-awesome' size={20}/>
+        <Icon name='dollar' type='font-awesome' size={20}/>
+        <Icon name='dollar' type='font-awesome' size={20}/>
+        <Icon name='dollar' type='font-awesome' size={20}/>
       </View>
+      :
+      this.state.price === '$$$' ?
+        <View style={styles.container}>
+          <Icon name='dollar' type='font-awesome' size={20}/>
+          <Icon name='dollar' type='font-awesome' size={20}/>
+          <Icon name='dollar' type='font-awesome' size={20}/>
+          <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+        </View>
+        :
+        this.state.price === '$$' ?
+          <View style={styles.container}>
+            <Icon name='dollar' type='font-awesome' size={20}/>
+            <Icon name='dollar' type='font-awesome' size={20}/>
+            <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+            <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+          </View>
+          : this.state.price === '$' ?
+            <View style={styles.container}>
+              <Icon name='dollar' type='font-awesome' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+            </View>
+            :
+            <View style={styles.container}>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+              <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
+            </View>
+            
+    return(
+      priceRange
     )
   }
 }

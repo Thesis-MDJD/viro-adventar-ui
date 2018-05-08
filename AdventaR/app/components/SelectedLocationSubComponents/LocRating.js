@@ -103,9 +103,7 @@ export default class LocRating extends Component {
                     </View>
 
     return(
-      <View>
-        {currentRating}
-      </View>
+      currentRating
     )
   }
 }

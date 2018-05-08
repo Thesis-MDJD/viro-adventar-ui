@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text,} from 'react-native';
-
-
 import { Icon } from 'react-native-elements';
 
 import LocRating from './LocRating';
 import LocPriceRange from './LocPriceRange';
+import LocHours from './LocHours';
 
 export default class LocBasicInfo extends Component {
   constructor(props) {
@@ -13,20 +12,20 @@ export default class LocBasicInfo extends Component {
     this.state = {
       name: 'Bon Appetea Cafe', //String
       review_count: 835, //integer
-      categories: {
-        title: '', // String, Title of a category for display purpose.
-        alias: '' // String, Alias of a category, when searching for business in certain categories, use alias rather than the title.
-      },
-      hours: {
-        hours_type: 'REGULAR', //String, The type of the opening hours information. Right now, this is always REGULAR.
-        is_open_now: true, //Boolean, Describe is business is open now
-        open: {
-          is_overnight: true, //Boolean, Whether the business opens overnight or not. When this is true, the end time will be lower than the start time.
-          end: '', //String, End of the opening hours in a day, in 24-hour clock notation, like 2130 means 9:30 PM.
-          start: '', //String, Start of the opening hours in a day, in 24-hour clock notation, like 1000 means 10 AM.
-          day: 0 //Int, From 0 to 6, representing day of the week from Monday to Sunday. Notice that you may get the same day of the week more than once if the business has more than one opening time slots.
+      categories: [
+        {
+            "alias": "tea",
+            "title": "Tea Rooms" //for display purpose
+        },
+        {
+            "alias": "cafes",
+            "title": "Cafes"
+        },
+        {
+            "alias": "taiwanese",
+            "title": "Taiwanese"
         }
-      },
+      ],
       // non-yelp
       favorite: false 
     }
@@ -35,33 +34,31 @@ export default class LocBasicInfo extends Component {
 
   onFavoritePress(){
     this.setState({favorite: !this.state.favorite})
+    // send info to user data base
   }
 
   render() {
-    /* Conditional Rendering for:
-      open status
-      rating => stars
-      price => dollor signs
-    */
-    let favoriteStatus = this.state.favorite ?
+    const favoriteStatus = this.state.favorite ?
+    //Favorited Heart
       <View>
-        {/* Favorited Heart */}
         <Icon name='heart' type='material-community' color='#ff4f7d' onPress={this.onFavoritePress}/>
       </View>
       :
+    // Unfavorited Heart
       <View>
-        {/* Unfavorited Heart */}
         <Icon name='heart-outline' type='material-community' color='#769db0' onPress={this.onFavoritePress}/>
       </View>
 
+    const categories = this.state.categories.map( category => category.title ).join(', ');
+
     return(
       <View style={styles.container}>
+
         <View style={styles.nameFavContainer}>
           <Text style={styles.name} /* numberOfLines= {1} ellipsizeMode='tail'*/> {this.state.name}</Text>
           {favoriteStatus}
         </View>
 
-        {/* Star Rating */}
         <View style={styles.ratingReviewContainer}>
           <LocRating />
           <Text > {this.state.review_count} Reviews </Text>
@@ -69,17 +66,11 @@ export default class LocBasicInfo extends Component {
 
         <View style={styles.priceCategoryContainer}>
           <LocPriceRange />
-
-          <Text>
-            Category(s)
-          </Text>
+          <Icon name='dot-single' type='entypo' color='#999999' />
+          <Text>{categories}</Text>
         </View>
 
-        <View style={styles.hoursContainer}>
-          <Text style={styles.hours}>
-            open /close status / hours
-          </Text>
-        </View>
+        <LocHours />
       </View>
     )
   }
@@ -91,12 +82,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
     paddingVertical: 15,
+    marginVertical: 5
   },
 
   nameFavContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
 
   name: {
@@ -106,11 +99,15 @@ const styles = StyleSheet.create({
   ratingReviewContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
 
   priceCategoryContainer: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
 
   hoursContainer: {

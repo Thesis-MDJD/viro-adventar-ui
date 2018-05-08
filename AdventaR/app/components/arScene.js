@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { Component, Text } from 'react';
 
 import {StyleSheet} from 'react-native';
 
@@ -43,11 +43,14 @@ export default class HelloWorldSceneAR extends Component {
     this.touched = this.touched.bind(this);
   }
 
-  touched(position, source){
-    this.setState({
-      text: "ICON WAS PRESSED",
-    });
-    console.log(source);
+  touched(index){
+    return (position, source) => {
+      let temp = this.state.places.slice();
+      temp.splice(index, 1);
+      this.setState({
+        places: temp,
+      });
+    }
   }
 
   getPlaces = async (latitude, longitude) => {
@@ -156,17 +159,17 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.places.map(place => {
+        {this.state.places.map( (place, index) => {
           let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.geometry.location.lat), parseFloat(this.state.longitude), parseFloat(place.geometry.location.lng)); 
-          console.log(polarCoor);
           return (
-            <ViroNode key={place.id} position={polarToCartesian([10, polarCoor.degrees - this.state.headingActual, 0])}>
-              <ViroText text={place.name} scale={[2.5, 2.5, 2.5]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+            <ViroNode key={place.id} rotation={[0, this.state.headingActual - polarCoor.degrees, 0]} position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
+              <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
               <Viro3DObject source={require('./res/model.vrx')}
                 rotation={[90, 0, 90]}
                 position={[0, -2.5, 0]}
-                scale={[.5, .5, .5]}
-                onClick={this.touched}
+                scale={[2.5, 2.5, 2.5]}
+                onClick={this.touched(index)}
+                degrees={polarCoor.degrees}
                 type="VRX"
                 animation={{name:'Take 001',
                             run:true,

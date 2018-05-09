@@ -11,17 +11,41 @@ import {
 import LocPics from './SelectedLocationSubComponents/LocPics';
 import LocBasicInfo from './SelectedLocationSubComponents/LocBasicInfo';
 import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
+import { YELP_API_KEY } from "react-native-dotenv";
 
 
- export default class CurrLocation extends Component {
+ export default class SelectedLocation extends Component {
    constructor(props) {
      super(props);
      this.state = {
        name: '',
-
+       data: {},
+       restaurantId: this.props.navigation.state.params.restaurantId
      }
-
    };
+
+
+   getPlace = async (id) => {
+    let myHeaders = new Headers({
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + YELP_API_KEY,
+    });
+    try {
+      const data = await fetch(
+        `https://api.yelp.com/v3/businesses/${id}`,
+        { headers: myHeaders }
+      );
+      const result = await data.json();
+      this.setState({ data: result })
+    } catch (error) {
+      console.log("Fetch Error = ", error);
+    }
+  };
+
+   componentDidMount() {
+    this.getPlace(this.state.restaurantId)
+    this.props.navigation.setParams({ goToRestaurants: this.goToRestaurants });
+   }
 
    static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
@@ -43,23 +67,34 @@ import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
   };
 
   goToRestaurants = () => {
-    this.props.navigation.navigate("Restaurants");
+    this.props.navigation.navigate("YelpRestaurants");
   };
 
   render() {
+    const info = this.state.data;
+
     return(
       <ScrollView>
         <StatusBar barStyle='light-content' />
           <View>
-            <LocPics />
+            {info.name ? <LocPics photos={info.photos}/> : null}
           </View>
 
           <View>
-            <LocBasicInfo />
+            {info.name ? 
+            <LocBasicInfo 
+              name={info.name} 
+              review_count={info.review_count} 
+              categories={info.categories} 
+              favorite={info.favorite}
+              rating={info.rating}
+              price={info.price}
+              hours={info.hours}
+              />: null}          
           </View>
 
           <View>
-            <LocContactInfo />
+            {info.name ? <LocContactInfo phone={info.phone} display_phone={info.display_phone} url={info.url}/> : null }
           </View>
       </ScrollView>
     )

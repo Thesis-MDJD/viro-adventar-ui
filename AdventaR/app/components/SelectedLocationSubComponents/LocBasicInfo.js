@@ -10,22 +10,9 @@ export default class LocBasicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Bon Appetea Cafe', //String
-      review_count: 835, //integer
-      categories: [
-        {
-            "alias": "tea",
-            "title": "Tea Rooms" //for display purpose
-        },
-        {
-            "alias": "cafes",
-            "title": "Cafes"
-        },
-        {
-            "alias": "taiwanese",
-            "title": "Taiwanese"
-        }
-      ],
+      name: '0', //String
+      review_count: 0, //integer
+      categories: [],
       // non-yelp
       favorite: false 
     }
@@ -49,28 +36,28 @@ export default class LocBasicInfo extends Component {
         <Icon name='heart-outline' type='material-community' color='#769db0' onPress={this.onFavoritePress}/>
       </View>
 
-    const categories = this.state.categories.map( category => category.title ).join(', ');
+    const categories = this.props.categories.map( category => category.title ).join(', ');
 
     return(
       <View style={styles.container}>
 
         <View style={styles.nameFavContainer}>
-          <Text style={styles.name} /* numberOfLines= {1} ellipsizeMode='tail'*/> {this.state.name}</Text>
+          <Text style={styles.name} /* numberOfLines= {1} ellipsizeMode='tail'*/> {this.props.name}</Text>
           {favoriteStatus}
         </View>
 
         <View style={styles.ratingReviewContainer}>
-          <LocRating />
-          <Text > {this.state.review_count} Reviews </Text>
+          <LocRating rating={this.props.rating}/>
+          <Text > {this.props.review_count} Reviews </Text>
         </View>
 
         <View style={styles.priceCategoryContainer}>
-          <LocPriceRange />
+          <LocPriceRange price={this.props.price}/>
           <Icon name='dot-single' type='entypo' color='#999999' />
           <Text>{categories}</Text>
         </View>
 
-        <LocHours />
+        <LocHours hours={this.props.hours}/>
       </View>
     )
   }

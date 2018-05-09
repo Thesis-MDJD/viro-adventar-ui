@@ -6,13 +6,10 @@ import call from 'react-native-phone-call'
 export default class LocContactInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      //String, Phone number of the business.
-      phone: '+16262812266', 
-      //String, Phone number of the business formatted nicely to be displayed to users. The format is the standard phone number format for the business's country.
-      display_phone: '(626) 281-2266', 
-      //String, URL for business page onYelp
-      url: "https://www.yelp.com/biz/bon-appetea-cafe-alhambra?adjust_creative=gQRrphyAAi4hAIl9WD_6MA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=gQRrphyAAi4hAIl9WD_6MA", 
+    this.state = { 
+      phone: '', //String, Phone number of the business.
+      display_phone: '', //String, Phone number of the business formatted nicely to be displayed to users. The format is the standard phone number format for the business's country.
+      url: "",  //String, URL for business page onYelp
     };
     this.onPhonePress = this.onPhonePress.bind(this);
     this.onYelpPress = this.onYelpPress.bind(this);
@@ -20,14 +17,14 @@ export default class LocContactInfo extends Component {
 
   onPhonePress(){
     const args = {
-      number: this.state.phone,
+      number: this.props.phone,
       prompt: false
     }
     call(args).catch(console.error)
   }
 
   onYelpPress(){
-    const url = this.state.url
+    const url = this.props.url
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);

@@ -6,13 +6,13 @@ export default class LocPriceRange extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: "$", 
+      price: "", 
       // Price level of the business. Value is one of $, $$, $$$ and $$$$ or null if we don't have price available for the business.
     }
   }
 
   render() {
-    const priceRange = this.state.price === '$$$$' ?
+    const priceRange = this.props.price === '$$$$' ?
       <View style={styles.container}>
         <Icon name='dollar' type='font-awesome' size={20}/>
         <Icon name='dollar' type='font-awesome' size={20}/>
@@ -20,7 +20,7 @@ export default class LocPriceRange extends Component {
         <Icon name='dollar' type='font-awesome' size={20}/>
       </View>
       :
-      this.state.price === '$$$' ?
+      this.props.price === '$$$' ?
         <View style={styles.container}>
           <Icon name='dollar' type='font-awesome' size={20}/>
           <Icon name='dollar' type='font-awesome' size={20}/>
@@ -28,14 +28,14 @@ export default class LocPriceRange extends Component {
           <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
         </View>
         :
-        this.state.price === '$$' ?
+        this.props.price === '$$' ?
           <View style={styles.container}>
             <Icon name='dollar' type='font-awesome' size={20}/>
             <Icon name='dollar' type='font-awesome' size={20}/>
             <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
             <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>
           </View>
-          : this.state.price === '$' ?
+          : this.props.price === '$' ?
             <View style={styles.container}>
               <Icon name='dollar' type='font-awesome' size={20}/>
               <Icon name='dollar' type='font-awesome' color='#999999' size={20}/>

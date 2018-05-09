@@ -45,17 +45,21 @@ export default class HelloWorldSceneAR extends Component {
 
   touched(index){
     return (position, source) => {
+      console.log(this.state.places[index]);
       let temp = this.state.places.slice();
       temp.splice(index, 1);
       this.setState({
         places: temp,
+        headingActual: this.state.heading,
       });
     }
   }
 
   getPlaces = async (latitude, longitude) => {
     this.setState({
-      places: dummyData.results
+      places: dummyData.businesses
+    }, () => {
+      console.log(this.state.places);
     })
     // try {
     //   const data = await fetch(
@@ -71,7 +75,7 @@ export default class HelloWorldSceneAR extends Component {
   };
 
   componentDidMount(){
-    ReactNativeHeading.start(15)
+    ReactNativeHeading.start(1)
     .then(didStart => {
       this.setState({
         headingIsSupported: didStart,
@@ -92,7 +96,6 @@ export default class HelloWorldSceneAR extends Component {
 
     navigator.geolocation.getCurrentPosition(
       position => {
-        console.log('jkjlkjkljkljljlk  jkljkl jlk', position.coords.latitude,',', position.coords.longitude);
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -159,38 +162,46 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.places.map( (place, index) => {
-          let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.geometry.location.lat), parseFloat(this.state.longitude), parseFloat(place.geometry.location.lng)); 
-          return (
-            <ViroNode key={place.id} rotation={[0, this.state.headingActual - polarCoor.degrees, 0]} position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
-              <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
-              <Viro3DObject source={require('./res/model.vrx')}
-                rotation={[90, 0, 90]}
-                position={[0, -2.5, 0]}
-                scale={[2.5, 2.5, 2.5]}
-                onClick={this.touched(index)}
-                degrees={polarCoor.degrees}
-                type="VRX"
-                animation={{name:'Take 001',
-                            run:true,
-                            loop:true}}
-              />
-            </ViroNode>
-          )
-        })}
+        {this.state.latitude === "" ? 
+        (<ViroText text={"Initializing AR..."} position={[0, 0, -2]} scale={[0.5, 0.5, 0.5]} />)
+        :
+        (this.state.places.map( (place, index) => {
+          if(index < 20){
+            let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+            return (
+              <ViroNode key={place.id} rotation={[0, this.state.headingActual - polarCoor.degrees, 0]} position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
+                <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+                <Viro3DObject source={require('./res/model.vrx')}
+                  rotation={[90, 0, 90]}
+                  position={[0, -2.5, 0]}
+                  scale={[2.5, 2.5, 2.5]}
+                  onClick={this.touched(index)}
+                  degrees={polarCoor.degrees}
+                  type="VRX"
+                  animation={{name:'Take 001',
+                              run:true,
+                              loop:true}}
+                />
+              </ViroNode>
+            )
+          } else {
+            return;
+          }
+        }))}
         
       </ViroARScene>
     );
   }
 
   _onInitialized(state, reason) {
+    console.log(' update', this.state.headingActual);
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text : "Hello World!",
+        text : "",
         headingActual: this.state.heading
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
+      console.log('loss of tracking');
     }
   }
 }

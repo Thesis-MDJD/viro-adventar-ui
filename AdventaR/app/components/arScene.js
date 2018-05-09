@@ -102,7 +102,7 @@ export default class HelloWorldSceneAR extends Component {
         this.getPlaces(position.coords.latitude, position.coords.longitude);
       },
       error => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 }
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     );
     this.watchId = navigator.geolocation.watchPosition(
       position => {

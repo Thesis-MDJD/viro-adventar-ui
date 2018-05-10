@@ -1,29 +1,35 @@
 import React from "react";
-import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
+import {
+  StackNavigator,
+  SwitchNavigator,
+  TabNavigator
+} from "react-navigation";
 import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
 import AuthLoadingScreen from "./components/AuthLoadingScreen";
-import YelpRestaurants from './components/YelpRestaurants';
-import SelectedLocation from './components/SelectedLocation';
+import YelpRestaurants from "./components/YelpRestaurants";
+import SelectedLocation from "./components/SelectedLocation";
 
-const AppStack= StackNavigator({
+const AppStack = StackNavigator({
   Camera: {
-    screen: TabNavigator({
-      Camera: {
-        screen: Camera,
-        navigationOptions:({ navigation }) => ({
-          title: 'Camera',
-        }),
+    screen: TabNavigator(
+      {
+        Camera: {
+          screen: Camera,
+          navigationOptions: ({ navigation }) => ({
+            title: "Camera"
+          })
+        },
+        YelpRestaurants: {
+          screen: YelpRestaurants,
+          navigationOptions: ({ navigation }) => ({
+            title: "User"
+          })
+        }
       },
-      YelpRestaurants: {
-        screen: YelpRestaurants,
-        navigationOptions:({ navigation }) => ({
-          title: 'User',
-        })
-      },
-    }, {
-        tabBarPosition: 'bottom',
+      {
+        tabBarPosition: "bottom",
         swipeEnabled: true,
         tabBarOptions: {
           style: {
@@ -31,13 +37,14 @@ const AppStack= StackNavigator({
           },
           labelStyle: {
             fontSize: 28,
-            fontWeight: 'bold',
+            fontWeight: "bold",
             paddingBottom: 10
           },
-          activeTintColor: '#fff',
-          inactiveTintColor: '#ffa589',
+          activeTintColor: "#fff",
+          inactiveTintColor: "#ffa589"
+        }
       }
-    })
+    )
   },
   SelectedLocation: {
     screen: SelectedLocation
@@ -46,11 +53,8 @@ const AppStack= StackNavigator({
 
 const AuthStack = StackNavigator({ Login: LoginScreen });
 
-export default SwitchNavigator (
-  {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
-    Auth: AuthStack
-  }
-
-)
+export default SwitchNavigator({
+  AuthLoading: AuthLoadingScreen,
+  App: AppStack,
+  Auth: AuthStack
+});

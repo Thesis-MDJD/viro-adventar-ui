@@ -14,6 +14,8 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 
+
+@import Firebase;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url

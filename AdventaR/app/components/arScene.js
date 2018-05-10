@@ -6,9 +6,9 @@ import {StyleSheet} from 'react-native';
 
 import {
   ViroARScene,
+  ViroCamera,
   ViroText,
   ViroConstants,
-  ViroBox,
   ViroMaterials,
   Viro3DObject,
   ViroAmbientLight,
@@ -36,17 +36,30 @@ class HelloWorldSceneAR extends Component {
       places: [],
       longitude: "",
       latitude: "",
-      heading: 0,
       headingActual: 0,
     };
+
+    this.heading
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
   }
 
+<<<<<<< HEAD
   touched(id){
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
+=======
+  touched(index){
+    return (position, source) => {
+      let temp = this.state.places.slice();
+      temp.splice(index, 1);
+      this.setState({
+        places: temp,
+        headingActual: this.heading,
+      });
+    }
+>>>>>>> attempted to fix tracking issues
   }
 
   getPlaces = async (latitude, longitude) => {
@@ -64,15 +77,12 @@ class HelloWorldSceneAR extends Component {
     })
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
-      this.setState({
-        heading: data.heading || data
-      }, () => {
-        if(!this.state.headingActual){
-          this.setState({
-            headingActual: this.state.heading
-          })
-        }
-      });
+      heading = data.heading || data;
+      if(!this.state.headingActual){
+        this.setState({
+          headingActual: this.heading
+        })
+      }
     });
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -97,7 +107,7 @@ class HelloWorldSceneAR extends Component {
       },
       error => this.setState({ error: error.message }),
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         timeout: 200000,
         maximumAge: 1000,
         distanceFilter: 10
@@ -142,25 +152,37 @@ class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.latitude === "" ? 
+        {this.state.text !== "" ? 
         ( 
-          <ViroNode  position={[0, 0, -2]}>
-            <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
-            <ViroSpinner type='light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+          <ViroNode position={[0, 0, -2]}>
+            <ViroText text={this.state.text} scale={[0.5, 0.5, 0.5]} />
+            <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
           </ViroNode>
         )
         :
-        (this.state.places.slice().map( (place, index) => {
+        (this.state.places.map( (place, index) => {
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+            if(place.name === 'Om Nom Nuts'){
+              console.log('hello', this.state.headingActual);
+              console.log('what', polarCoor.degrees);
+              console.log('should be', polarCoor.degrees - this.state.headingActual, ' for ', place.name);
+            }
             return (
-              <ViroNode key={place.id} rotation={[0, this.state.headingActual - polarCoor.degrees, 0]} position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
+              <ViroNode 
+                key={place.id}
+                rotation={[0, this.state.headingActual - polarCoor.degrees, 0]}
+                position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
                 <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
+<<<<<<< HEAD
                   onClick={() => this.touched(place.id)}
+=======
+                  onClick={this.touched(index, polarCoor.distance)}
+>>>>>>> attempted to fix tracking issues
                   degrees={polarCoor.degrees}
                   type="VRX"
                   animation={{name:'Take 001',
@@ -178,23 +200,32 @@ class HelloWorldSceneAR extends Component {
     );
   }
 
+  resetPlaces(){
+    this.setState({
+      places: this.state.places.slice(),
+      headingActual: this.heading
+    })
+  }
+
   _onInitialized(state, reason) {
-    console.log(' update', this.state.headingActual);
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
         text : "",
-        headingActual: this.state.heading
+      }, () => {
+        setTimeout(this.resetPlaces.bind(this), 2000);
       });
-    } else if (state == ViroConstants.TRACKING_NONE) {
-      console.log('loss of tracking');
+    } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
+      this.setState({
+        text : "Tracking Lost. Please try moving the camera around"
+      })
     }
   }
 }
 
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: 'Arial',
-    fontSize: 30,
+    fontFamily: 'Helvetica',
+    fontSize: 20,
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',

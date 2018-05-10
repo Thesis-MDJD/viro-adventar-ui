@@ -7,7 +7,7 @@ import AuthLoadingScreen from "./components/AuthLoadingScreen";
 import Profile from "./components/Profile";
 import Friends from "./components/Friends";
 import FavoritePlaces from "./components/FavoritePlaces";
-export default createStackNavigator({
+const AppStack = createStackNavigator({
   Restaurants: Restaurants,
   Camera: Camera,
   Profile: Profile,
@@ -16,11 +16,11 @@ export default createStackNavigator({
 });
 const AuthStack = createStackNavigator({ Login: LoginScreen });
 
-// export default SwitchNavigator (
-//   {
-//     AuthLoading: AuthLoadingScreen,
-//     App: AppStack,
-//     Auth: AuthStack
-//   }
+export default SwitchNavigator (
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack
+  }
 
-// )
+)

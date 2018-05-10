@@ -20,7 +20,7 @@ export default class LocContactInfo extends Component {
       number: this.props.phone,
       prompt: false
     }
-    call(args).catch(console.error)
+    this.props.phone === '' ? alert('No phone number available') : call(args).catch(console.error)
   }
 
   onYelpPress(){

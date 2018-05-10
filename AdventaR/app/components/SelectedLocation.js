@@ -44,7 +44,7 @@ import { YELP_API_KEY } from "react-native-dotenv";
 
    componentDidMount() {
     this.getPlace(this.state.restaurantId)
-    this.props.navigation.setParams({ goToRestaurants: this.goToRestaurants });
+    this.props.navigation.setParams({ goToCamera: this.goToCamera});
    }
 
    static navigationOptions = ({ navigation }) => {
@@ -61,13 +61,13 @@ import { YELP_API_KEY } from "react-native-dotenv";
       },
       // go back to camera view
       headerLeft: (
-        <Button onPress={params.goToRestaurants} title="Restaurants" color="#fff" />
+        <Button onPress={params.goToCamera} title="Camera" color="#fff" />
       )
     };
   };
 
-  goToRestaurants = () => {
-    this.props.navigation.navigate("YelpRestaurants");
+  goToCamera = () => {
+    this.props.navigation.navigate("Camera");
   };
 
   render() {

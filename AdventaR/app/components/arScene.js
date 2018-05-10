@@ -15,14 +15,15 @@ import {
   ViroUtils,
   ViroNode,
 } from 'react-viro';
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
 import { GOOGLE_API } from "react-native-dotenv";
 import dummyData from "./res/dummyData";
+import { withNavigation } from 'react-navigation'
 
 const polarToCartesian = ViroUtils.polarToCartesian;
 
-export default class HelloWorldSceneAR extends Component {
+class HelloWorldSceneAR extends Component {
 
   constructor(props) {
     super(props);
@@ -43,23 +44,25 @@ export default class HelloWorldSceneAR extends Component {
     this.touched = this.touched.bind(this);
   }
 
-  touched(index){
-    return (position, source) => {
-      console.log(this.state.places[index]);
-      let temp = this.state.places.slice();
-      temp.splice(index, 1);
-      this.setState({
-        places: temp,
-        headingActual: this.state.heading,
-      });
-    }
+  touched(id){
+    // alert(JSON.stringify(this.props.navigation));
+    this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
+    // return (position, source) => {
+    //   console.log(this.state.places[index]);
+    //   let temp = this.state.places.slice();
+    //   temp.splice(index, 1);
+    //   this.setState({
+    //     places: temp,
+    //     headingActual: this.state.heading,
+    //   });
+    // }
   }
 
   getPlaces = async (latitude, longitude) => {
     this.setState({
       places: dummyData.businesses
     }, () => {
-      console.log(this.state.places);
+      // alert(JSON.stringify(this.state.places));
     })
     // try {
     //   const data = await fetch(
@@ -84,7 +87,7 @@ export default class HelloWorldSceneAR extends Component {
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
       this.setState({
-        heading: data
+        heading: data.heading || data
       }, () => {
         if(!this.state.headingActual){
           this.setState({
@@ -93,7 +96,6 @@ export default class HelloWorldSceneAR extends Component {
         }
       });
     });
-
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -175,7 +177,7 @@ export default class HelloWorldSceneAR extends Component {
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
-                  onClick={this.touched(index)}
+                  onClick={() => this.touched(place.id)}
                   degrees={polarCoor.degrees}
                   type="VRX"
                   animation={{name:'Take 001',
@@ -222,4 +224,4 @@ ViroMaterials.createMaterials({
   },
 });
 
-module.exports = HelloWorldSceneAR;
+export default withNavigation(HelloWorldSceneAR);

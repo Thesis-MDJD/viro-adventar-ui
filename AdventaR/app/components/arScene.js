@@ -18,7 +18,6 @@ import {
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
-import { GOOGLE_API } from "react-native-dotenv";
 import dummyData from "./res/dummyData";
 import { withNavigation } from 'react-navigation'
 
@@ -39,7 +38,7 @@ class HelloWorldSceneAR extends Component {
       headingActual: 0,
     };
 
-    this.heading
+    this.heading = 0;
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
@@ -65,7 +64,7 @@ class HelloWorldSceneAR extends Component {
     })
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
-      heading = data.heading || data;
+      this.heading = data.heading || data;
       if(!this.state.headingActual){
         this.setState({
           headingActual: this.heading
@@ -166,11 +165,7 @@ class HelloWorldSceneAR extends Component {
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
-<<<<<<< HEAD
                   onClick={() => this.touched(place.id)}
-=======
-                  onClick={this.touched(index, polarCoor.distance)}
->>>>>>> attempted to fix tracking issues
                   degrees={polarCoor.degrees}
                   type="VRX"
                   animation={{name:'Take 001',

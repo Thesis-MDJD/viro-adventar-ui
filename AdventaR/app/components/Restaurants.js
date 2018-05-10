@@ -47,8 +47,6 @@ export default class Restaurants extends Component {
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     );
-<<<<<<< HEAD
-=======
     // this.watchId = navigator.geolocation.watchPosition(
     //   position => {
     //     this.setState({
@@ -66,7 +64,6 @@ export default class Restaurants extends Component {
     //     distanceFilter: 10
     //   }
     // );
->>>>>>> attempted to fix tracking issues
     this.props.navigation.setParams({ goToCamera: this.goToCamera });
   }
   static navigationOptions = ({ navigation }) => {

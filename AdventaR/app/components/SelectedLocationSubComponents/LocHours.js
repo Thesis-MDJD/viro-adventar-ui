@@ -24,14 +24,16 @@ export default class LocHours extends Component {
   }
 
   render() {
-    const openStatus = this.props.hours[0].is_open_now ?
-      <Text style={{color: '#79C727'}}> Open </Text>
-      :
-      <Text style={{color: '#C41200'}}> Closed </Text>
+    const openStatus = this.props.hours ?
+      this.props.hours[0].is_open_now ?
+        <Text style={{color: '#79C727'}}> Open </Text>
+        :
+        <Text style={{color: '#C41200'}}> Closed </Text>
+      : null
 
     const todayDayOfWeek = moment().diff(moment().startOf('week'), 'days')
 
-    const todayHour = this.props.hours[0].open.map( day => {
+    const todayHour = this.props.hours && this.props.hours[0].open.map( day => {
       return (
         day.day === todayDayOfWeek ?
         `${moment(day.start, 'hmm').format('hh:mm A')} - ${moment(day.end, 'hmm').format('hh:mm A')}`

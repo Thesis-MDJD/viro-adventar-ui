@@ -48,7 +48,7 @@ export default class LocBasicInfo extends Component {
 
         <View style={styles.ratingReviewContainer}>
           <LocRating rating={this.props.rating}/>
-          <Text > {this.props.review_count} Reviews </Text>
+          <Text > base on {this.props.review_count} Reviews </Text>
         </View>
 
         <View style={styles.priceCategoryContainer}>

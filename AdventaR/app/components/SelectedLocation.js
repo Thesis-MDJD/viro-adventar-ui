@@ -11,7 +11,7 @@ import {
 import LocPics from './SelectedLocationSubComponents/LocPics';
 import LocBasicInfo from './SelectedLocationSubComponents/LocBasicInfo';
 import LocContactInfo from './SelectedLocationSubComponents/LocContactInfo';
-import { YELP_API_KEY } from "react-native-dotenv";
+import { REST_SERVER_IP } from "react-native-dotenv";
 
 
  export default class SelectedLocation extends Component {
@@ -26,14 +26,13 @@ import { YELP_API_KEY } from "react-native-dotenv";
 
 
    getPlace = async (id) => {
-    let myHeaders = new Headers({
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + YELP_API_KEY,
-    });
+    // let myHeaders = new Headers({
+    //   "Content-Type": "application/json",
+    //   "Authorization": "Bearer " + YELP_API_KEY,
+    // });
     try {
       const data = await fetch(
-        `https://api.yelp.com/v3/businesses/${id}`,
-        { headers: myHeaders }
+        `http://${REST_SERVER_IP}/yelp/business/${id}`,
       );
       const result = await data.json();
       this.setState({ data: result })
@@ -44,7 +43,7 @@ import { YELP_API_KEY } from "react-native-dotenv";
 
    componentDidMount() {
     this.getPlace(this.state.restaurantId)
-    this.props.navigation.setParams({ goToCamera: this.goToCamera});
+    this.props.navigation.setParams({ goBackToPrevious: this.goBackToPrevious});
    }
 
    static navigationOptions = ({ navigation }) => {
@@ -59,15 +58,15 @@ import { YELP_API_KEY } from "react-native-dotenv";
       headerTitleStyle: {
         fontWeight: "bold"
       },
-      // go back to camera view
+      // go back to previous view
       headerLeft: (
-        <Button onPress={params.goToCamera} title="Camera" color="#fff" />
+        <Button onPress={params.goBackToPrevious} title="Back" color="#fff" />
       )
     };
   };
 
-  goToCamera = () => {
-    this.props.navigation.navigate("Camera");
+  goBackToPrevious = () => {
+    this.props.navigation.goBack();
   };
 
   render() {

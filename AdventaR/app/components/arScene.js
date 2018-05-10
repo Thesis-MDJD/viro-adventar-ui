@@ -46,20 +46,8 @@ class HelloWorldSceneAR extends Component {
     this.touched = this.touched.bind(this);
   }
 
-<<<<<<< HEAD
   touched(id){
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
-=======
-  touched(index){
-    return (position, source) => {
-      let temp = this.state.places.slice();
-      temp.splice(index, 1);
-      this.setState({
-        places: temp,
-        headingActual: this.heading,
-      });
-    }
->>>>>>> attempted to fix tracking issues
   }
 
   getPlaces = async (latitude, longitude) => {

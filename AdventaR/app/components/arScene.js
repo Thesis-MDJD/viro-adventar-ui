@@ -45,36 +45,13 @@ class HelloWorldSceneAR extends Component {
   }
 
   touched(id){
-    // alert(JSON.stringify(this.props.navigation));
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
-    // return (position, source) => {
-    //   console.log(this.state.places[index]);
-    //   let temp = this.state.places.slice();
-    //   temp.splice(index, 1);
-    //   this.setState({
-    //     places: temp,
-    //     headingActual: this.state.heading,
-    //   });
-    // }
   }
 
   getPlaces = async (latitude, longitude) => {
     this.setState({
       places: dummyData.businesses
-    }, () => {
-      // alert(JSON.stringify(this.state.places));
     })
-    // try {
-    //   const data = await fetch(
-    //     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${GOOGLE_API}`
-    //   );
-    //   const { results } = await data.json();
-    //   this.setState({
-    //     places: results
-    //   });
-    // } catch (error) {
-    //   console.log("Fetch Error = ", error);
-    // }
   };
 
   componentDidMount(){

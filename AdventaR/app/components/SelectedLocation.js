@@ -26,10 +26,6 @@ import { REST_SERVER_IP } from "react-native-dotenv";
 
 
    getPlace = async (id) => {
-    // let myHeaders = new Headers({
-    //   "Content-Type": "application/json",
-    //   "Authorization": "Bearer " + YELP_API_KEY,
-    // });
     try {
       const data = await fetch(
         `http://${REST_SERVER_IP}/yelp/business/${id}`,

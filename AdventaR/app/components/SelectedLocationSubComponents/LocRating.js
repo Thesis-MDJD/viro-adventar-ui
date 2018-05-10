@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Platform } from 'react-native';
-import { Icon } from 'react-native-elements';
 
 export default class LocRating extends Component {
   constructor(props) {

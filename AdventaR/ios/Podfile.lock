@@ -13,9 +13,9 @@ PODS:
   - Firebase/Database (5.0.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (= 5.0.0)
-  - Firebase/Messaging (5.0.0):
+  - Firebase/Storage (5.0.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (= 3.0.0)
+    - FirebaseStorage (= 3.0.0)
   - FirebaseAnalytics (5.0.0):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
@@ -31,11 +31,9 @@ PODS:
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (3.0.0):
     - FirebaseCore (~> 5.0)
-  - FirebaseMessaging (3.0.0):
+  - FirebaseStorage (3.0.0):
     - FirebaseCore (~> 5.0)
-    - FirebaseInstanceID (~> 3.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/Logger (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
@@ -50,7 +48,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Protobuf (3.5.0)
   - ViroKit (1.0):
     - AWSDynamoDB (~> 2.6.7)
     - GVRAudioSDK (= 1.120.0)
@@ -61,7 +58,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
-  - Firebase/Messaging
+  - Firebase/Storage
   - ViroKit (from `../node_modules/react-viro/ios/dist/ViroRenderer/`)
   - ViroReact (from `../node_modules/react-viro/ios/`)
 
@@ -75,14 +72,13 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
-    - FirebaseMessaging
+    - FirebaseStorage
     - GoogleToolboxForMac
     - GTMSessionFetcher
     - GVRAudioSDK
     - GVRSDK
     - leveldb-library
     - nanopb
-    - Protobuf
 
 EXTERNAL SOURCES:
   ViroKit:
@@ -99,17 +95,16 @@ SPEC CHECKSUMS:
   FirebaseCore: e46e4babb9de298fb2f736958edcc6da1dc60d73
   FirebaseDatabase: 697eb53e5b4fe7cd4fa8756c1f82a9fca011345f
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
-  FirebaseMessaging: f2360a966ecfb0d14facf0fbdf306efc2df0ddbe
+  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
   GVRAudioSDK: 302f0a8f190d855868ea07f246ce4f9b44c392ae
   GVRSDK: 0cb9d0ce06a84d698e61e3db9509766022dcf815
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   ViroKit: 9631f301ef6a3f56116b23d6aac5d5c2307aa368
   ViroReact: 5520f26ac4654e361786c82da3b29ce0402c3c00
 
-PODFILE CHECKSUM: 4f1c61610602805fe1896392c2bb117c8f920120
+PODFILE CHECKSUM: 38ae90f85f33b6ea5019aedbea2d2a24b02e0b73
 
 COCOAPODS: 1.5.0

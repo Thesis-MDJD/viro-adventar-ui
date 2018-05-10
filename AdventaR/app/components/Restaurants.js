@@ -62,12 +62,19 @@ export default class Restaurants extends Component {
       },
       headerRight: (
         <Button onPress={params.goToCamera} title="Camera" color="#fff" />
+      ),
+      headerLeft: (
+        <Button onPress={params.goToProfile} title="Profile" color="#fff" />
       )
     };
   };
 
   goToCamera = () => {
     this.props.navigation.navigate("Camera");
+  };
+
+  goToProfile = () => {
+    this.props.navigation.navigate("Profile");
   };
 
   componentWillUnmount() {

@@ -14,6 +14,7 @@ import {
   ViroAmbientLight,
   ViroUtils,
   ViroNode,
+  ViroSpinner,
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
@@ -142,9 +143,14 @@ class HelloWorldSceneAR extends Component {
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroAmbientLight color="#FFFFFF" />
         {this.state.latitude === "" ? 
-        (<ViroText text={"Initializing AR..."} position={[0, 0, -2]} scale={[0.5, 0.5, 0.5]} />)
+        ( 
+          <ViroNode  position={[0, 0, -2]}>
+            <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
+            <ViroSpinner type='light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+          </ViroNode>
+        )
         :
-        (this.state.places.map( (place, index) => {
+        (this.state.places.slice().map( (place, index) => {
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             return (

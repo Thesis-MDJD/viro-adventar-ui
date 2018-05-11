@@ -10,7 +10,7 @@ import SelectedLocation from './components/SelectedLocation';
 import SearchFriend from './components/SearchFriend';
 
 const AppStack= StackNavigator({
-  // SearchFriend: {screen: SearchFriend},
+  SearchFriend: {screen: SearchFriend},
   Camera: {
     screen: TabNavigator({
       Camera: Camera,

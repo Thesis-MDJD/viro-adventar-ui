@@ -8,10 +8,12 @@ import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
 import AuthLoadingScreen from "./components/AuthLoadingScreen";
-import YelpRestaurants from "./components/YelpRestaurants";
-import SelectedLocation from "./components/SelectedLocation";
+import YelpRestaurants from './components/YelpRestaurants';
+import SelectedLocation from './components/SelectedLocation';
+import SearchFriend from './components/SearchFriend';
 
-const AppStack = StackNavigator({
+const AppStack= StackNavigator({
+  SearchFriend: {screen: SearchFriend},
   Camera: {
     screen: TabNavigator(
       {

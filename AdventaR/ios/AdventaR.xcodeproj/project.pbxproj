@@ -39,6 +39,7 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		4CAF86CCEF3E4CC6B6FCD14F /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F505E96A0ACE4304B6BE7D41 /* libA0Auth0.a */; };
 <<<<<<< HEAD
 =======
@@ -50,6 +51,10 @@
 >>>>>>> working with Auth0 + Firebase setup
 		56126E5C806757B1F9FDEDF6 /* Pods_AdventaR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06339D360557F70193EDA7D4 /* Pods_AdventaR.framework */; };
 >>>>>>> firebase in progress
+=======
+		382054C9B48344978C9416F9 /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 771217257C3742DE9FC60250 /* libA0Auth0.a */; };
+		56126E5C806757B1F9FDEDF6 /* Pods_AdventaR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06339D360557F70193EDA7D4 /* Pods_AdventaR.framework */; };
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		603B9414A645429E925F8E7E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E4E29DDDEC74C8A8BB7091D /* MaterialCommunityIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -57,6 +62,7 @@
 		9BC5A3AC912246F6A61925F9 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78790872473C465BB536F6BB /* Octicons.ttf */; };
 		9F8AD26CD6B548F783135A9C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DAAE1D6751D48419498B7BC /* FontAwesome.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -72,6 +78,10 @@
 		AF8C7FAD20A4A7AD007EB82F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF8C7FAC20A4A7AD007EB82F /* GoogleService-Info.plist */; };
 		AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */; };
 >>>>>>> firebase in progress
+=======
+		AF8C7FAD20A4A7AD007EB82F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF8C7FAC20A4A7AD007EB82F /* GoogleService-Info.plist */; };
+		AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */; };
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -350,6 +360,7 @@
 		};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		AF22A99120A62ECE000D0A80 /* PBXContainerItemProxy */ = {
 =======
 		CD77752D20A37A4A004FA907 /* PBXContainerItemProxy */ = {
@@ -370,16 +381,24 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */;
 >>>>>>> firebase in progress
+=======
+		AFA7CD4F20A4AA8A002F3560 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			proxyType = 2;
 			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
 			remoteInfo = ReactNativeHeading;
 		};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6af4faa0e566899037a027b7e14c85670d72f38b
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		AFA7CD8920A4B5BA002F3560 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2C2675487B2B4F2793A4B04A /* RNFirebase.xcodeproj */;
@@ -394,7 +413,10 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = A0Auth0;
 		};
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -418,6 +440,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AdventaR/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AdventaR/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		1E113CF5740D6F656A023BD5 /* Pods-AdventaR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.debug.xcconfig"; sourceTree = "<group>"; };
@@ -446,6 +469,17 @@
 =======
 		771217257C3742DE9FC60250 /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
 >>>>>>> working with Auth0 + Firebase setup
+=======
+		2647A1E8F3804EC0BA7F643C /* A0Auth0.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = A0Auth0.xcodeproj; path = "../node_modules/react-native-auth0/ios/A0Auth0.xcodeproj"; sourceTree = "<group>"; };
+		2C2675487B2B4F2793A4B04A /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* AdventaR-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AdventaR-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* AdventaR-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AdventaR-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C334D320710480684966AFB /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
+		58B2A86896B7DD7DF223423D /* Pods-AdventaR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.debug.xcconfig"; sourceTree = "<group>"; };
+		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		771217257C3742DE9FC60250 /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 <<<<<<< HEAD
 		7A14B6584B794B9EBA9F1EC6 /* A0Auth0.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = A0Auth0.xcodeproj; path = "../node_modules/react-native-auth0/ios/A0Auth0.xcodeproj"; sourceTree = "<group>"; };
@@ -457,6 +491,7 @@
 		98581945D671432FB6724B3F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		A561C146180744B1BE9AD9BD /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 <<<<<<< HEAD
 		C10F9CEA5580B5EF98E28888 /* Pods-AdventaR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.release.xcconfig"; sourceTree = "<group>"; };
 		C1F2CEC2B7906DE4BD22F92D /* Pods_AdventaR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdventaR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -472,6 +507,11 @@
 		AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
 		FAF3EBB7BBABF68C7CEE31F6 /* Pods-AdventaR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.release.xcconfig"; sourceTree = "<group>"; };
 >>>>>>> firebase in progress
+=======
+		AF8C7FAC20A4A7AD007EB82F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
+		FAF3EBB7BBABF68C7CEE31F6 /* Pods-AdventaR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.release.xcconfig"; sourceTree = "<group>"; };
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -488,10 +528,14 @@
 			buildActionMask = 2147483647;
 			files = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CD77759C20A3B03B004FA907 /* libReactNativeHeading.a in Frameworks */,
 =======
 				AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */,
 >>>>>>> firebase in progress
+=======
+				AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */,
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -684,10 +728,14 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CD77756120A3A86B004FA907 /* ReactNativeHeading.xcodeproj */,
 =======
 				AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */,
 >>>>>>> firebase in progress
+=======
+				AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */,
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -724,6 +772,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BFBB8CC7EF6FD073169567A8 /* Pods */,
 <<<<<<< HEAD
 				AF22A96820A62ECD000D0A80 /* Recovered References */,
@@ -738,6 +787,10 @@
 =======
 				AFA7CD5F20A4B5B9002F3560 /* Recovered References */,
 >>>>>>> working with Auth0 + Firebase setup
+=======
+				8B720F2AD50211BDE741D1C4 /* Pods */,
+				AFA7CD5F20A4B5B9002F3560 /* Recovered References */,
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -774,6 +827,7 @@
 			sourceTree = "<group>";
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
 		AF22A96820A62ECD000D0A80 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,6 +848,9 @@
 =======
 		AFA7CD2720A4AA8A002F3560 /* Products */ = {
 >>>>>>> firebase in progress
+=======
+		AFA7CD2720A4AA8A002F3560 /* Products */ = {
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			isa = PBXGroup;
 			children = (
 				AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */,
@@ -801,6 +858,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 <<<<<<< HEAD
 		CD77752A20A37A49004FA907 /* Products */ = {
 			isa = PBXGroup;
@@ -815,6 +873,8 @@
 			children = (
 				CD77758C20A3A86D004FA907 /* libReactNativeHeading.a */,
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		AFA7CD5F20A4B5B9002F3560 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,11 +888,15 @@
 			isa = PBXGroup;
 			children = (
 				AFA7CD8A20A4B5BA002F3560 /* libRNFirebase.a */,
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 <<<<<<< HEAD
 		CDA7E32320A3771400F4549A /* Recovered References */ = {
 			isa = PBXGroup;
@@ -860,13 +924,18 @@
 			);
 			name = Resources;
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		AFA7CED020A4C7F8002F3560 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				AFA7CED420A4C7F8002F3560 /* libA0Auth0.a */,
 			);
 			name = Products;
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -900,6 +969,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				C9FB0E45D4E1BA77A99FEE49 /* [CP] Embed Pods Frameworks */,
 				8844AE66FDF402ED0C412B53 /* [CP] Copy Pods Resources */,
 				5B831807047F56C7C028C373 /* Execute Ngrok */,
@@ -909,18 +979,26 @@
 				99A70E901662E070AFCCE49A /* Execute Ngrok */,
 				CE33EE8DC29AD670411AD462 /* Copy ngrok endpoint */,
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				D6BBCAEB2D4709820524A737 /* [CP] Embed Pods Frameworks */,
 				DC20BF752581C3D53250C9B8 /* [CP] Copy Pods Resources */,
 				41C1C469F2B05D83F5F703BD /* Execute Ngrok */,
 				D1B6F6590EE80FB75169ECC7 /* Copy ngrok endpoint */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				3E5A4FE71F2F1DA4CFD189B3 /* Execute Ngrok */,
 				F226B6CA35B5EDBC329C9284 /* Copy ngrok endpoint */,
 				D341A18C733F876C299E331C /* Execute Ngrok */,
 				252AA955D0DF3CCC9D2936D6 /* Copy ngrok endpoint */,
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			buildRules = (
 			);
@@ -984,6 +1062,7 @@
 					13B07F861A680F5B00A75B9A = {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 						DevelopmentTeam = P9T24TA4J7;
 <<<<<<< HEAD
 						ProvisioningStyle = Automatic;
@@ -996,6 +1075,10 @@
 						DevelopmentTeam = P9T24TA4J7;
 						ProvisioningStyle = Automatic;
 >>>>>>> fetching room and participants
+=======
+						DevelopmentTeam = P9T24TA4J7;
+						ProvisioningStyle = Automatic;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1023,6 +1106,7 @@
 				{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 					ProductGroup = AF22A98E20A62ECE000D0A80 /* Products */;
 =======
 					ProductGroup = CD77752A20A37A49004FA907 /* Products */;
@@ -1032,6 +1116,10 @@
 					ProductGroup = AFA7CED020A4C7F8002F3560 /* Products */;
 					ProjectRef = 2647A1E8F3804EC0BA7F643C /* A0Auth0.xcodeproj */;
 >>>>>>> working with Auth0 + Firebase setup
+=======
+					ProductGroup = AFA7CED020A4C7F8002F3560 /* Products */;
+					ProjectRef = 2647A1E8F3804EC0BA7F643C /* A0Auth0.xcodeproj */;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -1083,12 +1171,17 @@
 				},
 				{
 <<<<<<< HEAD
+<<<<<<< HEAD
 					ProductGroup = CD77756220A3A86B004FA907 /* Products */;
 					ProjectRef = CD77756120A3A86B004FA907 /* ReactNativeHeading.xcodeproj */;
 =======
 					ProductGroup = AFA7CD2720A4AA8A002F3560 /* Products */;
 					ProjectRef = AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */;
 >>>>>>> firebase in progress
+=======
+					ProductGroup = AFA7CD2720A4AA8A002F3560 /* Products */;
+					ProjectRef = AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				},
 				{
 					ProductGroup = AFA7CD8620A4B5BA002F3560 /* Products */;
@@ -1367,6 +1460,7 @@
 		};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		AF22A99220A62ECE000D0A80 /* libA0Auth0.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1387,12 +1481,17 @@
 			remoteRef = CD77758B20A3A86D004FA907 /* PBXContainerItemProxy */;
 >>>>>>> 6af4faa0e566899037a027b7e14c85670d72f38b
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libReactNativeHeading.a;
 			remoteRef = AFA7CD4F20A4AA8A002F3560 /* PBXContainerItemProxy */;
+<<<<<<< HEAD
 >>>>>>> firebase in progress
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AFA7CD8A20A4B5BA002F3560 /* libRNFirebase.a */ = {
@@ -1426,6 +1525,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				92316EA03C10418A9BCC11BC /* Entypo.ttf in Resources */,
 				C2FC61403D1C4F4C9006DD30 /* EvilIcons.ttf in Resources */,
 				C657AAC35B2A4EA0BBC8C9FD /* Feather.ttf in Resources */,
@@ -1441,6 +1541,9 @@
 =======
 				AF8C7FAD20A4A7AD007EB82F /* GoogleService-Info.plist in Resources */,
 >>>>>>> firebase in progress
+=======
+				AF8C7FAD20A4A7AD007EB82F /* GoogleService-Info.plist in Resources */,
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1478,10 +1581,14 @@
 		};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		0206BE0AF89C48D46F2F9146 /* Copy ngrok endpoint */ = {
 =======
 		252AA955D0DF3CCC9D2936D6 /* Copy ngrok endpoint */ = {
 >>>>>>> working with Auth0 + Firebase setup
+=======
+		252AA955D0DF3CCC9D2936D6 /* Copy ngrok endpoint */ = {
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1558,10 +1665,14 @@
 		};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		99A70E901662E070AFCCE49A /* Execute Ngrok */ = {
 =======
 		D341A18C733F876C299E331C /* Execute Ngrok */ = {
 >>>>>>> working with Auth0 + Firebase setup
+=======
+		D341A18C733F876C299E331C /* Execute Ngrok */ = {
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1576,12 +1687,16 @@
 			shellScript = $SRCROOT/ngrok_launch.sh;
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
 		A28981B656B21092C0DE1DD4 /* [CP] Check Pods Manifest.lock */ = {
 =======
 =======
 >>>>>>> working with Auth0 + Firebase setup
 		D59ABDF9D6099197BEB4ED8F /* [CP] Check Pods Manifest.lock */ = {
 >>>>>>> firebase in progress
+=======
+		D59ABDF9D6099197BEB4ED8F /* [CP] Check Pods Manifest.lock */ = {
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1612,10 +1727,15 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${PODS_ROOT}/../../node_modules/react-viro/ios/dist/ViroRenderer/ViroKit.framework",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 >>>>>>> firebase in progress
+=======
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1625,16 +1745,22 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViroKit.framework",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 >>>>>>> firebase in progress
+=======
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+<<<<<<< HEAD
 <<<<<<< HEAD
 		CE33EE8DC29AD670411AD462 /* Copy ngrok endpoint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1651,17 +1777,32 @@
 			shellScript = "DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\nendpointfile=\"ngrokendpoint.txt\"\nif [[ -e \"$SRCROOT/$endpointfile\" ]]; then\necho \"Ngrok endpoint file found, copying over...\"\ncp \"$SRCROOT/$endpointfile\" \"$DEST/$endpointfile\"\nbreak;\nfi";
 		};
 		F65199523F248A33CC2AE131 /* Execute Ngrok */ = {
+=======
+		DC20BF752581C3D53250C9B8 /* [CP] Copy Pods Resources */ = {
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-resources.sh",
+				"${PODS_ROOT}/GVRSDK/Resources/CardboardSDK.bundle",
+				"${PODS_ROOT}/GVRSDK/Resources/GoogleKitCore.bundle",
+				"${PODS_ROOT}/GVRSDK/Resources/GoogleKitDialogs.bundle",
+				"${PODS_ROOT}/GVRSDK/Resources/GoogleKitHUD.bundle",
+				"${PODS_ROOT}/GVRSDK/Resources/MaterialRobotoFontLoader.bundle",
 			);
-			name = "Execute Ngrok";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CardboardSDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleKitCore.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleKitDialogs.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleKitHUD.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialRobotoFontLoader.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
+<<<<<<< HEAD
 			shellScript = $SRCROOT/ngrok_launch.sh;
 		};
 		FB9B9DCBF9BC37BE31881D1A /* Copy ngrok endpoint */ = {
@@ -1693,6 +1834,11 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+=======
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 		F226B6CA35B5EDBC329C9284 /* Copy ngrok endpoint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1785,6 +1931,7 @@
 				);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -1792,12 +1939,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = AdventaRTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1825,6 +1977,7 @@
 				ENABLE_BITCODE = NO;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -1832,12 +1985,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = AdventaRTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1863,6 +2021,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 =======
 				CODE_SIGN_STYLE = Manual;
@@ -1870,10 +2029,14 @@
 =======
 				CODE_SIGN_STYLE = Automatic;
 >>>>>>> fetching room and participants
+=======
+				CODE_SIGN_STYLE = Automatic;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = P9T24TA4J7;
 				ENABLE_BITCODE = NO;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
@@ -1883,6 +2046,8 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1891,7 +2056,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = AdventaR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1916,6 +2084,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 =======
 				CODE_SIGN_STYLE = Manual;
@@ -1923,10 +2092,14 @@
 =======
 				CODE_SIGN_STYLE = Automatic;
 >>>>>>> fetching room and participants
+=======
+				CODE_SIGN_STYLE = Automatic;
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = P9T24TA4J7;
 				ENABLE_BITCODE = NO;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
@@ -1936,6 +2109,8 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1944,7 +2119,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = AdventaR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1977,6 +2155,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -1984,12 +2163,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = "AdventaR-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2025,6 +2209,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -2032,12 +2217,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = "AdventaR-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2072,6 +2262,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -2079,12 +2270,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = "AdventaR-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2119,6 +2315,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -2126,12 +2323,17 @@
 =======
 >>>>>>> firebase in progress
 =======
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-auth0/ios",
 				);
+<<<<<<< HEAD
 >>>>>>> working with Auth0 + Firebase setup
+=======
+>>>>>>> 0fdd3b117c1599a9e65f2a4fc78db721b99a073b
 				INFOPLIST_FILE = "AdventaR-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

@@ -37,6 +37,8 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/Logger (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.0)":
+    - GoogleToolboxForMac/Defines (= 2.1.0)
   - GTMSessionFetcher/Core (1.1.6)
   - GVRAudioSDK (1.120.0)
   - GVRSDK (1.120.0):

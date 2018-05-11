@@ -50,6 +50,14 @@ export default class DevTools extends Component {
       .set({ [currentId]: 0 });
   };
 
+  // <Button
+  //   onPress={this.acceptFriend(
+  //     "-LCFVZiSV8FFN_sprt2s",
+  //     "-LCBq7GwsW6LE5SWZRo5"
+  //   )}
+  //   title="Add Friend"
+  //   color="blue"
+  // />
   acceptFriend = (currentId, userId) => {
     const self = this;
     const request = this.rootRef
@@ -74,8 +82,6 @@ export default class DevTools extends Component {
       .push()
       .set({ [currentId]: 1 });
   };
-
-  acceptFriendRequest = userId => {};
 
   //   <Button
   //     onPress={this.searchUser("Mark")}
@@ -220,17 +226,6 @@ export default class DevTools extends Component {
     this.rootRef.off();
   }
   render() {
-    return (
-      <View>
-        <Button
-          onPress={this.acceptFriend(
-            "-LCFVZiSV8FFN_sprt2s",
-            "-LCBq7GwsW6LE5SWZRo5"
-          )}
-          title="Add Friend"
-          color="blue"
-        />
-      </View>
-    );
+    return <View />;
   }
 }

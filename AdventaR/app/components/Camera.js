@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
-import arScene from "./arScene";
+import tempScene from "./tempScene";
 import {VIRO_KEY} from "react-native-dotenv";
 
 export default class Camera extends Component {
@@ -18,7 +18,7 @@ export default class Camera extends Component {
       <View style={styles.container}>
         <ViroARSceneNavigator
           apiKey={VIRO_KEY}
-          initialScene={{ scene: arScene }}
+          initialScene={{ scene: tempScene }}
           debug={true} // set this to true
         />
         {/* <View

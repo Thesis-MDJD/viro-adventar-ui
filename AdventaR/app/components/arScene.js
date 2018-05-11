@@ -15,6 +15,7 @@ import {
   ViroUtils,
   ViroNode,
   ViroSpinner,
+  ViroARSceneNavigator,
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
@@ -36,6 +37,7 @@ class HelloWorldSceneAR extends Component {
       longitude: "",
       latitude: "",
       headingActual: 0,
+      willReset: false,
     };
 
     this.heading = 0;
@@ -132,12 +134,34 @@ class HelloWorldSceneAR extends Component {
             Math.sin(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1);
     var brng = Math.atan2(y, x);
     
-    return {degrees: (brng * 180 / Math.PI), distance: d};
+    return {degrees: ((brng * 180 / Math.PI) + 360) % 360, distance: d};
   }
+
+  // convertToOrientation = (userDirection, thetaDirection) => {
+  //   let relDiff;
+  //   const absDiff = Math.max((thetaDirection - userDirection), (userDirection - thetaDirection));
+  //   switch (true) {
+  //     case (userDirection > thetaDirection) && (absDiff > 180):
+  //       relDiff = 360 - absDiff;
+  //     break;
+  //     case (userDirection > thetaDirection) && (absDiff < 180):
+  //       relDiff = -(absDiff % 360);
+  //     break;
+  //     case (thetaDirection > userDirection) && (absDiff > 180):
+  //       relDiff = absDiff - 360;
+  //     break;
+  //     case (thetaDirection > userDirection) && (absDiff < 180):
+  //       relDiff = absDiff % 360;
+  //     break;
+  //     default:
+  //       relDiff = absDiff;
+  //     }
+  //   return relDiff;
+  // };
 
   render() {
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
+      <ViroARScene onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
         {this.state.text !== "" ? 
         ( 
@@ -150,17 +174,17 @@ class HelloWorldSceneAR extends Component {
         (this.state.places.map( (place, index) => {
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
-            if(place.name === 'Om Nom Nuts'){
-              console.log('hello', this.state.headingActual);
-              console.log('what', polarCoor.degrees);
-              console.log('should be', polarCoor.degrees - this.state.headingActual, ' for ', place.name);
-            }
+            console.log(polarCoor);
+            console.log('heading actual ', this.state.headingActual);
+            console.log('heading', this.heading);
+            console.log('polar to cartesian ', polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0]))
+            console.log('lat then lon, me then place ', parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             return (
-              <ViroNode 
+              <ViroNode
                 key={place.id}
                 rotation={[0, this.state.headingActual - polarCoor.degrees, 0]}
                 position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
-                <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+                <ViroText text={(polarCoor.degrees - this.state.headingActual).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
@@ -183,20 +207,11 @@ class HelloWorldSceneAR extends Component {
     );
   }
 
-  resetPlaces(){
-    this.setState({
-      places: this.state.places.slice(),
-      headingActual: this.heading
-    })
-  }
-
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        text : "",
-      }, () => {
-        setTimeout(this.resetPlaces.bind(this), 2000);
-      });
+      if(this.state.willReset){
+        this.pop();
+      }
     } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
       this.setState({
         text : "Tracking Lost. Please try moving the camera around"

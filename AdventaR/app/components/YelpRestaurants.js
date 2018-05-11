@@ -70,27 +70,7 @@ getPlaces = async (latitude, longitude) => {
     );
     this.props.navigation.setParams({ goToRestaurants: this.goToRestaurants });
   }
-  static navigationOptions = ({ navigation }) => {
-    const params = navigation.state.params || {};
-    return {
-      title: "YelpRestaurants",
-      headerStyle: {
-        backgroundColor: "#f4511e"
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        fontWeight: "bold"
-      },
-      headerRight: (
-        <Button onPress={params.goToRestaurants} title="Restaurants" color="#fff" />
-      )
-    };
-  };
 
-  goToRestaurants = () => {
-    this.props.navigation.navigate("Restaurants");
-  };
-  
   goToSelectedRestaurants(id) {
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
   }

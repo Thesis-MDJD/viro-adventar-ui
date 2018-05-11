@@ -12,7 +12,6 @@ import arScene from "./arScene";
 import {VIRO_KEY} from "react-native-dotenv";
 
 export default class Camera extends Component {
-  componentDidMount() {}
 
   render() {
     return (

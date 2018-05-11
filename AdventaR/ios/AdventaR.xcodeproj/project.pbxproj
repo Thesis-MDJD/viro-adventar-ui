@@ -983,6 +983,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 						DevelopmentTeam = P9T24TA4J7;
 <<<<<<< HEAD
 						ProvisioningStyle = Automatic;
@@ -991,6 +992,10 @@
 =======
 						ProvisioningStyle = Manual;
 >>>>>>> firebase returns friends + adds friends
+=======
+						DevelopmentTeam = P9T24TA4J7;
+						ProvisioningStyle = Automatic;
+>>>>>>> fetching room and participants
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1857,13 +1862,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 =======
 				CODE_SIGN_STYLE = Manual;
 >>>>>>> firebase returns friends + adds friends
+=======
+				CODE_SIGN_STYLE = Automatic;
+>>>>>>> fetching room and participants
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = P9T24TA4J7;
 				ENABLE_BITCODE = NO;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1906,13 +1915,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Automatic;
 =======
 				CODE_SIGN_STYLE = Manual;
 >>>>>>> firebase returns friends + adds friends
+=======
+				CODE_SIGN_STYLE = Automatic;
+>>>>>>> fetching room and participants
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = P9T24TA4J7;
 				ENABLE_BITCODE = NO;
 <<<<<<< HEAD
 <<<<<<< HEAD

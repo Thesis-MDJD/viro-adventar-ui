@@ -86,13 +86,28 @@ export default class DevTools extends Component {
       .set(group);
   };
 
+  // <Button
+  //         onPress={this.getChatrooms("Mark")}
+  //         title="get rooms"
+  //         color="blue"
+  //       />
   getChatrooms = username => {
     const rooms = this.rootRef
       .child("Conversations")
-      .orderByKey()
-      .equalTo(username);
+      .orderByChild(username)
+      .equalTo(true);
+    //Returns Users Rooms
+    let col = [];
+    //creates array of object containing room id and participants
     rooms.once("value", snap => {
-      alert(JSON.stringify(snap.val()));
+      Object.keys(snap.val()).forEach(key => {
+        col.push({ conversationId: key });
+      });
+      Object.values(snap.val()).forEach((room, i) => {
+        col[i]["participants"] = Object.keys(room).join(", ");
+      });
+      //returns array of object containing room id and participants
+      alert(JSON.stringify(col));
     });
   };
 
@@ -104,11 +119,6 @@ export default class DevTools extends Component {
       <View>
         <Button onPress={this.addUser} title="Add User" color="blue" />
         <Button onPress={this.addFriend} title="Add Friend" color="blue" />
-        <Button
-          onPress={this.getChatrooms("Mark")}
-          title="get rooms"
-          color="blue"
-        />
       </View>
     );
   }

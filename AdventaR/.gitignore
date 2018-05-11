@@ -56,3 +56,5 @@ buck-out/
 *.jsbundle
 .env
 Pods
+
+ios/GoogleService-Info.plist

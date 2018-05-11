@@ -8,12 +8,11 @@ export default class SearchFriend extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       searched: [
-        {name: 'Lady1WOIENW', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'},
+        {name: 'Lady1', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'},
         {name: 'Lady2', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'},
         {name: 'Lady3', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'}
-      ],
+      ]
     }
   }
 

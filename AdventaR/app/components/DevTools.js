@@ -15,13 +15,15 @@ export default class DevTools extends Component {
       .child("Features");
   }
 
-  addUser = () => {
+  // <Button onPress={this.addUser(Daniel, Daniel@gmail.com, default)} title="Add User" color="blue" />
+  addUser = (name, email, img) => {
     this.rootRef
       .child("Users")
       .push()
       .set({
-        name: "Mark",
-        email: "mark@gmail.com",
+        name,
+        email,
+        img,
         firstName: "",
         lastName: "",
         favoritePlaces: {},
@@ -30,29 +32,50 @@ export default class DevTools extends Component {
       });
   };
 
-  addFriend = () => {
-    //Get the current user id
-    const user = this.rootRef
+  //   <Button
+  //   onPress={this.addFriend(
+  //     "-LCBq7GwsW6LE5SWZRo5",
+  //     "-LCFVZiSV8FFN_sprt2s"
+  //   )}
+  //   title="Add Friend"
+  //   color="blue"
+  // />
+
+  addFriend = (currentId, userId) => {
+    this.rootRef
       .child("Users")
-      .orderByChild("name")
-      .equalTo("Mark");
-    const self = this;
-    //Pass in the id of the friend to add
-    //const friendId = something
-    user.once("value", snap => {
-      const friends = self.rootRef
-        .child("Users")
-        .child(Object.keys(snap.val())[0])
-        .child("Friends");
-      friends.push().set({
-        //should be setting friends id
-        askdfjhasdf: 0
-      });
-      friends.once("value", snap => {
-        alert(JSON.stringify(snap));
-      });
-    });
+      .child(userId)
+      .child("Friends")
+      .push()
+      .set({ [currentId]: 0 });
   };
+
+  acceptFriend = (currentId, userId) => {
+    const self = this;
+    const request = this.rootRef
+      .child("Users")
+      .child(currentId)
+      .child("Friends")
+      .orderByChild(userId)
+      .equalTo(0);
+    request.once("value", snap => {
+      snap.ref.remove();
+      self.rootRef
+        .child("Users")
+        .child(currentId)
+        .child("Friends")
+        .push()
+        .set({ [userId]: 1 });
+    });
+    this.rootRef
+      .child("Users")
+      .child(userId)
+      .child("Friends")
+      .push()
+      .set({ [currentId]: 1 });
+  };
+
+  acceptFriendRequest = userId => {};
 
   //   <Button
   //     onPress={this.searchUser("Mark")}
@@ -111,14 +134,102 @@ export default class DevTools extends Component {
     });
   };
 
+  // <Button
+  //   onPress={this.sendChat(
+  //     "-LCC6vGy_CZuI-WSrKzS",
+  //     "Mark",
+  //     "We're Almost There Guys!"
+  //   )}
+  //   title="Send Chat"
+  //   color="blue"
+  // />
+  sendChat = (conversation, sender, content) => {
+    this.rootRef
+      .child("Messages")
+      .push()
+      .set({
+        content: content,
+        conversation: conversation,
+        sender: sender,
+        createdAt: Date.now()
+      });
+  };
+
+  // <Button
+  //   onPress={this.getChats("-LCC6vGy_CZuI-WSrKzS")}
+  //   title="Get Chats"
+  //   color="blue"
+  // />
+  getChats = conversationId => {
+    let messages = this.rootRef
+      .child("Messages")
+      .orderByChild("conversation")
+      .equalTo(conversationId);
+    messages.once("value", snap => {
+      alert(JSON.stringify(snap.val()));
+    });
+  };
+
+  // <Button
+  //   onPress={this.addFavoritePlace(
+  //     "Mark",
+  //     "Del Taco",
+  //     5,
+  //     "taco.png",
+  //     23456234
+  //   )}
+  //   title="Add Place"
+  //   color="blue"
+  // />
+  addFavoritePlace = (user, name, rating, image, yelpId) => {
+    const place = {
+      name,
+      image,
+      rating,
+      yelpId
+    };
+    this.rootRef
+      .child("Users")
+      .child(user)
+      .child("FavoritePlaces")
+      .push()
+      .set(place);
+  };
+
+  // <Button
+  //   onPress={this.addVisit("Mark", "Del Taco", 5, "taco.png", 23456234)}
+  //   title="Check In"
+  //   color="blue"
+  // />
+  addVisit = (user, name, rating, image, yelpId) => {
+    const place = {
+      name,
+      image,
+      rating,
+      yelpId
+    };
+    this.rootRef
+      .child("Users")
+      .child(user)
+      .child("VisitHistory")
+      .push()
+      .set(place);
+  };
+
   componentWillUnmount() {
     this.rootRef.off();
   }
   render() {
     return (
       <View>
-        <Button onPress={this.addUser} title="Add User" color="blue" />
-        <Button onPress={this.addFriend} title="Add Friend" color="blue" />
+        <Button
+          onPress={this.acceptFriend(
+            "-LCFVZiSV8FFN_sprt2s",
+            "-LCBq7GwsW6LE5SWZRo5"
+          )}
+          title="Add Friend"
+          color="blue"
+        />
       </View>
     );
   }

@@ -16,6 +16,10 @@ export default class User extends Component {
   goToPlaces = () => {
     this.props.navigation.navigate("Places");
   };
+
+  goToHistory = () => {
+    this.props.navigation.navigate("History");
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -38,6 +42,7 @@ export default class User extends Component {
           title="Favorite Places"
           color="blue"
         />
+        <Button onPress={this.goToHistory} title="History" color="blue" />
       </View>
     );
   }

@@ -12,6 +12,9 @@ import arScene from "./arScene";
 import { withNavigation } from 'react-navigation'
 
 class tempScene extends Component {
+  constructor(props){
+    super(props);
+  }
 
   render() {
     return (
@@ -23,7 +26,8 @@ class tempScene extends Component {
 
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
-      this.push(arScene)
+      console.log(this.props);
+      // this.props.sceneNavigator.push(arScene);
     } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
       
     }

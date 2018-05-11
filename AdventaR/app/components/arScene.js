@@ -36,10 +36,10 @@ class HelloWorldSceneAR extends Component {
       places: [],
       longitude: "",
       latitude: "",
-      headingActual: 0,
-      willReset: false,
     };
 
+    this.headingActual = 0;
+    this.willReset = false;
     this.heading = 0;
 
     // bind 'this' to functions
@@ -67,10 +67,8 @@ class HelloWorldSceneAR extends Component {
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
       this.heading = data.heading || data;
-      if(!this.state.headingActual){
-        this.setState({
-          headingActual: this.heading
-        })
+      if(!this.headingActual){
+          this.headingActual = this.heading
       }
     });
     navigator.geolocation.getCurrentPosition(
@@ -175,16 +173,16 @@ class HelloWorldSceneAR extends Component {
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             console.log(polarCoor);
-            console.log('heading actual ', this.state.headingActual);
+            console.log('heading actual ', this.headingActual);
             console.log('heading', this.heading);
-            console.log('polar to cartesian ', polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0]))
+            console.log('polar to cartesian ', polarToCartesian([75, polarCoor.degrees - this.headingActual, 0]))
             console.log('lat then lon, me then place ', parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             return (
               <ViroNode
                 key={place.id}
-                rotation={[0, this.state.headingActual - polarCoor.degrees, 0]}
-                position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
-                <ViroText text={(polarCoor.degrees - this.state.headingActual).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+                rotation={[0, this.headingActual - polarCoor.degrees, 0]}
+                position={polarToCartesian([75, polarCoor.degrees - this.headingActual, 0])}>
+                <ViroText text={(polarCoor.degrees - this.headingActual).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
@@ -209,9 +207,17 @@ class HelloWorldSceneAR extends Component {
 
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
-      if(this.state.willReset){
-        this.pop();
+      // this.resetPlaces();
+      if(willReset){
+        this.props.sceneNavigator.pop();
       }
+      if(!this.headingActual){
+        this.headingActual = this.heading
+      }
+      this.setState({
+        text : ""
+      })
+      this.willReset = true;
     } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
       this.setState({
         text : "Tracking Lost. Please try moving the camera around"

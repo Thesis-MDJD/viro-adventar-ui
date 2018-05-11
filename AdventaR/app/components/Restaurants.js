@@ -97,6 +97,10 @@ export default class Restaurants extends Component {
     this.props.navigation.navigate("Profile");
   };
 
+  goToDevTools = () => {
+    this.props.navigation.navigate("DevTools");
+  };
+
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
@@ -105,7 +109,7 @@ export default class Restaurants extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Button onPress={this.goToDevTools} title="DevTools" color="blue" />
         <Text style={styles.instructions}>{this.state.latitude}</Text>
         <Text style={styles.instructions}>{this.state.longitude}</Text>
         <ScrollView style={list.container}>

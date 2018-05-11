@@ -23,10 +23,8 @@ export default class FavoritePlaces extends Component {
     this.rootRef.on("value", function(snapshot) {
       const values = [];
       for (let key in snapshot.val()) {
-        alert(JSON.stringify(snapshot.val()[key]));
         values.push(snapshot.val()[key]);
       }
-      // alert(JSON.stringify(snapshot));
       self.setState({
         places: values
       });

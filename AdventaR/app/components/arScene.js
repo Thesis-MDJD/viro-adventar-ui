@@ -8,16 +8,15 @@ import {
   ViroARScene,
   ViroText,
   ViroConstants,
-  ViroBox,
   ViroMaterials,
   Viro3DObject,
   ViroAmbientLight,
   ViroUtils,
   ViroNode,
+  ViroSpinner,
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
-import { GOOGLE_API } from "react-native-dotenv";
 import dummyData from "./res/dummyData";
 import { withNavigation } from 'react-navigation'
 
@@ -35,13 +34,14 @@ class HelloWorldSceneAR extends Component {
       places: [],
       longitude: "",
       latitude: "",
-      heading: 0,
-      headingActual: 0,
     };
+
+    this.heading = 0;
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
+    this.cameraHead = 0.1;
   }
 
   touched(id){
@@ -55,7 +55,7 @@ class HelloWorldSceneAR extends Component {
   };
 
   componentDidMount(){
-    ReactNativeHeading.start(1)
+    ReactNativeHeading.start(5)
     .then(didStart => {
       this.setState({
         headingIsSupported: didStart,
@@ -63,15 +63,7 @@ class HelloWorldSceneAR extends Component {
     })
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
-      this.setState({
-        heading: data.heading || data
-      }, () => {
-        if(!this.state.headingActual){
-          this.setState({
-            headingActual: this.state.heading
-          })
-        }
-      });
+      this.heading = data.heading || data;
     });
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -96,7 +88,7 @@ class HelloWorldSceneAR extends Component {
       },
       error => this.setState({ error: error.message }),
       {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         timeout: 200000,
         maximumAge: 1000,
         distanceFilter: 10
@@ -134,25 +126,34 @@ class HelloWorldSceneAR extends Component {
             Math.sin(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1);
     var brng = Math.atan2(y, x);
     
-    return {degrees: (brng * 180 / Math.PI), distance: d};
+    return {degrees: ((brng * 180 / Math.PI) + 360) % 360, distance: d};
   }
 
   render() {
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
+      <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.latitude === "" ? 
-        (<ViroText text={"Initializing AR..."} position={[0, 0, -2]} scale={[0.5, 0.5, 0.5]} />)
-        :
+        {this.state.latitude === "" || (this.state.initialized && this.state.places.length === 0) ? 
+        ( 
+          <ViroNode position={[0, 0, -1]}>
+            <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
+            <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+          </ViroNode>
+        )
+         :
         (this.state.places.map( (place, index) => {
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+            let turn = polarCoor.degrees - this.cameraHead;
             return (
-              <ViroNode key={place.id} rotation={[0, this.state.headingActual - polarCoor.degrees, 0]} position={polarToCartesian([75, polarCoor.degrees - this.state.headingActual, 0])}>
-                <ViroText text={(place.name).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+              <ViroNode
+                key={place.id}
+                rotation={[0, turn * -1, 0]}
+                position={polarToCartesian([75, turn, 0])}>
+                <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
-                  position={[0, -2.5, 0]}
+                  position={[0, -3.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
                   onClick={() => this.touched(place.id)}
                   degrees={polarCoor.degrees}
@@ -173,22 +174,30 @@ class HelloWorldSceneAR extends Component {
   }
 
   _onInitialized(state, reason) {
-    console.log(' update', this.state.headingActual);
     if (state == ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        text : "",
-        headingActual: this.state.heading
-      });
-    } else if (state == ViroConstants.TRACKING_NONE) {
-      console.log('loss of tracking');
+      if(this.cameraHead === 0.1){
+        this.cameraHead = this.heading;
+      }
+
+    } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
+      if(this.state.places.length > 0){
+        this.setState({
+          places: []
+        }, () => {
+          if(this.state.longitude !== ""){
+            this.props.arSceneNavigator.viroAppProps.unmount();
+          }
+        });
+      }
     }
   }
 }
 
+          
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: 'Arial',
-    fontSize: 30,
+    fontFamily: 'Helvetica',
+    fontSize: 20,
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',

@@ -12,31 +12,46 @@ import arScene from "./arScene";
 import {VIRO_KEY} from "react-native-dotenv";
 
 export default class Camera extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      cameraMounted: true
+    }
+
+    this.remount = this.remount.bind(this);
+    this.unmount = this.unmount.bind(this);
+  }
+
+  unmount(){
+    this.setState({
+      cameraMounted: false
+    }, ()=> {
+      setTimeout(this.remount, 1000);
+    })
+  }
+
+  remount(){
+    this.setState({
+      cameraMounted: true
+    })
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <ViroARSceneNavigator
+        {this.state.cameraMounted ? (<ViroARSceneNavigator
           apiKey={VIRO_KEY}
-          initialScene={{ scene: arScene }}
+          ref={((component)=> component).bind(this)}
+          viroAppProps={{unmount: this.unmount}}
+          initialScene={{scene: arScene}}
+          autofocus={false}
           debug={true} // set this to true
-        />
-        {/* <View
-          style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}
-        >
-          <TouchableOpacity
-            onPress={this.takePicture.bind(this)}
-            style={styles.capture}
-          >
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
-        </View> */}
+        />) : <Text style={styles.helloWorldTextStyle}>Tracking lost...</Text>}
       </View>
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

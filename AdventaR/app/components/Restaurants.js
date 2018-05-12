@@ -47,6 +47,23 @@ export default class Restaurants extends Component {
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     );
+    this.watchId = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        this.getPlaces(position.coords.latitude, position.coords.longitude);
+      },
+      error => this.setState({ error: error.message }),
+      {
+        enableHighAccuracy: true,
+        timeout: 200000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
+    );
     this.props.navigation.setParams({ goToCamera: this.goToCamera });
   }
   static navigationOptions = ({ navigation }) => {

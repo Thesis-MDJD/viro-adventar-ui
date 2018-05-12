@@ -1,6 +1,19 @@
 import React from "react";
+<<<<<<< HEAD
 import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+=======
+<<<<<<< HEAD
+import {
+  StackNavigator,
+  SwitchNavigator,
+  TabNavigator
+} from "react-navigation";
+=======
+import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+>>>>>>> implemented navbar with friends and convo
+>>>>>>> implemented navbar with friends and convo
 import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
@@ -10,7 +23,7 @@ import SelectedLocation from './components/SelectedLocation';
 import SearchFriend from './components/SearchFriend';
 
 const AppStack= StackNavigator({
-  SearchFriend: {screen: SearchFriend},
+  // SearchFriend: {screen: SearchFriend},
   Camera: {
     screen: TabNavigator({
       Camera: Camera,
@@ -43,25 +56,11 @@ const AppStack= StackNavigator({
         inactiveTintColor: 'black',
         inactiveBackgroundColor: 'green',
       },
-      {
-        tabBarPosition: "bottom",
-        swipeEnabled: true,
-        tabBarOptions: {
-          style: {
-            backgroundColor: "#f4511e"
-          },
-          labelStyle: {
-            fontSize: 28,
-            fontWeight: "bold",
-            paddingBottom: 10
-          },
-          activeTintColor: "#fff",
-          inactiveTintColor: "#ffa589"
-        }
-      
+
+
     }),
     navigationOptions: {
-      header: null
+      header: null,
     }
   },
     SelectedLocation: {

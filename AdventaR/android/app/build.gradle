@@ -76,6 +76,7 @@ project.ext.react = [
     entryFile: "index.js"
 ]
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -145,9 +146,8 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-vector-icons')
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.facebook.react:react-native:+'
     compile project(':arcore_client') // remove this if AR not required
     compile project(':gvr_common')

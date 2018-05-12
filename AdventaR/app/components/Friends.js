@@ -19,7 +19,6 @@ export default class FavoritePlaces extends Component {
   componentDidMount() {
     const self = this;
     this.rootRef.on("value", function(snapshot) {
-      alert(JSON.stringify(snapshot.val()));
       // const values = [];
       // for (let key in snapshot.val()) {
       //   if (snapshot.val()[key] !== 'Mark') {

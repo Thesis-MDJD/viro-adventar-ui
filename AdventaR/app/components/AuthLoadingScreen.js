@@ -18,12 +18,11 @@ const styles = StyleSheet.create({
 export default class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
-    this._bootstrapAsync();
+    this._checkToken();
   }
 
-  _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
-    console.log(userToken);
+  _checkToken = async () => {
+    const userToken = await AsyncStorage.getItem("userToken");console.log(userToken);
     this.props.navigation.navigate(userToken ? "App" : "Auth");
   };
 

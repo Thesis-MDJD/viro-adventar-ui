@@ -1,16 +1,9 @@
 import * as firebase from "firebase";
-import {
-  FIREBASE_DATABASEURL,
-  FIREBASE_AUTHDOMAIN,
-  FIREBASE_APIKEY,
-  FIREBASE_STORAGEBUCKET
-} from "react-native-dotenv";
+import { FIREBASE_DATABASEURL, FIREBASE_APIKEY } from "react-native-dotenv";
 
 const firebaseConfig = {
   apiKey: FIREBASE_APIKEY,
-  authDomain: FIREBASE_AUTHDOMAIN,
-  databaseURL: FIREBASE_DATABASEURL,
-  storageBucket: FIREBASE_STORAGEBUCKET
+  databaseURL: FIREBASE_DATABASEURL
 };
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);

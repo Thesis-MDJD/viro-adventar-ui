@@ -1,29 +1,29 @@
-import React from 'react';
+import React from "react";
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
   StyleSheet,
-  View,
-} from 'react-native';
+  View
+} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
 
 export default class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
-    this._bootstrapAsync();
+    this._checkToken();
   }
 
-  _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+  _checkToken = async () => {
+    const userToken = await AsyncStorage.getItem("userToken");console.log(userToken);
+    this.props.navigation.navigate(userToken ? "App" : "Auth");
   };
 
   render() {

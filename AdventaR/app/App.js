@@ -43,11 +43,25 @@ const AppStack= StackNavigator({
         inactiveTintColor: 'black',
         inactiveBackgroundColor: 'green',
       },
-
-
+      {
+        tabBarPosition: "bottom",
+        swipeEnabled: true,
+        tabBarOptions: {
+          style: {
+            backgroundColor: "#f4511e"
+          },
+          labelStyle: {
+            fontSize: 28,
+            fontWeight: "bold",
+            paddingBottom: 10
+          },
+          activeTintColor: "#fff",
+          inactiveTintColor: "#ffa589"
+        }
+      
     }),
     navigationOptions: {
-      header: null,
+      header: null
     }
   },
     SelectedLocation: {

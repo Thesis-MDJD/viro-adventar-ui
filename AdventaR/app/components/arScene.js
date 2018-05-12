@@ -38,13 +38,16 @@ class HelloWorldSceneAR extends Component {
       latitude: "",
     };
 
-    this.headingActual = 0;
-    this.willReset = false;
     this.heading = 0;
+    this.placesList = [];
+    this.rotate = 0;
+    this.oldHeading = 0;
+    this.initialized = false;
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
+    // this.popARScene = this.popARScene.bind(this);
   }
 
   touched(id){
@@ -54,11 +57,17 @@ class HelloWorldSceneAR extends Component {
   getPlaces = async (latitude, longitude) => {
     this.setState({
       places: dummyData.businesses
+    }, () => {
+      this.placesList = this.state.places;
     })
   };
 
+  // popARScene() {
+  //   this.props.arSceneNavigator.pop()
+  // }
+
   componentDidMount(){
-    ReactNativeHeading.start(1)
+    ReactNativeHeading.start(2)
     .then(didStart => {
       this.setState({
         headingIsSupported: didStart,
@@ -67,9 +76,6 @@ class HelloWorldSceneAR extends Component {
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
       this.heading = data.heading || data;
-      if(!this.headingActual){
-          this.headingActual = this.heading
-      }
     });
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -135,54 +141,34 @@ class HelloWorldSceneAR extends Component {
     return {degrees: ((brng * 180 / Math.PI) + 360) % 360, distance: d};
   }
 
-  // convertToOrientation = (userDirection, thetaDirection) => {
-  //   let relDiff;
-  //   const absDiff = Math.max((thetaDirection - userDirection), (userDirection - thetaDirection));
-  //   switch (true) {
-  //     case (userDirection > thetaDirection) && (absDiff > 180):
-  //       relDiff = 360 - absDiff;
-  //     break;
-  //     case (userDirection > thetaDirection) && (absDiff < 180):
-  //       relDiff = -(absDiff % 360);
-  //     break;
-  //     case (thetaDirection > userDirection) && (absDiff > 180):
-  //       relDiff = absDiff - 360;
-  //     break;
-  //     case (thetaDirection > userDirection) && (absDiff < 180):
-  //       relDiff = absDiff % 360;
-  //     break;
-  //     default:
-  //       relDiff = absDiff;
-  //     }
-  //   return relDiff;
-  // };
-
   render() {
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
+      <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.text !== "" ? 
+        {this.state.latitude === "" || (this.initialized && this.state.places.length === 0) ? 
         ( 
           <ViroNode position={[0, 0, -2]}>
-            <ViroText text={this.state.text} scale={[0.5, 0.5, 0.5]} />
+            <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
             <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
           </ViroNode>
         )
-        :
+         :
         (this.state.places.map( (place, index) => {
+          this.initialized = true;
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
-            console.log(polarCoor);
-            console.log('heading actual ', this.headingActual);
-            console.log('heading', this.heading);
-            console.log('polar to cartesian ', polarToCartesian([75, polarCoor.degrees - this.headingActual, 0]))
-            console.log('lat then lon, me then place ', parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+            
+            console.log("heading ", this.heading);
+            console.log("polarCoor ", polarCoor.degrees);
+            console.log("rotate ", this.rotate);
+            console.log("oldHeading ", this.oldHeading);
+            console.log("polarCoor.degrees - this.heading + this.rotate ", polarCoor.degrees - this.heading + this.rotate + this.oldHeading);
             return (
               <ViroNode
                 key={place.id}
-                rotation={[0, this.headingActual - polarCoor.degrees, 0]}
-                position={polarToCartesian([75, polarCoor.degrees - this.headingActual, 0])}>
-                <ViroText text={(polarCoor.degrees - this.headingActual).toString()} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+                rotation={[0, this.heading - polarCoor.degrees - this.rotate - this.oldHeading, 0]}
+                position={polarToCartesian([75, polarCoor.degrees - this.heading + this.rotate + this.oldHeading, 0])}>
+                <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
                   position={[0, -2.5, 0]}
@@ -205,22 +191,26 @@ class HelloWorldSceneAR extends Component {
     );
   }
 
-  _onInitialized(state, reason) {
+  async _onInitialized(state, reason) { 
+    console.log('2');
     if (state == ViroConstants.TRACKING_NORMAL) {
-      // this.resetPlaces();
-      if(willReset){
-        this.props.sceneNavigator.pop();
-      }
-      if(!this.headingActual){
-        this.headingActual = this.heading
+      
+      if(this.initialized){
+        let temp = await this.scene.getCameraOrientationAsync();
+        console.log('1 ', temp.forward);
+        this.rotate = (Math.acos(temp.forward[2]/(Math.sqrt(temp.forward[0] ** 2 + temp.forward[1] ** 2 + temp.forward[2] ** 2))) * 180 / Math.PI) + 180;
       }
       this.setState({
-        text : ""
+        places: this.placesList.slice(),
       })
-      this.willReset = true;
     } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
+      // this.state.places.length > 0 && this.popARScene();
+      if(this.initialized){
+        this.oldHeading = this.heading;
+      }
+
       this.setState({
-        text : "Tracking Lost. Please try moving the camera around"
+        places: [],
       })
     }
   }

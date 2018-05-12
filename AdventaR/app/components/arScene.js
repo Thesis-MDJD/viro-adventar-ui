@@ -24,7 +24,7 @@ import { withNavigation } from 'react-navigation'
 const polarToCartesian = ViroUtils.polarToCartesian;
 
 class HelloWorldSceneAR extends Component {
-
+  
   constructor(props) {
     super(props);
 
@@ -43,7 +43,7 @@ class HelloWorldSceneAR extends Component {
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
   }
-
+  
   touched(id){
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
   }

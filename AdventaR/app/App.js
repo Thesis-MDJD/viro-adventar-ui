@@ -46,12 +46,16 @@ const AppStack= StackNavigator({
           inactiveTintColor: "#ffa589"
         }
       }
-    )
+    }),
+    navigationOptions: {
+      header: null
+    }
   },
   SelectedLocation: {
     screen: SelectedLocation
   }
-});
+}
+);
 
 const AuthStack = StackNavigator({ Login: LoginScreen });
 

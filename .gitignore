@@ -127,3 +127,5 @@ buck-out/
 AdventaR/ios/GoogleService-Info.plist
 
 Pods
+
+google-services.json

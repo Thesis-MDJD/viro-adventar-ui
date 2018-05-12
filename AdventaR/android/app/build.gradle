@@ -95,7 +95,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
 
     flavorDimensions "default"
 

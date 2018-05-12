@@ -6,7 +6,6 @@ import {StyleSheet} from 'react-native';
 
 import {
   ViroARScene,
-  ViroCamera,
   ViroText,
   ViroConstants,
   ViroMaterials,
@@ -15,7 +14,6 @@ import {
   ViroUtils,
   ViroNode,
   ViroSpinner,
-  ViroARSceneNavigator,
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
@@ -56,12 +54,8 @@ class HelloWorldSceneAR extends Component {
     })
   };
 
-  // popARScene() {
-  //   this.props.arSceneNavigator.pop()
-  // }
-
   componentDidMount(){
-    ReactNativeHeading.start(2)
+    ReactNativeHeading.start(5)
     .then(didStart => {
       this.setState({
         headingIsSupported: didStart,
@@ -156,10 +150,10 @@ class HelloWorldSceneAR extends Component {
                 key={place.id}
                 rotation={[0, turn * -1, 0]}
                 position={polarToCartesian([75, turn, 0])}>
-                <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
+                <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
-                  position={[0, -2.5, 0]}
+                  position={[0, -3.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
                   onClick={() => this.touched(place.id)}
                   degrees={polarCoor.degrees}

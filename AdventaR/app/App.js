@@ -51,7 +51,8 @@ const AppStack= StackNavigator({
   SelectedLocation: {
     screen: SelectedLocation
   }
-});
+}
+);
 
 const AuthStack = StackNavigator({ Login: LoginScreen });
 

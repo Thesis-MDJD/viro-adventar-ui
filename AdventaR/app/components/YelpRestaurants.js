@@ -19,24 +19,23 @@ export default class YelpRestaurants extends Component {
       places: {}
     };
   }
-  
 
-getPlaces = async (latitude, longitude) => {
-  let myHeaders = new Headers({
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + YELP_API_KEY,
-  });
-  try {
-    const data = await fetch(
-      `https://api.yelp.com/v3/businesses/search?term=restaurant&latitude=${latitude}&longitude=${longitude}&rank_by=distance&limit=50`,
-      { headers: myHeaders }
-    );
-    const results = await data.json();
-    this.setState({ places: results })
-  } catch (error) {
-    console.log("Fetch Error = ", error);
-  }
-};
+  getPlaces = async (latitude, longitude) => {
+    let myHeaders = new Headers({
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + YELP_API_KEY,
+    });
+    try {
+      const data = await fetch(
+        `https://api.yelp.com/v3/businesses/search?term=restaurant&latitude=${latitude}&longitude=${longitude}&rank_by=distance&limit=50`,
+        { headers: myHeaders }
+      );
+      const results = await data.json();
+      this.setState({ places: results })
+    } catch (error) {
+      console.log("Fetch Error = ", error);
+    }
+  };
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(

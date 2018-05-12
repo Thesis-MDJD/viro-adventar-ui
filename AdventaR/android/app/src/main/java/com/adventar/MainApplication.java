@@ -7,11 +7,6 @@ import com.auth0.react.A0Auth0Package;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-
-import com.viromedia.bridge.ReactViroPackage;
-
-import com.viromedia.bridge.ReactViroPackage;
-
 import com.viromedia.bridge.ReactViroPackage;
 import com.facebook.soloader.SoLoader;
 
@@ -19,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 

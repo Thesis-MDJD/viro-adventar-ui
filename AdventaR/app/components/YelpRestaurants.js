@@ -7,6 +7,7 @@ import {
   ScrollView,
   Button
 } from "react-native";
+import { YELP_API_KEY } from 'react-native-dotenv'
 
 export default class YelpRestaurants extends Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 http://462aece4.ngrok.io/
 =======
 http://05706df8.ngrok.io/
@@ -7,3 +8,6 @@ http://05706df8.ngrok.io/
 =======
 http://9e51b65f.ngrok.io/
 >>>>>>> implemented friends list with hard data
+=======
+http://462aece4.ngrok.io/
+>>>>>>> implemented navbar with friends and convo

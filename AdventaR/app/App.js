@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  StackNavigator,
-  SwitchNavigator,
-  TabNavigator
-} from "react-navigation";
+import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
@@ -13,45 +10,48 @@ import SelectedLocation from './components/SelectedLocation';
 import SearchFriend from './components/SearchFriend';
 
 const AppStack= StackNavigator({
-  SearchFriend: {screen: SearchFriend},
+  // SearchFriend: {screen: SearchFriend},
   Camera: {
-    screen: TabNavigator(
-      {
-        Camera: {
-          screen: Camera,
-          navigationOptions: ({ navigation }) => ({
-            title: "Camera"
-          })
+    screen: TabNavigator({
+      Camera: Camera,
+      User: YelpRestaurants,
+      Friend: YelpRestaurants,
+      Convo: YelpRestaurants
+    },
+    {
+      tabBarPosition: 'bottom',
+      swipeEnabled: true,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ focused, tintColor }) => {
+          const { routeName } = navigation.state;
+          let iconName;
+          if (routeName === 'Camera') {
+            iconName = `ios-camera${focused ? '' : '-outline'}`;
+          } else if (routeName === 'User') {
+            iconName = `ios-home${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Friend') {
+            iconName = `ios-people${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Convo') {
+            iconName = `ios-text${focused ? '' : '-outline'}`;
+          }
+          return <Ionicons name={iconName} size={25} color={tintColor} />;
         },
-        YelpRestaurants: {
-          screen: YelpRestaurants,
-          navigationOptions: ({ navigation }) => ({
-            title: "User"
-          })
-        }
+      }),
+      tabBarOptions: {
+        activeTintColor: 'white',
+        activeBackgroundColor: 'green',
+        inactiveTintColor: 'black',
+        inactiveBackgroundColor: 'green',
       },
-      {
-        tabBarPosition: "bottom",
-        swipeEnabled: true,
-        tabBarOptions: {
-          style: {
-            backgroundColor: "#f4511e"
-          },
-          labelStyle: {
-            fontSize: 28,
-            fontWeight: "bold",
-            paddingBottom: 10
-          },
-          activeTintColor: "#fff",
-          inactiveTintColor: "#ffa589"
-        }
-      }
-    )
+    }),
+    navigationOptions: {
+      header: null,
+    }
   },
-  SelectedLocation: {
-    screen: SelectedLocation
+    SelectedLocation: {
+      screen: SelectedLocation
+    }
   }
-}
 );
 
 const AuthStack = StackNavigator({ Login: LoginScreen });

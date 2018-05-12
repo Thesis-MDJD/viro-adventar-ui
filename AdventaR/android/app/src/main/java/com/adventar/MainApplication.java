@@ -3,6 +3,7 @@ package com.adventar;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.auth0.react.A0Auth0Package;
 import com.facebook.react.ReactNativeHost;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
         new ReactNativeHeadingPackage(),
         new MainReactPackage(),
+            new VectorIconsPackage(),
             new RNFirebasePackage(),
         new A0Auth0Package(),
         new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))

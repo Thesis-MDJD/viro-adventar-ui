@@ -39,15 +39,11 @@ class HelloWorldSceneAR extends Component {
     };
 
     this.heading = 0;
-    this.placesList = [];
-    this.rotate = 0;
-    this.oldHeading = 0;
-    this.initialized = false;
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
-    // this.popARScene = this.popARScene.bind(this);
+    this.cameraHead = 0.1;
   }
 
   touched(id){
@@ -57,8 +53,6 @@ class HelloWorldSceneAR extends Component {
   getPlaces = async (latitude, longitude) => {
     this.setState({
       places: dummyData.businesses
-    }, () => {
-      this.placesList = this.state.places;
     })
   };
 
@@ -145,29 +139,23 @@ class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.latitude === "" || (this.initialized && this.state.places.length === 0) ? 
+        {this.state.latitude === "" || (this.state.initialized && this.state.places.length === 0) ? 
         ( 
-          <ViroNode position={[0, 0, -2]}>
+          <ViroNode position={[0, 0, -1]}>
             <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
             <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
           </ViroNode>
         )
          :
         (this.state.places.map( (place, index) => {
-          this.initialized = true;
           if(index < 20){
             let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
-            
-            console.log("heading ", this.heading);
-            console.log("polarCoor ", polarCoor.degrees);
-            console.log("rotate ", this.rotate);
-            console.log("oldHeading ", this.oldHeading);
-            console.log("polarCoor.degrees - this.heading + this.rotate ", polarCoor.degrees - this.heading + this.rotate + this.oldHeading);
+            let turn = polarCoor.degrees - this.cameraHead;
             return (
               <ViroNode
                 key={place.id}
-                rotation={[0, this.heading - polarCoor.degrees - this.rotate - this.oldHeading, 0]}
-                position={polarToCartesian([75, polarCoor.degrees - this.heading + this.rotate + this.oldHeading, 0])}>
+                rotation={[0, turn * -1, 0]}
+                position={polarToCartesian([75, turn, 0])}>
                 <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 2.5, 0]} style={styles.helloWorldTextStyle} />
                 <Viro3DObject source={require('./res/model.vrx')}
                   rotation={[90, 0, 90]}
@@ -191,31 +179,27 @@ class HelloWorldSceneAR extends Component {
     );
   }
 
-  async _onInitialized(state, reason) { 
-    console.log('2');
+  _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
-      
-      if(this.initialized){
-        let temp = await this.scene.getCameraOrientationAsync();
-        console.log('1 ', temp.forward);
-        this.rotate = (Math.acos(temp.forward[2]/(Math.sqrt(temp.forward[0] ** 2 + temp.forward[1] ** 2 + temp.forward[2] ** 2))) * 180 / Math.PI) + 180;
-      }
-      this.setState({
-        places: this.placesList.slice(),
-      })
-    } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
-      // this.state.places.length > 0 && this.popARScene();
-      if(this.initialized){
-        this.oldHeading = this.heading;
+      if(this.cameraHead === 0.1){
+        this.cameraHead = this.heading;
       }
 
-      this.setState({
-        places: [],
-      })
+    } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
+      if(this.state.places.length > 0){
+        this.setState({
+          places: []
+        }, () => {
+          if(this.state.longitude !== ""){
+            this.props.arSceneNavigator.viroAppProps.unmount();
+          }
+        });
+      }
     }
   }
 }
 
+          
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Helvetica',

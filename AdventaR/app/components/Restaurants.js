@@ -7,7 +7,6 @@ import {
   ScrollView,
   Button
 } from "react-native";
-import { GOOGLE_API } from "react-native-dotenv";
 
 export default class Restaurants extends Component {
   constructor(props) {
@@ -21,17 +20,17 @@ export default class Restaurants extends Component {
   }
 
   getPlaces = async (latitude, longitude) => {
-    try {
-      const data = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${GOOGLE_API}`
-      );
-      const { results } = await data.json();
-      this.setState({
-        places: results
-      });
-    } catch (error) {
-      console.log("Fetch Error = ", error);
-    }
+    // try {
+    //   const data = await fetch(
+    //     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${GOOGLE_API}`
+    //   );
+    //   const { results } = await data.json();
+    //   this.setState({
+    //     places: results
+    //   });
+    // } catch (error) {
+    //   console.log("Fetch Error = ", error);
+    // }
   };
 
   componentDidMount() {

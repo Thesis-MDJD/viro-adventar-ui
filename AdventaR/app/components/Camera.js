@@ -12,8 +12,6 @@ import arScene from "./arScene";
 import {VIRO_KEY} from "react-native-dotenv";
 
 export default class Camera extends Component {
-<<<<<<< HEAD
-=======
   constructor(props){
     super(props);
 
@@ -38,22 +36,10 @@ export default class Camera extends Component {
       cameraMounted: true
     })
   }
-    // this.pushScene = this.pushScene.bind(this);
-    // this.popScene = this.popScene.bind(this);
-
-  // pushScene(scene){
-  //   this.nav.push({scene: arScene});
-  // }
-
-  // popScene(){
-  //   this.nav.pop();
-  // }
->>>>>>> forced unmounted camera when tracking is lost
 
   render() {
     return (
       <View style={styles.container}>
-        {/* {this.state.cameraMounted ? */}
         {this.state.cameraMounted ? (<ViroARSceneNavigator
           apiKey={VIRO_KEY}
           ref={((component)=> component).bind(this)}
@@ -62,22 +48,10 @@ export default class Camera extends Component {
           autofocus={false}
           debug={true} // set this to true
         />) : <Text style={styles.helloWorldTextStyle}>Tracking lost...</Text>}
-        {/* <View
-          style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}
-        >
-          <TouchableOpacity
-            onPress={this.takePicture.bind(this)}
-            style={styles.capture}
-          >
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

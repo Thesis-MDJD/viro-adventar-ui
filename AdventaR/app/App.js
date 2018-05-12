@@ -44,7 +44,7 @@ const AppStack= StackNavigator({
       },
     }),
     navigationOptions: {
-      header: null
+      header: null,
     }
   },
     SelectedLocation: {

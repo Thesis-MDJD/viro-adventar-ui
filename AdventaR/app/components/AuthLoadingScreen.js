@@ -22,7 +22,7 @@ export default class AuthLoadingScreen extends React.Component {
   }
 
   _checkToken = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");console.log(userToken);
+    const userToken = await AsyncStorage.getItem("userToken");
     this.props.navigation.navigate(userToken ? "App" : "Auth");
   };
 

@@ -1,19 +1,6 @@
 import React from "react";
-<<<<<<< HEAD
 import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-=======
-<<<<<<< HEAD
-import {
-  StackNavigator,
-  SwitchNavigator,
-  TabNavigator
-} from "react-navigation";
-=======
-import { StackNavigator, SwitchNavigator, TabNavigator } from "react-navigation";
-import Ionicons from 'react-native-vector-icons/Ionicons';
->>>>>>> implemented navbar with friends and convo
->>>>>>> implemented navbar with friends and convo
 import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
@@ -56,8 +43,6 @@ const AppStack= StackNavigator({
         inactiveTintColor: 'black',
         inactiveBackgroundColor: 'green',
       },
-
-
     }),
     navigationOptions: {
       header: null,

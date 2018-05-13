@@ -22,23 +22,20 @@ export default class LoginScreen extends Component {
     this._onLogin();
   }
 
-  _onLogin = () => {
-    const component = this;
-    auth0.webAuth
-      .authorize({
+  _onLogin = async () => {
+    try {
+      const credentials = await auth0.webAuth.authorize({
         scope: 'openid profile',
         audience: 'https://' + AUTH_DOMAIN + '/userinfo'
-      })
-      .then(credentials => {
-        component._signInAsync(credentials.accessToken);
-      })
-      .catch(error => console.log('login failed', error));
-
-  };
-
-  _signInAsync = async (token) => {
-    await AsyncStorage.setItem('userToken', token);
-    this.props.navigation.navigate('App');
+      });
+      const user = await auth0.auth.userInfo({token: credentials.accessToken});
+      await AsyncStorage.setItem('userToken', credentials.idToken);
+      await AsyncStorage.setItem('username', user.nickname);
+      await AsyncStorage.setItem('email', user.name);
+      this.props.navigation.navigate('App');
+    } catch (error) {
+      console.log('login failed', error);
+    }
   };
 
   render() {

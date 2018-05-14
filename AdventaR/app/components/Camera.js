@@ -11,6 +11,7 @@ import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
 import dummyData from "./res/dummyData";
 import {VIRO_KEY} from "react-native-dotenv";
+import getDegreesDistance from "./util/getDegreesDistance";
 
 export default class Camera extends Component {
   constructor(props){
@@ -42,8 +43,11 @@ export default class Camera extends Component {
   }
 
   getPlaces = async (latitude, longitude) => {
+    console.log("GET PLACES WAS CALLED");
     this.setState({
-      places: dummyData.businesses
+      places: dummyData.businesses,
+      previousLatitude:latitude,
+      previousLongitude: longitude,
     });
   };
 
@@ -53,13 +57,14 @@ export default class Camera extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          error: null
+          error: null,
         });
         this.getPlaces(position.coords.latitude, position.coords.longitude);
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
     );
+
     this.watchId = navigator.geolocation.watchPosition(
       position => {
         this.setState({
@@ -67,7 +72,10 @@ export default class Camera extends Component {
           longitude: position.coords.longitude,
           error: null
         });
-        this.getPlaces(position.coords.latitude, position.coords.longitude);
+
+        if(position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000){
+          this.getPlaces(position.coords.latitude, position.coords.longitude);
+        }
       },
       error => this.setState({ error: error.message }),
       {
@@ -86,14 +94,17 @@ export default class Camera extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.cameraMounted ? (<ViroARSceneNavigator
+        {this.state.cameraMounted ? (
+        <ViroARSceneNavigator
           apiKey={VIRO_KEY}
           ref={((component)=> component).bind(this)}
           viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
           initialScene={{scene: arScene}}
           autofocus={false}
           debug={true} // set this to true
-        />) : <Text style={styles.helloWorldTextStyle}>Tracking lost...</Text>}
+        />) 
+        : 
+        <Text style={styles.helloWorldTextStyle}>Tracking lost...</Text>}
       </View>
     );
   }

@@ -92,9 +92,6 @@ class HelloWorldSceneAR extends Component {
           if(index < 20){
             let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             let turn = polarCoor.degrees - this.cameraHead;
-            //do a check
-            //hidden or not render?
-            //Switch by rendering new or unhiding?
             return (
               <ViroNode
                 key={place.id}

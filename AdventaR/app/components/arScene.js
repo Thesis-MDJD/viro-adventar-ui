@@ -155,10 +155,7 @@ class HelloWorldSceneAR extends Component {
          :
         (places.map( (place, index) => {
           if(index < 20){
-            let turn = polarCoor.degrees - this.cameraHead;
-            //do a check
-            //hidden or not render?
-            //Switch by rendering new or unhiding?
+            let turn = place.polarCoor.degrees - this.cameraHead;
             return (
               <ViroNode
                 key={place.id}
@@ -170,7 +167,6 @@ class HelloWorldSceneAR extends Component {
                   position={[0, -3.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
                   onClick={() => this.touched(place.id)}
-                  degrees={polarCoor.degrees}
                   type="VRX"
                   animation={{name:'Take 001',
                               run:true,

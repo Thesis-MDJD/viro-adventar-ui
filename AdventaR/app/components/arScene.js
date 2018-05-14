@@ -37,11 +37,11 @@ class HelloWorldSceneAR extends Component {
     };
 
     this.heading = 0;
+    this.cameraHead = 0.1;
 
     // bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
-    this.cameraHead = 0.1;
   }
 
   touched(id){
@@ -130,6 +130,18 @@ class HelloWorldSceneAR extends Component {
   }
 
   render() {
+    let places = this.state.places.map( (place, index, array) => {
+      polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+      let returnedObject = Object.assign({ polarCoor, locationsBehind: [] }, place)
+      for(let i = 0; i < index, i++){
+        if(polarCoor.degrees > array[i].polarCoor.degrees - 5 && polarCoor.degrees < array[i].polarCoor.degrees + 5 ){
+          array[i].locationsBehind.push(places);
+          return;
+        }
+      }
+      return returnedObject;
+    });
+
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
@@ -141,10 +153,12 @@ class HelloWorldSceneAR extends Component {
           </ViroNode>
         )
          :
-        (this.state.places.map( (place, index) => {
+        (places.map( (place, index) => {
           if(index < 20){
-            let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             let turn = polarCoor.degrees - this.cameraHead;
+            //do a check
+            //hidden or not render?
+            //Switch by rendering new or unhiding?
             return (
               <ViroNode
                 key={place.id}
@@ -162,6 +176,7 @@ class HelloWorldSceneAR extends Component {
                               run:true,
                               loop:true}}
                 />
+                  {/*some image with drop down*/}
               </ViroNode>
             )
           } else {

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-import React, { Component, Text } from 'react';
+import React, { Component, Text } from "react";
 
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from "react-native";
 
 import {
   ViroARScene,
@@ -14,10 +14,11 @@ import {
   ViroUtils,
   ViroNode,
   ViroSpinner,
-} from 'react-viro';
-import { DeviceEventEmitter, Platform } from 'react-native';
-import ReactNativeHeading from 'react-native-heading';
-import { withNavigation } from 'react-navigation'
+} from "react-viro";
+import { DeviceEventEmitter, Platform } from "react-native";
+import ReactNativeHeading from "react-native-heading";
+import { withNavigation } from "react-navigation";
+import getDegreesDistance from "./util/getDegreesDistance";
 
 const polarToCartesian = ViroUtils.polarToCartesian;
 
@@ -39,7 +40,7 @@ class HelloWorldSceneAR extends Component {
     this.heading = 0;
     this.cameraHead = 0.1;
 
-    // bind 'this' to functions
+    // bind "this" to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
   }
@@ -48,13 +49,12 @@ class HelloWorldSceneAR extends Component {
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    this.setState({
+  static getDerivedStateFromProps(nextProps, prevState){
+    return Object.assign(prevState, {
       places: nextProps.arSceneNavigator.viroAppProps.places,
       longitude: nextProps.arSceneNavigator.viroAppProps.longitude,
       latitude: nextProps.arSceneNavigator.viroAppProps.latitude,
-    })
+    });
   }
 
   componentDidMount(){
@@ -65,44 +65,19 @@ class HelloWorldSceneAR extends Component {
       });
     })
     
-    DeviceEventEmitter.addListener('headingUpdated', data => {
+    DeviceEventEmitter.addListener("headingUpdated", data => {
       this.heading = data.heading || data;
     });
   }
 
   componentWillUnmount() {
     ReactNativeHeading.stop();
-    DeviceEventEmitter.removeAllListeners('headingUpdated');
-  }
-
-  getDegreesDistance (lat1, lat2, lon1, lon2) {
-    var R = 6371 * 1000; // Radius of the earth in m
-
-    var dLat = (lat2-lat1) * Math.PI / 180;  // Javascript functions in radians
-    var dLon = (lon2-lon1) * Math.PI / 180;
-    
-    lat1 = lat1 * Math.PI / 180;
-    lat2 = lat2 * Math.PI / 180;
-    lon1 = lon1 * Math.PI / 180;
-    lon2 = lon2 * Math.PI / 180;
-    
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat1) * Math.cos(lat2) *
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c; // Distance in m
-
-    var y = Math.sin(lon2-lon1) * Math.cos(lat2);
-    var x = Math.cos(lat1)*Math.sin(lat2) -
-            Math.sin(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1);
-    var brng = Math.atan2(y, x);
-    
-    return {degrees: ((brng * 180 / Math.PI) + 360) % 360, distance: d};
+    DeviceEventEmitter.removeAllListeners("headingUpdated");
   }
 
   render() {
     let places = this.state.places.map( (place, index, array) => {
-      let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+      let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
       let returnedObject = Object.assign({ polarCoor, locationsBehind: [] }, place)
       for(let i = 0; i < index; i++){
         if(polarCoor.degrees > array[i].polarCoor.degrees - 5 && polarCoor.degrees < array[i].polarCoor.degrees + 5 ){
@@ -112,6 +87,7 @@ class HelloWorldSceneAR extends Component {
       }
       return returnedObject;
     });
+
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
@@ -119,7 +95,7 @@ class HelloWorldSceneAR extends Component {
         ( 
           <ViroNode position={[0, 0, -1]}>
             <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
-            <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+            <ViroSpinner type="Light" scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
           </ViroNode>
         )
          :
@@ -132,13 +108,13 @@ class HelloWorldSceneAR extends Component {
                 rotation={[0, turn * -1, 0]}
                 position={polarToCartesian([75, turn, 0])}>
                 <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
-                <Viro3DObject source={require('./res/model.vrx')}
+                <Viro3DObject source={require("./res/model.vrx")}
                   rotation={[90, 0, 90]}
                   position={[0, -3.5, 0]}
                   scale={[2.5, 2.5, 2.5]}
                   onClick={() => this.touched(place.id)}
                   type="VRX"
-                  animation={{name:'Take 001',
+                  animation={{name:"Take 001",
                               run:true,
                               loop:true}}
                 />
@@ -181,17 +157,17 @@ class HelloWorldSceneAR extends Component {
           
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: 'Helvetica',
+    fontFamily: "Helvetica",
     fontSize: 20,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    color: "#ffffff",
+    textAlignVertical: "center",
+    textAlign: "center",
   },
 });
 
 ViroMaterials.createMaterials({
   grid: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
+    diffuseTexture: require("./res/grid_bg.jpg"),
   },
 });
 

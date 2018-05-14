@@ -17,7 +17,6 @@ import {
 } from 'react-viro';
 import { DeviceEventEmitter, Platform } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
-import dummyData from "./res/dummyData";
 import { withNavigation } from 'react-navigation'
 
 const polarToCartesian = ViroUtils.polarToCartesian;
@@ -31,9 +30,10 @@ class HelloWorldSceneAR extends Component {
     this.state = {
       text : "Initializing AR...",
       headingIsSupported: 0,
-      places: [],
-      longitude: "",
-      latitude: "",
+      places: this.props.arSceneNavigator.viroAppProps.places,
+      longitude: this.props.arSceneNavigator.viroAppProps.longitude,
+      latitude: this.props.arSceneNavigator.viroAppProps.latitude,
+      initialized: false
     };
 
     this.heading = 0;
@@ -48,60 +48,31 @@ class HelloWorldSceneAR extends Component {
     this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
   }
 
-  getPlaces = async (latitude, longitude) => {
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
     this.setState({
-      places: dummyData.businesses
+      places: nextProps.arSceneNavigator.viroAppProps.places,
+      longitude: nextProps.arSceneNavigator.viroAppProps.longitude,
+      latitude: nextProps.arSceneNavigator.viroAppProps.latitude,
     })
-  };
+  }
 
   componentDidMount(){
     ReactNativeHeading.start(5)
     .then(didStart => {
       this.setState({
         headingIsSupported: didStart,
-      })
+      });
     })
     
     DeviceEventEmitter.addListener('headingUpdated', data => {
       this.heading = data.heading || data;
     });
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        });
-        this.getPlaces(position.coords.latitude, position.coords.longitude);
-      },
-      error => this.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
-    );
-    this.watchId = navigator.geolocation.watchPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        });
-        this.getPlaces(position.coords.latitude, position.coords.longitude);
-      },
-      error => this.setState({ error: error.message }),
-      {
-        enableHighAccuracy: false,
-        timeout: 200000,
-        maximumAge: 1000,
-        distanceFilter: 10
-      }
-    );
-
-    }
+  }
 
   componentWillUnmount() {
     ReactNativeHeading.stop();
     DeviceEventEmitter.removeAllListeners('headingUpdated');
-    
-    navigator.geolocation.clearWatch(this.watchId);
   }
 
   getDegreesDistance (lat1, lat2, lon1, lon2) {
@@ -119,7 +90,7 @@ class HelloWorldSceneAR extends Component {
             Math.cos(lat1) * Math.cos(lat2) *
             Math.sin(dLon/2) * Math.sin(dLon/2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c // Distance in m
+    var d = R * c; // Distance in m
 
     var y = Math.sin(lon2-lon1) * Math.cos(lat2);
     var x = Math.cos(lat1)*Math.sin(lat2) -
@@ -131,9 +102,9 @@ class HelloWorldSceneAR extends Component {
 
   render() {
     let places = this.state.places.map( (place, index, array) => {
-      polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+      let polarCoor = this.getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
       let returnedObject = Object.assign({ polarCoor, locationsBehind: [] }, place)
-      for(let i = 0; i < index, i++){
+      for(let i = 0; i < index; i++){
         if(polarCoor.degrees > array[i].polarCoor.degrees - 5 && polarCoor.degrees < array[i].polarCoor.degrees + 5 ){
           array[i].locationsBehind.push(places);
           return;
@@ -141,11 +112,10 @@ class HelloWorldSceneAR extends Component {
       }
       return returnedObject;
     });
-
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.latitude === "" || (this.state.initialized && this.state.places.length === 0) ? 
+        {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ? 
         ( 
           <ViroNode position={[0, 0, -1]}>
             <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
@@ -190,8 +160,12 @@ class HelloWorldSceneAR extends Component {
         this.cameraHead = this.heading;
       }
 
+      this.setState({
+        initialized: true
+      })
+
     } else if (state == ViroConstants.TRACKING_UNAVAILABLE) {
-      if(this.state.places.length > 0){
+      if(this.state.initialized){
         this.setState({
           places: []
         }, () => {

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
+import dummyData from "./res/dummyData";
 import {VIRO_KEY} from "react-native-dotenv";
 
 export default class Camera extends Component {
@@ -16,7 +17,10 @@ export default class Camera extends Component {
     super(props);
 
     this.state = {
-      cameraMounted: true
+      cameraMounted: true,
+      latitude: "",
+      longitude: "",
+      places: [],
     }
 
     this.remount = this.remount.bind(this);
@@ -37,13 +41,55 @@ export default class Camera extends Component {
     })
   }
 
+  getPlaces = async (latitude, longitude) => {
+    this.setState({
+      places: dummyData.businesses
+    });
+  };
+
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        this.getPlaces(position.coords.latitude, position.coords.longitude);
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
+    );
+    this.watchId = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        this.getPlaces(position.coords.latitude, position.coords.longitude);
+      },
+      error => this.setState({ error: error.message }),
+      {
+        enableHighAccuracy: false,
+        timeout: 200000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
+    );
+  }
+
+  componentWillUnmount(){
+    navigator.geolocation.clearWatch(this.watchId);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         {this.state.cameraMounted ? (<ViroARSceneNavigator
           apiKey={VIRO_KEY}
           ref={((component)=> component).bind(this)}
-          viroAppProps={{unmount: this.unmount}}
+          viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
           initialScene={{scene: arScene}}
           autofocus={false}
           debug={true} // set this to true

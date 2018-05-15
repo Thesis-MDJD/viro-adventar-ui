@@ -88,7 +88,7 @@ class HelloWorldSceneAR extends Component {
           </ViroNode>
         )
          :
-        (places.map( (place, index) => {
+        (this.state.places.map( (place, index) => {
           if(index < 20){
             let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             let turn = polarCoor.degrees - this.cameraHead;

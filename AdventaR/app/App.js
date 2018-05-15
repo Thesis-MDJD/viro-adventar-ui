@@ -15,7 +15,7 @@ const AppStack= StackNavigator({
     screen: TabNavigator({
       Camera: Camera,
       User: YelpRestaurants,
-      Friend: YelpRestaurants,
+      Friend: SearchFriend,
       Convo: YelpRestaurants
     },
     {

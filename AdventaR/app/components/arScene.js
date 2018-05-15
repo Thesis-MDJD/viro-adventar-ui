@@ -9,6 +9,7 @@ import {
   ViroText,
   ViroConstants,
   ViroMaterials,
+  ViroAnimations,
   Viro3DObject,
   ViroAmbientLight,
   ViroUtils,
@@ -151,16 +152,15 @@ class HelloWorldSceneAR extends Component {
                 rotation={[0, turn * -1, 0]}
                 position={polarToCartesian([75, turn, 0])}>
                 <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
-                <Viro3DObject source={require('./res/model.vrx')}
-                  rotation={[90, 0, 90]}
+                <Viro3DObject source={require('./res/OrangePeel_v4.vrx')}
+                  rotation={[0, 0, 0]}
                   position={[0, -3.5, 0]}
-                  scale={[2.5, 2.5, 2.5]}
+                  scale={[0.1, 0.1, 0.1]}
                   onClick={() => this.touched(place.id)}
                   degrees={polarCoor.degrees}
                   type="VRX"
-                  animation={{name:'Take 001',
-                              run:true,
-                              loop:true}}
+                  materials={['orangeColor']}
+                  animation={{name: 'animateMarker', run: true, loop: true}}
                 />
               </ViroNode>
             )
@@ -204,10 +204,13 @@ var styles = StyleSheet.create({
   },
 });
 
-ViroMaterials.createMaterials({
-  grid: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
-  },
-});
+ViroAnimations.registerAnimations({
+  animateMarker:{
+    properties: {rotateY: '+=45'},
+    duration: 1000
+  }
+})
+
+
 
 export default withNavigation(HelloWorldSceneAR);

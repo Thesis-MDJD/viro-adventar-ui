@@ -1,13 +1,1 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-http://462aece4.ngrok.io/
-=======
-http://05706df8.ngrok.io/
->>>>>>> in progress SearchFriend
-=======
-http://9e51b65f.ngrok.io/
->>>>>>> implemented friends list with hard data
-=======
-http://462aece4.ngrok.io/
->>>>>>> implemented navbar with friends and convo
+http://a09b39d9.ngrok.io/

@@ -14,6 +14,7 @@ import SelectedLocation from "./components/SelectedLocation";
 import Profile from "./components/Profile";
 import DevTools from "./components/DevTools";
 import SearchFriend from "./components/SearchFriend";
+import OtherProfile from "./components/OtherProfile";
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(
@@ -56,6 +57,9 @@ const AppStack = StackNavigator({
   },
   SelectedLocation: {
     screen: SelectedLocation
+  },
+  otherProfile: {
+    screen: OtherProfile
   }
 });
 

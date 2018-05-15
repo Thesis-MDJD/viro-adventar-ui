@@ -11,7 +11,7 @@ import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
 import dummyData from "./res/dummyData";
 import {VIRO_KEY} from "react-native-dotenv";
-import getDegreesDistance from "./util/getDegreesDistance";
+import getDegreesDistance from "./util/getDegreesDistance.js";
 
 export default class Camera extends Component {
   constructor(props){

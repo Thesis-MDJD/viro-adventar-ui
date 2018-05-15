@@ -76,17 +76,6 @@ class HelloWorldSceneAR extends Component {
   }
 
   render() {
-    let places = this.state.places.map( (place, index, array) => {
-      let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
-      let returnedObject = Object.assign({ polarCoor, locationsBehind: [] }, place)
-      for(let i = 0; i < index; i++){
-        if(polarCoor.degrees > array[i].polarCoor.degrees - 5 && polarCoor.degrees < array[i].polarCoor.degrees + 5 ){
-          array[i].locationsBehind.push(places);
-          return;
-        }
-      }
-      return returnedObject;
-    });
 
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized} displayPointCloud={true}>
@@ -99,9 +88,10 @@ class HelloWorldSceneAR extends Component {
           </ViroNode>
         )
          :
-        (places.map( (place, index) => {
+        (this.state.places.map( (place, index) => {
           if(index < 20){
-            let turn = place.polarCoor.degrees - this.cameraHead;
+            let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
+            let turn = polarCoor.degrees - this.cameraHead;
             return (
               <ViroNode
                 key={place.id}

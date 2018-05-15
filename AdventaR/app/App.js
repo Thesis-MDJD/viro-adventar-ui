@@ -5,7 +5,6 @@ import {
   TabNavigator
 } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
 import AuthLoadingScreen from "./components/AuthLoadingScreen";
@@ -75,5 +74,3 @@ export default SwitchNavigator({
   App: AppStack,
   Auth: AuthStack
 });
-
-//rebase

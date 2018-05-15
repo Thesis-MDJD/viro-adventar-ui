@@ -1,12 +1,49 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, Image, Button } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Button,
+  AsyncStorage
+} from "react-native";
+import { firebaseApp } from "./FireBase";
 
 export default class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: "",
       username: "Mark"
     };
+    //Database
+    this.rootRef = firebaseApp
+      .database()
+      .ref()
+      .child("Features");
+    //Load Profile
+  }
+
+  // getUserProfile = async () => {
+  //   const self = this;
+  //   try {
+  //     const username = await AsyncStorage.getItem("username");
+  //     const email = await AsyncStorage.getItem("email");
+  //     const userId = self.rootRef
+  //       .child("Users")
+  //       .orderByKey("username")
+  //       .equalTo(username);
+  //     alert(JSON.stringify(userId));
+  //     userId.once("value", snap => {
+  //       alert(JSON.stringify(snap.val()));
+  //     });
+  //   } catch (error) {
+  //     alert("error", JSON.stringify(error));
+  //     console.log("Profile Fetch Error: ", error);
+  //   }
+  // };
+  componentDidMount() {
+    // this.getUserProfile();
   }
 
   goToFriends = () => {
@@ -19,6 +56,11 @@ export default class User extends Component {
 
   goToHistory = () => {
     this.props.navigation.navigate("History");
+  };
+
+  onLogOutPress = async () => {
+    await AsyncStorage.removeItem("userToken");
+    this.props.navigation.navigate("Auth");
   };
   render() {
     return (
@@ -43,6 +85,7 @@ export default class User extends Component {
           color="blue"
         />
         <Button onPress={this.goToHistory} title="History" color="blue" />
+        <Button onPress={this.onLogOutPress} title="Log Out" color="blue" />
       </View>
     );
   }

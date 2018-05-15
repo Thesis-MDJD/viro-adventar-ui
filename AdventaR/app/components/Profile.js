@@ -13,8 +13,9 @@ export default class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "",
-      username: "Mark"
+      username: "",
+      dbId: "",
+      email: ""
     };
     //Database
     this.rootRef = firebaseApp
@@ -24,26 +25,24 @@ export default class User extends Component {
     //Load Profile
   }
 
-  // getUserProfile = async () => {
-  //   const self = this;
-  //   try {
-  //     const username = await AsyncStorage.getItem("username");
-  //     const email = await AsyncStorage.getItem("email");
-  //     const userId = self.rootRef
-  //       .child("Users")
-  //       .orderByKey("username")
-  //       .equalTo(username);
-  //     alert(JSON.stringify(userId));
-  //     userId.once("value", snap => {
-  //       alert(JSON.stringify(snap.val()));
-  //     });
-  //   } catch (error) {
-  //     alert("error", JSON.stringify(error));
-  //     console.log("Profile Fetch Error: ", error);
-  //   }
-  // };
+  getUserProfile = async () => {
+    const self = this;
+    try {
+      const username = await AsyncStorage.getItem("username");
+      const email = await AsyncStorage.getItem("email");
+      const userId = await AsyncStorage.getItem("dbId");
+      this.setState({
+        username,
+        dbId: userId,
+        email
+      });
+    } catch (error) {
+      alert("error", JSON.stringify(error));
+      console.log("Profile Fetch Error: ", error);
+    }
+  };
   componentDidMount() {
-    // this.getUserProfile();
+    this.getUserProfile();
   }
 
   goToFriends = () => {

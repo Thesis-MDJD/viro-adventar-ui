@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, FlatList} from 'react-native';
 import { SearchBar, ListItem, List } from 'react-native-elements'

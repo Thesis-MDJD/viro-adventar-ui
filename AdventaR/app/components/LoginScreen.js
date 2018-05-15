@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
       const dbId = "";
       const userId = this.rootRef
         .child(`Users`)
-        .orderByChild("name")
+        .orderByChild("username")
         .equalTo(user.nickname);
       userId.once("value", async snap => {
         let a = snap.exists();

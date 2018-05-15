@@ -13,6 +13,7 @@ import YelpRestaurants from "./components/YelpRestaurants";
 import SelectedLocation from "./components/SelectedLocation";
 import Profile from "./components/Profile";
 import DevTools from "./components/DevTools";
+import SearchFriend from "./components/SearchFriend";
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(

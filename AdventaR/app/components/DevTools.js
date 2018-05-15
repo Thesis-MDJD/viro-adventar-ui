@@ -223,11 +223,8 @@ export default class DevTools extends Component {
     return (
       <View>
         <Button
-          onPress={this.acceptFriend(
-            "-LCFVZiSV8FFN_sprt2s",
-            "-LCBq7GwsW6LE5SWZRo5"
-          )}
-          title="Add Friend"
+          onPress={this.addUser("Mark", "Mark@gmail.com", "default")}
+          title="Add User"
           color="blue"
         />
       </View>

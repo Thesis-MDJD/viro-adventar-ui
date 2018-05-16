@@ -21,7 +21,8 @@ import { REST_SERVER_IP } from "react-native-dotenv";
        name: '',
        data: {},
        restaurantId: this.props.navigation.state.params.restaurantId,
-      //  updateFavoritedLocation: this.props.navigation.state.params.updateFavoritedLocation
+       updateFavoritedLocations: this.props.navigation.state.params.updateFavoritedLocations,
+       updateCheckedInLocations: this.props.navigation.state.params.updateCheckedInLocations
      }
    };
 
@@ -87,7 +88,8 @@ import { REST_SERVER_IP } from "react-native-dotenv";
               hours={info.hours}
               yelpId={info.id}
               photo={info.photos[0]}
-              // update={this.state.updateFavoritedLocation}
+              updateFavorite={this.state.updateFavoritedLocations}
+              updateCheckedIn={this.state.updateCheckedInLocations}
               />: null}          
           </View>
 

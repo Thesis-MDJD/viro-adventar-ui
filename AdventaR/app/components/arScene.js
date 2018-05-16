@@ -2,8 +2,6 @@
 
 import React, { Component, Text } from "react";
 
-import {StyleSheet} from "react-native";
-
 import {
   ViroARScene,
   ViroText,
@@ -17,7 +15,7 @@ import {
   ViroSpinner,
 } from "react-viro";
 import { firebaseApp } from './FireBase';
-import { DeviceEventEmitter, Platform, AsyncStorage } from "react-native";
+import { DeviceEventEmitter, Platform, AsyncStorage,  StyleSheet} from "react-native";
 import ReactNativeHeading from "react-native-heading";
 import { withNavigation } from "react-navigation";
 import getDegreesDistance from "./util/getDegreesDistance";
@@ -38,6 +36,7 @@ class HelloWorldSceneAR extends Component {
       latitude: this.props.arSceneNavigator.viroAppProps.latitude,
       initialized: false,
       favorited: {},
+      checkedIn: {}
     };
 
     this.heading = 0;
@@ -46,6 +45,8 @@ class HelloWorldSceneAR extends Component {
     // bind "this" to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
+    this.updateFavoritedLocations = this.updateFavoritedLocations.bind(this);
+    this.updateCheckedInLocations = this.updateCheckedInLocations.bind(this);
 
     this.rootRef = firebaseApp
       .database()
@@ -54,7 +55,7 @@ class HelloWorldSceneAR extends Component {
   }
   
   touched(id){
-    this.props.navigation.navigate("SelectedLocation", {restaurantId: id, updateFavoritedLocations: this.updateFavoritedLocations});
+    this.props.navigation.navigate("SelectedLocation", {restaurantId: id, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -63,6 +64,28 @@ class HelloWorldSceneAR extends Component {
       longitude: nextProps.arSceneNavigator.viroAppProps.longitude,
       latitude: nextProps.arSceneNavigator.viroAppProps.latitude,
     });
+  }
+
+  getCheckedInLocations = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('dbId');
+      let CheckedInId = this.rootRef
+        .child('Users')
+        .child(userId)
+        .child('CheckedInPlaces')
+        .orderByChild('yelpId')
+        CheckedInId.once('value', snapshot => {
+        let storage = {};
+        let checkedInYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
+        this.setState({checkedIn: storage});
+      })
+    } catch (error) {
+      console.log('Error on favorite fetch', error)
+    }
+  }
+
+  updateCheckedInLocations(yelpId){
+    this.state.checkedIn[yelpId] ? delete this.state.checkedIn[yelpId] : this.state.checkedIn[yelpId] = yelpId;
   }
 
   getFavoritedLocations = async () => {
@@ -83,12 +106,9 @@ class HelloWorldSceneAR extends Component {
     }
   }
 
-  // updateFavoritedLocations = (yelpId) => {
-  //   this.state.favorited[yelpId] ?
-  //     delete this.state.favorited[yelpId]
-  //     :
-  //     this.state.favorited[yelpId] = yelpId
-  // }
+  updateFavoritedLocations(yelpId){
+    this.state.favorited[yelpId] ? delete this.state.favorited[yelpId] : this.state.favorited[yelpId] = yelpId;
+  }
 
   componentDidMount() {
     ReactNativeHeading.start(5)
@@ -101,6 +121,7 @@ class HelloWorldSceneAR extends Component {
       this.heading = data.heading || data;
     });
     this.getFavoritedLocations();
+    this.getCheckedInLocations();
   }
 
   componentWillUnmount() {
@@ -125,23 +146,53 @@ class HelloWorldSceneAR extends Component {
           if(index < 20){
             let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             let turn = polarCoor.degrees - this.cameraHead;
-            let locationMarker = this.state.favorited[place.id] ?
-              <Viro3DObject source={require('./res/Heart.vrx')}
-              rotation={[0, 0, 0]}
-              position={[0, -3.5, 0]}
-              scale={[0.3, 0.3, 0.3]}
-              onClick={() => this.touched(place.id)}
-              type="VRX"
-              />
-              :
-              <Viro3DObject source={require('./res/Triangle.vrx')}
+            let locationMarker = (this.state.favorited[place.id] && this.state.checkedIn[place.id]) ?
+              (
+                <Viro3DObject 
+                  source={require('./res/CircledHeart.vrx')}
                   rotation={[0, 0, 0]}
-                  position={[0, -3, 0]}
-                  scale={[0.4, 0.4, 0.4]}
+                  position={[0, -3.5, 0]}
+                  scale={[0.3, 0.3, 0.3]}
                   onClick={() => this.touched(place.id)}
                   type="VRX"
-                  animation={{name: 'animateMarker', run: true, loop: true}}
                 />
+              )
+              :
+              this.state.favorited[place.id] ?
+                (
+                  <Viro3DObject 
+                    source={require('./res/Heart.vrx')}
+                    rotation={[0, 0, 0]}
+                    position={[0, -3.5, 0]}
+                    scale={[0.3, 0.3, 0.3]}
+                    onClick={() => this.touched(place.id)}
+                    type="VRX"
+                  />
+                )
+                :
+                this.state.checkedIn[place.id] ?
+                  (
+                    <Viro3DObject 
+                      source={require('./res/Circle.vrx')}
+                      rotation={[0, 0, 0]}
+                      position={[0, -3.5, 0]}
+                      scale={[0.3, 0.3, 0.3]}
+                      onClick={() => this.touched(place.id)}
+                      type="VRX"
+                    />
+                  )
+                  :
+                  (
+                    <Viro3DObject 
+                      source={require('./res/Triangle.vrx')}
+                      rotation={[0, 0, 0]}
+                      position={[0, -3, 0]}
+                      scale={[0.4, 0.4, 0.4]}
+                      onClick={() => this.touched(place.id)}
+                      type="VRX"
+                      animation={{name: 'animateMarker', run: true, loop: true}}
+                    />
+                  )
             return (
               <ViroNode
                 key={place.id}

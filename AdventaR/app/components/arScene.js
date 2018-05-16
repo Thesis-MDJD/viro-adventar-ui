@@ -99,14 +99,27 @@ class HelloWorldSceneAR extends Component {
                 rotation={[0, turn * -1, 0]}
                 position={polarToCartesian([75, turn, 0])}>
                 <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
-                <Viro3DObject source={require('./res/OrangePeel_v4.vrx')}
+                <Viro3DObject source={require('./res/Triangle.vrx')}
                   rotation={[0, 0, 0]}
-                  position={[0, -3.5, 0]}
-                  scale={[0.1, 0.1, 0.1]}
+                  position={[0, -3, 0]}
+                  scale={[0.4, 0.4, 0.4]}
                   onClick={() => this.touched(place.id)}
                   type="VRX"
-                  materials={['orangeColor']}
                   animation={{name: 'animateMarker', run: true, loop: true}}
+                />
+                <Viro3DObject source={require('./res/Heart.vrx')}
+                  rotation={[0, 0, 0]}
+                  position={[2.75, -3.5, 0]}
+                  scale={[0.3, 0.3, 0.3]}
+                  onClick={() => this.touched(place.id)}
+                  type="VRX"
+                />
+                <Viro3DObject source={require('./res/Circle.vrx')}
+                  rotation={[0, 0, 0]}
+                  position={[-2.75, -3.5, 0]}
+                  scale={[0.3, 0.3, 0.3]}
+                  onClick={() => this.touched(place.id)}
+                  type="VRX"
                 />
                   {/*some image with drop down*/}
               </ViroNode>

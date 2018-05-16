@@ -67,7 +67,6 @@ import { REST_SERVER_IP } from "react-native-dotenv";
 
   render() {
     const info = this.state.data;
-
     return(
       <ScrollView>
         <StatusBar barStyle='light-content' />
@@ -85,6 +84,8 @@ import { REST_SERVER_IP } from "react-native-dotenv";
               rating={info.rating}
               price={info.price}
               hours={info.hours}
+              yelpId={info.id}
+              photo={info.photos[0]}
               />: null}          
           </View>
 

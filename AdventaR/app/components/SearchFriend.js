@@ -13,15 +13,21 @@ export default class SearchFriend extends Component {
         {name: 'Lady2', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'},
         {name: 'Lady3', img: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'}
       ],
+      searchedText: ''
     }
   }
 
-  onTextInput(text) {
+  onTextInput() {
     //run the search function here
   }
 
   renderHeader() {
-    return <SearchBar placeholder='Search for friends here...' lightTheme round />
+    return <SearchBar 
+    placeholder='Search for friends here...' 
+    lightTheme 
+    round 
+    onChangeText={(text) => alert(text)}/>
+
   }
 
   render() {

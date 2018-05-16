@@ -5,15 +5,17 @@ import {
   TabNavigator
 } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
 import AuthLoadingScreen from "./components/AuthLoadingScreen";
-import YelpRestaurants from "./components/YelpRestaurants";
 import SelectedLocation from "./components/SelectedLocation";
 import Profile from "./components/Profile";
 import DevTools from "./components/DevTools";
 import SearchFriend from "./components/SearchFriend";
+import Friends from './components/Friends';
+import Places from './components/FavoritePlaces';
+import Conversations from './components/Conversations';
+
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(
@@ -21,7 +23,7 @@ const AppStack = StackNavigator({
         Camera: Camera,
         User: Profile,
         Friend: SearchFriend,
-        Convo: YelpRestaurants
+        Convo: Conversations
       },
       {
         tabBarPosition: "bottom",
@@ -54,9 +56,9 @@ const AppStack = StackNavigator({
       header: null
     }
   },
-  SelectedLocation: {
-    screen: SelectedLocation
-  }
+  SelectedLocation: SelectedLocation,
+  Friends: Friends,
+  Places: Places
 });
 
 const AuthStack = StackNavigator({ Login: LoginScreen });

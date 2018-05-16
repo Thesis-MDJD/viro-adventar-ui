@@ -52,6 +52,7 @@
 		AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */; };
 		AFC3046E20AA185000BE0C6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */; };
 		C7194F86EA274C61BB429D7C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F244CA536EAD4BFD951A1957 /* Foundation.ttf */; };
+		CDA0C46A20AB3A8C003DF524 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDA0C44220AB3A7E003DF524 /* GoogleService-Info.plist */; };
 		CF0598BDD1C6416DA90BAF43 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73064C3F659A4460B716395E /* SimpleLineIcons.ttf */; };
 /* End PBXBuildFile section */
 
@@ -395,6 +396,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
 		AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CDA0C44220AB3A7E003DF524 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4A6E8C53C9D4A41B6AD2E29 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		E9D38CC1CB1E47688F381B50 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		F244CA536EAD4BFD951A1957 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				CDA0C44220AB3A7E003DF524 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */,
@@ -1224,6 +1227,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				CDA0C46A20AB3A8C003DF524 /* GoogleService-Info.plist in Resources */,
 				83F9FDF5A59141EEA3F7AEC4 /* Entypo.ttf in Resources */,
 				7D2FC90FF29A4BBCBFE48223 /* EvilIcons.ttf in Resources */,
 				45F086BCF29B44FDB15C8272 /* Feather.ttf in Resources */,

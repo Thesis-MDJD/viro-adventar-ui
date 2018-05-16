@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text,} from 'react-native';
+import { StyleSheet, View, Text, AsyncStorage} from 'react-native';
 import { Icon } from 'react-native-elements';
-
+import { firebaseApp } from '../FireBase';
 import LocRating from './LocRating';
 import LocPriceRange from './LocPriceRange';
 import LocHours from './LocHours';
@@ -15,23 +15,95 @@ export default class LocBasicInfo extends Component {
       categories: [],
       // non-yelp
       favorite: false 
-    }
-    this.onFavoritePress = this.onFavoritePress.bind(this)
+    };
+    this.rootRef = firebaseApp
+      .database()
+      .ref()
+      .child("Features");
   }
 
-  onFavoritePress(){
-    this.setState({favorite: !this.state.favorite})
-    // send info to user data base
+  componentDidMount() {
+    this.checkFavoriteStatus(this.props.yelpId)
+  }
+
+  onFavoritePress = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('dbId');
+      this.state.favorite ?
+      this.removeFavoritePlace(this.props.yelpId)
+      :
+      this.addFavoritePlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId);
+        
+
+    } catch (error) {
+      console.log('Error on adding/removing Favoriting', error);
+    }
+  }
+
+  checkFavoriteStatus = async (yelpId) => {
+    try {
+      const userId = await AsyncStorage.getItem('dbId');
+      let status = this.rootRef
+        .child('Users')
+        .child(userId)
+        .child('FavoritePlaces')
+        .orderByChild('yelpId')
+        .equalTo(yelpId)
+      status.once('value')
+        .then( snapshot => {
+          snapshot.exists() && this.setState({favorite: true})
+        })
+    } catch (error) {
+      console.log('Error at check', error)
+    }
+  }
+// SOME PLACES DOESN'T HAVE IMAGES!!!
+  addFavoritePlace = (userId, name, rating, image, yelpId) => {
+    const place = {
+      name,
+      image,
+      rating,
+      yelpId
+    };
+    this.rootRef
+      .child("Users")
+      .child(userId)
+      .child("FavoritePlaces")
+      .push()
+      .set(place);
+    this.setState({favorite: true})
+  };
+
+  removeFavoritePlace = async (yelpId) => {
+    try {
+      const userId = await AsyncStorage.getItem('dbId');
+      let favorited = this.rootRef
+        .child('Users')
+        .child(userId)
+        .child('FavoritePlaces')
+        .orderByChild('yelpId')
+        .equalTo(yelpId)
+      favorited.once('value', (snapshot) => {
+        let fbId = Object.keys(snapshot.val())
+        this.rootRef
+        .child('Users')
+        .child(userId)
+        .child('FavoritePlaces')
+        .child(fbId[0])
+        .ref.remove()
+      });
+      this.setState({favorite: false});
+    } catch (error) {
+      console.log('Error', error)
+    }
   }
 
   render() {
     const favoriteStatus = this.state.favorite ?
-    //Favorited Heart
       <View>
         <Icon name='heart' type='material-community' color='#ff4f7d' onPress={this.onFavoritePress}/>
       </View>
       :
-    // Unfavorited Heart
       <View>
         <Icon name='heart-outline' type='material-community' color='#769db0' onPress={this.onFavoritePress}/>
       </View>
@@ -42,7 +114,7 @@ export default class LocBasicInfo extends Component {
       <View style={styles.container}>
 
         <View style={styles.nameFavContainer}>
-          <Text style={styles.name} /* numberOfLines= {1} ellipsizeMode='tail'*/> {this.props.name}</Text>
+          <Text style={styles.name}> {this.props.name}</Text>
           {favoriteStatus}
         </View>
 

@@ -5,9 +5,12 @@ import {
   StyleSheet,
   Image,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Modal,
+  TouchableHighlight
 } from "react-native";
 import { firebaseApp } from "./FireBase";
+import ProfilePicture from "./ProfilePicture"
 
 export default class User extends Component {
   constructor(props) {
@@ -15,7 +18,8 @@ export default class User extends Component {
     this.state = {
       username: "",
       dbId: "",
-      email: ""
+      email: "",
+      modalVisible: false
     };
     //Database
     this.rootRef = firebaseApp
@@ -41,6 +45,7 @@ export default class User extends Component {
       console.log("Profile Fetch Error: ", error);
     }
   };
+
   componentDidMount() {
     this.getUserProfile();
   }
@@ -64,14 +69,24 @@ export default class User extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={( () => this.setState({ modalVisible: false })).bind(this)}
+        >
+          <ProfilePicture hideModal={( () => this.setState({ modalVisible: false })).bind(this)} />
+        </Modal>
         <View style={styles.centered}>
-          <Image
-            style={styles.image}
-            source={{
-              uri:
-                "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
-            }}
-          />
+          <TouchableHighlight onPress={( () => this.setState({ modalVisible: true })).bind(this)}>
+            <Image
+              style={styles.image}
+              source={{
+                uri:
+                  "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+              }}
+            />
+          </TouchableHighlight>
           <Text style={styles.name}>{this.state.username}</Text>
         </View>
         <View style={{ marginLeft: 20 }}>

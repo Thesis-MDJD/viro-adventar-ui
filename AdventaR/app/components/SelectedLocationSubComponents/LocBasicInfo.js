@@ -34,7 +34,7 @@ export default class LocBasicInfo extends Component {
       :
       this.addFavoritePlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId);
         
-
+      // this.props.update(this.props.yelpId)
     } catch (error) {
       console.log('Error on adding/removing Favoriting', error);
     }

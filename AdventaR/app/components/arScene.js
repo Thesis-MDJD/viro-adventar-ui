@@ -105,7 +105,7 @@ class HelloWorldSceneAR extends Component {
                   scale={[0.1, 0.1, 0.1]}
                   onClick={() => this.touched(place.id)}
                   type="VRX"
-                  materials={['orangeColor']}
+                  // materials={['orangeColor']}
                   animation={{name: 'animateMarker', run: true, loop: true}}
                 />
                   {/*some image with drop down*/}

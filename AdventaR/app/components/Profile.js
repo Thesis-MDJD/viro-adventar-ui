@@ -63,16 +63,13 @@ export default class User extends Component {
       let task = RNFetchBlob.fetch('GET', url)
       .then( (data) => {
         let string = data.data;
-        let stringData = String.fromCharCode(...string.split(","))
+        let stringData = String.fromCharCode(...string.split(","));
           this.setState({
             profilePicture: "data:image/jpeg;base64," + stringData
           })
       })
-      .catch( err => {
-        this.setState({
-          profilePicture: undefined
-        })
-      })
+    })
+    .catch( err => {
     })
   }
 

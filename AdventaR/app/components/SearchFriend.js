@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, FlatList, Button } from "react-native";
 import { SearchBar, ListItem, List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
 
@@ -30,7 +30,11 @@ export default class SearchFriend extends Component {
       .ref()
       .child("Features");
   }
-
+  componentDidMount() {
+    this.props.navigation.setParams({
+      goBackToPrevious: this.goBackToPrevious
+    });
+  }
   searchUser = () => {
     const username = this.state.term.toLowerCase();
     const result = this.rootRef
@@ -68,9 +72,30 @@ export default class SearchFriend extends Component {
     this.props.navigation.navigate("otherProfile", { userId: id });
   };
 
+  goBackToPrevious = () => {
+    this.props.navigation.goBack();
+  };
+
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+    return {
+      title: "",
+      headerStyle: {
+        backgroundColor: "#f4511e"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      },
+      headerLeft: (
+        <Button onPress={params.goBackToPrevious} title="Back" color="#fff" />
+      )
+    };
+  };
+
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <SearchBar
           placeholder="Search for friends here..."
           lightTheme
@@ -80,7 +105,7 @@ export default class SearchFriend extends Component {
           onSubmitEditing={this.searchUser}
           returnKeyType="search"
         />
-        <List style={styles.container}>
+        <List>
           <FlatList
             data={this.state.searched}
             ListHeaderComponent={this.renderHeader}

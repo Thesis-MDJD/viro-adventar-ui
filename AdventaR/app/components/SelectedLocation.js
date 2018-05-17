@@ -21,6 +21,7 @@ import { REST_SERVER_IP } from "react-native-dotenv";
        name: '',
        data: {},
        restaurantId: this.props.navigation.state.params.restaurantId,
+       distance: this.props.navigation.state.params.distance,
        updateFavoritedLocations: this.props.navigation.state.params.updateFavoritedLocations,
        updateCheckedInLocations: this.props.navigation.state.params.updateCheckedInLocations
      }
@@ -41,14 +42,12 @@ import { REST_SERVER_IP } from "react-native-dotenv";
 
    componentDidMount() {
     this.getPlace(this.state.restaurantId)
-    this.props.navigation.setParams({ goBackToPrevious: this.goBackToPrevious});
    }
 
    static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
-      // selected location's name
-      title: 'Selected Location',
+      title: params.name,
       headerStyle: {
         backgroundColor: "#f4511e"
       },
@@ -56,21 +55,28 @@ import { REST_SERVER_IP } from "react-native-dotenv";
       headerTitleStyle: {
         fontWeight: "bold"
       },
-      // go back to previous view
       headerLeft: (
-        <Button onPress={params.goBackToPrevious} title="Back" color="#fff" />
+        <Text onPress={() => this.props.navigation.goBack()} title="Back" color="#fff" />
       )
     };
   };
 
-  goBackToPrevious = () => {
-    this.props.navigation.goBack();
-  };
-
   render() {
     const info = this.state.data;
+    const distance = this.state.distance === null ?
+      null
+      : (this.state.distance < 321.869) ?
+        <Text style={styles.distanceText} color='#888882'>{Math.floor(this.state.distance * 3.2808399)} ft away</Text>
+        :
+        <Text style={styles.distanceText} color='#888882'>{Math.floor(this.state.distance * 0.000621371 * 10) / 10} mi away</Text>;
+
+    const address = info.location && info.location.display_address.join(' ');
+    
     return(
-      <ScrollView>
+      <ScrollView contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: 'space-between'
+      }}>
         <StatusBar barStyle='light-content' />
           <View>
             {info.name ? <LocPics photos={info.photos}/> : null}
@@ -92,6 +98,16 @@ import { REST_SERVER_IP } from "react-native-dotenv";
               updateCheckedIn={this.state.updateCheckedInLocations}
               />: null}          
           </View>
+          
+          <View style={styles.addressContainer}>
+            <View style={styles.address}>
+              <Text style={styles.addressText}>{address}</Text>
+            </View>
+
+            <View style={styles.distance}>
+              {distance}
+            </View>
+          </View>
 
           <View>
             {info.name ? <LocContactInfo phone={info.phone} display_phone={info.display_phone} url={info.url}/> : null }
@@ -100,13 +116,30 @@ import { REST_SERVER_IP } from "react-native-dotenv";
     )
   };
 
-  
 }
 
 const styles = StyleSheet.create({
-  container: {
+  addressContainer: {
+    backgroundColor: '#fff'
+  },
+  address: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginTop: 5,
+    marginBottom: 2.5
+  },
+  addressText: {
+    fontSize: 14,
+    fontWeight: 'bold'
+  },
+  distance: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: 5
+  },
+  distanceText: {
+    fontSize: 12
   }
 })

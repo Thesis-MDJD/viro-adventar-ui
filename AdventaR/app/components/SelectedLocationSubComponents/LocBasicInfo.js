@@ -197,23 +197,26 @@ export default class LocBasicInfo extends Component {
       <View style={styles.container}>
 
         <View style={styles.nameFavContainer}>
-          <Text style={styles.name}> {this.props.name}</Text>
+          <Text style={styles.name}> {this.props.name}</Text>        
           {checkedInStatus}
           {favoriteStatus}
         </View>
 
         <View style={styles.ratingReviewContainer}>
           <LocRating rating={this.props.rating}/>
-          <Text > base on {this.props.review_count} Reviews </Text>
+          <Text> base on {this.props.review_count} Reviews </Text>
         </View>
 
-        <View style={styles.priceCategoryContainer}>
+        <View style={styles.priceContainer}>
           <LocPriceRange price={this.props.price}/>
-          <Icon name='dot-single' type='entypo' color='#999999' />
-          <Text>{categories}</Text>
+        </View>
+
+        <View style={styles.categoriesContainer}>
+          <Text ellipsizeMode='tail' >{categories}</Text>
         </View>
 
         <LocHours hours={this.props.hours}/>
+
       </View>
     )
   }
@@ -232,28 +235,37 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginVertical: 2.5
   },
 
   name: {
+    fontSize: 18,
     fontWeight: 'bold'
   },
 
   ratingReviewContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 2.5
   },
 
-  priceCategoryContainer: {
+  priceContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginVertical: 2.5
   },
 
-  hoursContainer: {
+  categoriesContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginVertical: 2.5
   },
 
   hours: {

@@ -42,33 +42,33 @@ export default class LocRating extends Component {
                       <Image height={34} width={170} resizeMode='contain' source={{uri: 'stars_large_0.png'}} />
 
     const currentRatingIOSWEB = rating === 5 ?
-      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_5'}} />  
+      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_5'}} />  
       :
       rating === 4.5 ?
-        <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_4_half'}} /> 
+        <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_4_half'}} /> 
         :
         rating === 4 ?
-          <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_4'}} />
+          <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_4'}} />
           :
           rating === 3.5 ?
-            <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_3_half'}} />
+            <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_3_half'}} />
             :
             rating === 3 ?
-              <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_3'}} />
+              <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_3'}} />
               :
               rating === 2.5 ?
-                <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_2_half'}} />
+                <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_2_half'}} />
                 :
                 rating === 2 ?
-                  <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_2'}} />
+                  <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_2'}} />
                   :
                   rating === 1.5 ?
-                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_1_half'}} />
+                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_1_half'}} />
                     :
                     rating === 1 ?
-                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_1'}} />
+                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_1'}} />
                       :  
-                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'large_0'}} />
+                      <Image resizeMode='contain' style={styles.iosImage} source={{uri: 'small_0'}} />
 
     let currentRating = Platform.OS === 'android' ?
       currentRatingAndroid

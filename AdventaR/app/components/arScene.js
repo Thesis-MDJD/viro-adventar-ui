@@ -54,8 +54,8 @@ class HelloWorldSceneAR extends Component {
       .child('Features');
   }
   
-  touched(id){
-    this.props.navigation.navigate("SelectedLocation", {restaurantId: id, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
+  touched(id, name, distance){
+    this.props.navigation.navigate("SelectedLocation", {restaurantId: id, name: name, distance: distance, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -146,6 +146,7 @@ class HelloWorldSceneAR extends Component {
           if(index < 20){
             let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
             let turn = polarCoor.degrees - this.cameraHead;
+            let distance = polarCoor.distance;
             let locationMarker = (this.state.favorited[place.id] && this.state.checkedIn[place.id]) ?
               (
                 <Viro3DObject 
@@ -153,7 +154,7 @@ class HelloWorldSceneAR extends Component {
                   rotation={[0, 0, 0]}
                   position={[0, -3.5, 0]}
                   scale={[0.3, 0.3, 0.3]}
-                  onClick={() => this.touched(place.id)}
+                  onClick={() => this.touched(place.id, place.name, distance)}
                   type="VRX"
                 />
               )
@@ -165,7 +166,7 @@ class HelloWorldSceneAR extends Component {
                     rotation={[0, 0, 0]}
                     position={[0, -3.5, 0]}
                     scale={[0.3, 0.3, 0.3]}
-                    onClick={() => this.touched(place.id)}
+                    onClick={() => this.touched(place.id, place.name, distance)}
                     type="VRX"
                   />
                 )
@@ -177,7 +178,7 @@ class HelloWorldSceneAR extends Component {
                       rotation={[0, 0, 0]}
                       position={[0, -3.5, 0]}
                       scale={[0.3, 0.3, 0.3]}
-                      onClick={() => this.touched(place.id)}
+                      onClick={() => this.touched(place.id, place.name, distance)}
                       type="VRX"
                     />
                   )
@@ -188,7 +189,7 @@ class HelloWorldSceneAR extends Component {
                       rotation={[0, 0, 0]}
                       position={[0, -3, 0]}
                       scale={[0.4, 0.4, 0.4]}
-                      onClick={() => this.touched(place.id)}
+                      onClick={() => this.touched(place.id, place.name, distance)}
                       type="VRX"
                       animation={{name: 'animateMarker', run: true, loop: true}}
                     />
@@ -201,14 +202,7 @@ class HelloWorldSceneAR extends Component {
                 <ViroText text={place.name} scale={[15, 15, 15]} position={[0, 3.5, 0]} style={styles.helloWorldTextStyle} />
                 {locationMarker}
 
-                {/* <Viro3DObject source={require('./res/Circle.vrx')}
-                  rotation={[0, 0, 0]}
-                  position={[-2.75, -3.5, 0]}
-                  scale={[0.3, 0.3, 0.3]}
-                  onClick={() => this.touched(place.id)}
-                  type="VRX"
-                /> */}
-                  {/*some image with drop down*/}
+                {/*some image with drop down*/}
               </ViroNode>
             )
           } else {
@@ -261,7 +255,5 @@ ViroAnimations.registerAnimations({
     duration: 1000
   }
 })
-
-
 
 export default withNavigation(HelloWorldSceneAR);

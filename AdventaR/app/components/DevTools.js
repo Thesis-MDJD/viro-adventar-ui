@@ -85,7 +85,7 @@ export default class DevTools extends Component {
   searchUser = username => {
     const result = this.rootRef
       .child("Users")
-      .orderByChild("name")
+      .orderByChild("username")
       .startAt(username);
 
     result.once("value", snap => {

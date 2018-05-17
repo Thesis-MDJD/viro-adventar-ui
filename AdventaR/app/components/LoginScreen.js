@@ -21,8 +21,6 @@ export default class LoginScreen extends Component {
     this._onLogin();
   }
 
-  getUserProfile = (username, email) => {};
-
   _onLogin = async () => {
     const self = this;
     try {
@@ -53,11 +51,12 @@ export default class LoginScreen extends Component {
           });
           id = id.toString().slice(48);
           await AsyncStorage.setItem("dbId", id);
+          self.props.navigation.navigate("App");
         } else {
           await AsyncStorage.setItem("dbId", Object.keys(snap.val())[0]);
           const id = await AsyncStorage.getItem("dbId");
+          self.props.navigation.navigate("App");
         }
-        self.props.navigation.navigate("App");
       });
     } catch (error) {
       console.log("login failed", error);

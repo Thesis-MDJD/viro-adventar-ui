@@ -113,6 +113,26 @@ export default class FavoritePlaces extends Component {
                 keyExtractor={item => item.img} // change to key later
               />
             </List>
+            <Text>Friends</Text>
+            <List>
+              <FlatList
+                data={this.state.friends}
+                renderItem={({ item }) => {
+                  return (
+                    <ListItem
+                      key={item.uid}
+                      roundAvatar
+                      title={item.username}
+                      avatar={{ uri: item.img }}
+                      onPress={() => {
+                        this.goToOtherProfile(item.uid, false, true);
+                      }}
+                    />
+                  );
+                }}
+                keyExtractor={item => item.img} // change to key later
+              />
+            </List>
           </View>
         )}
       </View>

@@ -183,6 +183,18 @@ export default class User extends Component {
             />
             <Button onPress={this.goToHistory} title="History" color="blue" />
 
+            {!this.props.navigation.state.params.isRequested ? (
+              this.props.navigation.state.params.isAccepted ? null : (
+                <Button
+                  onPress={() => {
+                    this.addFriend(this.state.userId);
+                  }}
+                  title="Add Friend"
+                  color="blue"
+                />
+              )
+            ) : null}
+
             {this.props.navigation.state.params.isRequested ? (
               <Button
                 onPress={() => {
@@ -191,15 +203,7 @@ export default class User extends Component {
                 title="Accept Friend"
                 color="blue"
               />
-            ) : (
-              <Button
-                onPress={() => {
-                  this.addFriend(this.state.userId);
-                }}
-                title="Add Friend"
-                color="blue"
-              />
-            )}
+            ) : null}
           </View>
         )}
       </View>

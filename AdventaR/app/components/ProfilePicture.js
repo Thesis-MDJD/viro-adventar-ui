@@ -12,8 +12,10 @@ import {
   ScrollView,
 } from "react-native";
 import { firebaseApp } from "./FireBase";
+import RNFetchBlob from "react-native-fetch-blob";
 
 //https://facebook.github.io/react-native/docs/cameraroll.html
+//https://github.com/joltup/react-native-fetch-blob
 export default class ProfilePicture extends Component {
   constructor(props){
     super(props);
@@ -21,24 +23,61 @@ export default class ProfilePicture extends Component {
     this.state = {
       photos: [],
       currentPhoto: this.props.profPic,
-      hideCameraRoll: false
+      hideCameraRoll: true
     };
 
     this.imageClick = this.imageClick.bind(this);
-    this.handleButtonPress = this.handleButtonPress.bind(this);
+    this.getLibraryPhoto = this.getLibraryPhoto.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleButtonPress() {
+  onSubmit(){
+    const that = this;
+    let data = "";
+    RNFetchBlob.fs.readStream(
+        // file path
+        this.state.currentPhoto,
+        // encoding, should be one of `base64`, `utf8`, `ascii`
+        "base64",
+        // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
+        // when reading file in BASE64 encoding, buffer size must be multiples of 3.
+        4095)
+    .then((ifstream) => {
+        ifstream.open()
+        ifstream.onData((chunk) => {
+          // when encoding is `ascii`, chunk will be an array contains numbers
+          // otherwise it will be a string
+          data += chunk
+        })
+        ifstream.onError((err) => {
+          console.log("oops", err)
+        })
+        ifstream.onEnd(async () => {
+          const userId = await AsyncStorage.getItem("dbId");
+          const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture.jpeg")
+
+
+          storageRef
+          .putString(data)
+          .then( (data) => {
+              console.log("finished");
+              console.log(data);
+              that.props.setProfile();
+            });
+        });
+    });
+  }
+
+  getLibraryPhoto() {
     CameraRoll.getPhotos({
         first: 40,
-        assetType: 'Photos',
+        assetType: "Photos"
       })
       .then(r => {
-        console.log(r.edges);
         this.setState({ photos: r.edges, hideCameraRoll: false });
       })
       .catch((err) => {
-        
+        console.log(err);
       });
   }
 
@@ -48,36 +87,38 @@ export default class ProfilePicture extends Component {
     }
   }
 
+
   render() {
     return (
-      <View >
+      <View style={{alignItems: "center"}}>
         <View style={{marginBottom: 30}}>
           <Text style={styles.modalText}> Change Profile Picture </Text>
         </View>
-        <View style={{alignItems: "center"}}>
-          <Text style={styles.modalText}>New Picture</Text>
-          <Image
-            style={styles.image}
-            resizeMode={'cover'}
-            source={{
-              uri: this.state.currentPhoto || "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
-            }}
-          />
-          <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
-            <Button style={{marginRight: 20}} onPress={this.props.hideModal} title="Go Back" />
-            <Button onPress={this.handleButtonPress} title="Upload from Library" />
+        
+        <Text style={styles.modalText}>{this.state.currentPhoto === this.props.profPic ? "Current Profile Picture" : "New Profile Picture"}</Text>
+        <Image
+          style={styles.image}
+          resizeMode={"cover"}
+          source={{
+            uri: this.state.currentPhoto || "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+          }}
+        />
+        
+        <View style={{flexDirection:"row", alignItems: "center"}}>
+          <View style={{marginRight: 20}}>
+            <Button onPress={this.props.hideModal} title="Go Back" />
           </View>
-          
-          {this.state.hideCameraView ? (this.state.currentPhoto !== this.props.profPic && (
-          <Button style={{alignItems: "center", margin:auto}} />
-            )) : (
+          <Button onPress={this.getLibraryPhoto} title="Upload from Library" />
+        </View>
+        
+        <View style={{marginTop: 30}}>
+          {this.state.hideCameraRoll ? (undefined) : (
           <ScrollView 
-          style={marginTop = 10}
           horizontal={true}
-          snapToAlignment={'center'}
+          snapToAlignment={"center"}
           centerContent={true}
           >
-            {this.state.photos.map((p, i) => {
+          {this.state.photos.map((p, i) => {
             return (
               <TouchableHighlight key={i} onPress={this.imageClick(p.node.image.uri)}>
                 <Image
@@ -86,14 +127,19 @@ export default class ProfilePicture extends Component {
                     height: 200,
                     marginRight:5
                   }}
-                  resizeMode={'cover'}
+                  resizeMode={"cover"}
                   source={{ uri: p.node.image.uri }}
                 />
               </TouchableHighlight>
             );
           })}
           </ScrollView>)}
-          
+        
+          {(this.state.currentPhoto !== this.props.profPic ? (
+          <View>
+            <Button title="Submit" onPress={this.onSubmit} />
+          </View>)
+           : (undefined))}
         </View>
       </View>
     )
@@ -106,6 +152,10 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 20
+  },
+  center: {
+    alignItems:"center",
+    justifyContent:"center"
   },
   modalText:{
     fontSize: 20,

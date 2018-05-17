@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.viromedia.bridge.ReactViroPackage;
 import com.facebook.soloader.SoLoader;
+import com.RNFetchBlob.RNFetchBlobPackage; 
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
         new ReactNativeHeadingPackage(),
         new MainReactPackage(),
+        new RNFetchBlobPackage(),
         new A0Auth0Package(),
         new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
       );

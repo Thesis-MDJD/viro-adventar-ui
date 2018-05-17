@@ -10,7 +10,8 @@ import {
   TouchableHighlight
 } from "react-native";
 import { firebaseApp } from "./FireBase";
-import ProfilePicture from "./ProfilePicture"
+import ProfilePicture from "./ProfilePicture";
+import RNFetchBlob from "react-native-fetch-blob";
 
 export default class User extends Component {
   constructor(props) {
@@ -19,8 +20,12 @@ export default class User extends Component {
       username: "",
       dbId: "",
       email: "",
-      modalVisible: false
+      modalVisible: false,
+      profilePicture: undefined
     };
+
+    this.setProfile = this.setProfile.bind(this);
+
     //Database
     this.rootRef = firebaseApp
       .database()
@@ -50,6 +55,20 @@ export default class User extends Component {
     this.getUserProfile();
   }
 
+  setProfile() {
+    let data = '';
+    firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture.jpeg").getDownloadURL().then( (url) => {
+      let task = RNFetchBlob.fetch('GET', url)
+      .then( (data) => {
+        let string = data.data;
+        let stringData = String.fromCharCode(...string.split(","))
+          this.setState({
+            profilePicture: "data:image/jpeg;base64," + stringData
+          }, ()=> { console.log(this.state.profilePicture) })
+      })
+    })
+  }
+
   goToFriends = () => {
     this.props.navigation.navigate("Friends");
   };
@@ -75,7 +94,7 @@ export default class User extends Component {
           visible={this.state.modalVisible}
           onRequestClose={( () => this.setState({ modalVisible: false })).bind(this)}
         >
-          <ProfilePicture hideModal={( () => this.setState({ modalVisible: false })).bind(this)} />
+          <ProfilePicture setProfile={this.setProfile} hideModal={( () => this.setState({ modalVisible: false })).bind(this)} />
         </Modal>
         <View style={styles.centered}>
           <TouchableHighlight onPress={( () => this.setState({ modalVisible: true })).bind(this)}>
@@ -83,7 +102,7 @@ export default class User extends Component {
               style={styles.image}
               source={{
                 uri:
-                  "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+                  this.state.profilePicture || "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
               }}
             />
           </TouchableHighlight>

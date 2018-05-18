@@ -59,7 +59,10 @@ export default class Conversations extends Component {
     this.getUserProfile();
   }
   goToConversation = id => {
-    alert(`working ${id}`);
+    this.props.navigation.navigate("chat", {
+      convId: id,
+      loggedInUser: this.state.loggedInUser
+    });
   };
   render() {
     return (

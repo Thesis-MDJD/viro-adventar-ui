@@ -8,9 +8,9 @@
  *
  * React Native CLI configuration file
  */
-'use strict';
+"use strict";
 
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   getProjectRoots() {
@@ -29,12 +29,12 @@ module.exports = {
     // match on either path separator
     if (__dirname.match(/node_modules[\/\\]react-native[\/\\]packager$/)) {
       // packager is running from node_modules of another project
-      return [path.resolve(__dirname, '../../..')];
+      return [path.resolve(__dirname, "../../..")];
     } else if (__dirname.match(/Pods\/React\/packager$/)) {
       // packager is running from node_modules of another project
-      return [path.resolve(__dirname, '../../..')];
+      return [path.resolve(__dirname, "../../..")];
     } else {
-      return [path.resolve(__dirname, '.')];
+      return [path.resolve(__dirname, ".")];
     }
   },
 

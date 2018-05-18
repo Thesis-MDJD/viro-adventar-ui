@@ -1,10 +1,8 @@
 "use strict";
 import React, { Component } from "react";
 import {
-  Dimensions,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
@@ -14,7 +12,7 @@ import {VIRO_KEY} from "react-native-dotenv";
 import getDegreesDistance from "./util/getDegreesDistance.js";
 
 export default class Camera extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -22,36 +20,36 @@ export default class Camera extends Component {
       latitude: "",
       longitude: "",
       places: [],
-    }
+    };
 
     this.remount = this.remount.bind(this);
     this.unmount = this.unmount.bind(this);
   }
 
-  unmount(){
+  unmount() {
     this.setState({
       cameraMounted: false
     }, ()=> {
       setTimeout(this.remount, 1000);
-    })
+    });
   }
 
-  remount(){
+  remount() {
     this.setState({
       cameraMounted: true
-    })
+    });
   }
 
   getPlaces = async (latitude, longitude) => {
     console.log("GET PLACES WAS CALLED");
     this.setState({
       places: dummyData.businesses,
-      previousLatitude:latitude,
+      previousLatitude: latitude,
       previousLongitude: longitude,
     });
   };
 
-  componentDidMount(){
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -73,7 +71,7 @@ export default class Camera extends Component {
           error: null
         });
 
-        if(position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000){
+        if (position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000) {
           this.getPlaces(position.coords.latitude, position.coords.longitude);
         }
       },
@@ -87,7 +85,7 @@ export default class Camera extends Component {
     );
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
@@ -95,16 +93,16 @@ export default class Camera extends Component {
     return (
       <View style={styles.container}>
         {this.state.cameraMounted ? (
-        <ViroARSceneNavigator
-          apiKey={VIRO_KEY}
-          ref={((component)=> component).bind(this)}
-          viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
-          initialScene={{scene: arScene}}
-          autofocus={false}
-          debug={true} // set this to true
-        />) 
-        : 
-        <Text style={styles.helloWorldTextStyle}>Tracking lost...</Text>}
+          <ViroARSceneNavigator
+            apiKey={VIRO_KEY}
+            ref={((component)=> component)}
+            viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
+            initialScene={{scene: arScene}}
+            autofocus={false}
+            debug={true} // set this to true
+          />) 
+          : 
+          <Text style={styles.placeTextStyle}>Tracking lost...</Text>}
       </View>
     );
   }
@@ -130,7 +128,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 20
   },
-  helloWorldTextStyle: {
+  placeTextStyle: {
     fontFamily: "Arial",
     fontSize: 30,
     color: "#ffffff",

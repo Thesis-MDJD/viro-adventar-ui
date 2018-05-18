@@ -57,7 +57,6 @@ export default class FavoritePlaces extends Component {
         }
       });
     } catch (error) {
-      alert("error", JSON.stringify(error));
       console.log("Profile Fetch Error: ", error);
     }
   };

@@ -6,6 +6,7 @@ import {
   Image,
   Button,
   AsyncStorage,
+  ActivityIndicator,
   Modal,
   TouchableHighlight,
   CameraRoll,
@@ -23,7 +24,8 @@ export default class ProfilePicture extends Component {
     this.state = {
       photos: [],
       currentPhoto: this.props.profPic,
-      hideCameraRoll: true
+      hideCameraRoll: true,
+      uploading: false
     };
 
     this.imageClick = this.imageClick.bind(this);
@@ -32,40 +34,56 @@ export default class ProfilePicture extends Component {
   }
 
   onSubmit(){
-    const that = this;
-    let data = "";
-    RNFetchBlob.fs.readStream(
-        // file path
-        this.state.currentPhoto,
-        // encoding, should be one of `base64`, `utf8`, `ascii`
-        "base64",
-        // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
-        // when reading file in BASE64 encoding, buffer size must be multiples of 3.
-        4095)
-    .then((ifstream) => {
-        ifstream.open()
-        ifstream.onData((chunk) => {
-          // when encoding is `ascii`, chunk will be an array contains numbers
-          // otherwise it will be a string
-          data += chunk
-        })
-        ifstream.onError((err) => {
-          console.log("oops", err)
-        })
-        ifstream.onEnd(async () => {
-          const userId = await AsyncStorage.getItem("dbId");
-          const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture.jpeg")
+    this.setState({
+      uploading: true
+    }, () => {
+      let data = "";
+      RNFetchBlob.fs.stat(this.state.currentPhoto)
+        .then((stats) => {
+          let filetype = stats.filename.split(".")[1];
+          console.log(filetype);
+          RNFetchBlob.fs.readStream(
+            // file path
+            this.state.currentPhoto,
+            // encoding, should be one of `base64`, `utf8`, `ascii`
+            "base64",
+            // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
+            // when reading file in BASE64 encoding, buffer size must be multiples of 3.
+            4095)
+          .then((ifstream) => {
+            ifstream.open()
+            ifstream.onData((chunk) => {
+              // when encoding is `ascii`, chunk will be an array contains numbers
+              // otherwise it will be a string
+              data += chunk
+            })
+            ifstream.onError((err) => {
+              console.log("oops", err)
+            })
+            ifstream.onEnd(async () => {
+              const userId = await AsyncStorage.getItem("dbId");
+              const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture")
 
-
-          storageRef
-          .putString(data)
-          .then( (data) => {
-              console.log("finished");
-              console.log(data);
-              that.props.setProfile();
+              storageRef
+              .putString(data)
+              .then( (data) => {
+                  this.setState({
+                    uploading: false
+                  }, () => {
+                    storageRef.updateMetadata({ contentType: 'image/' + filetype })
+                    this.props.setProfilePicture();
+                    this.props.hideModal();
+                  })
+                });
             });
-        });
-    });
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      
+    })
+    
   }
 
   getLibraryPhoto() {
@@ -106,9 +124,9 @@ export default class ProfilePicture extends Component {
         
         <View style={{flexDirection:"row", alignItems: "center"}}>
           <View style={{marginRight: 20}}>
-            <Button onPress={this.props.hideModal} title="Go Back" />
+            {this.state.uploading ? undefined : (<Button onPress={this.props.hideModal} title="Go Back" />) }
           </View>
-          <Button onPress={this.getLibraryPhoto} title="Upload from Library" />
+          {this.state.uploading ? undefined : (<Button onPress={this.getLibraryPhoto} title="Upload from Library" />) }
         </View>
         
         <View style={{marginTop: 30}}>
@@ -135,7 +153,7 @@ export default class ProfilePicture extends Component {
           })}
           </ScrollView>)}
         
-          {(this.state.currentPhoto !== this.props.profPic ? (
+        {this.state.uploading ? (<ActivityIndicator size="large" color="#0000ff" />) : (this.state.currentPhoto !== this.props.profPic ? (
           <View>
             <Button title="Submit" onPress={this.onSubmit} />
           </View>)

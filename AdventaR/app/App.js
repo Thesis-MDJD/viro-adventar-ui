@@ -16,6 +16,7 @@ import DevTools from "./components/DevTools";
 import SearchFriend from "./components/SearchFriend";
 import OtherProfile from "./components/OtherProfile";
 import Friends from "./components/Friends";
+import Conversations from "./components/Conversations";
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(
@@ -23,7 +24,7 @@ const AppStack = StackNavigator({
         Camera: Camera,
         User: Profile,
         Friend: Friends,
-        Convo: YelpRestaurants
+        Convo: Conversations
       },
       {
         tabBarPosition: "bottom",

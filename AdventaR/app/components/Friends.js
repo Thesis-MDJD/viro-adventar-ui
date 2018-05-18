@@ -19,7 +19,6 @@ export default class FavoritePlaces extends Component {
       username: "Mark",
       requests: [],
       friends: [],
-      fetched: [],
       loading: true
     };
     this.rootRef = firebaseApp
@@ -93,26 +92,30 @@ export default class FavoritePlaces extends Component {
               color="black"
               style={styles.button}
             />
-            <Text>Friend Requests</Text>
-            <List>
-              <FlatList
-                data={this.state.requests}
-                renderItem={({ item }) => {
-                  return (
-                    <ListItem
-                      key={item.uid}
-                      roundAvatar
-                      title={item.username}
-                      avatar={{ uri: item.img }}
-                      onPress={() => {
-                        this.goToOtherProfile(item.uid, true);
-                      }}
-                    />
-                  );
-                }}
-                keyExtractor={item => item.img} // change to key later
-              />
-            </List>
+            {this.state.requests.length > 0 ? (
+              <View>
+                <Text>Friend Requests</Text>
+                <List>
+                  <FlatList
+                    data={this.state.requests}
+                    renderItem={({ item }) => {
+                      return (
+                        <ListItem
+                          key={item.uid}
+                          roundAvatar
+                          title={item.username}
+                          avatar={{ uri: item.img }}
+                          onPress={() => {
+                            this.goToOtherProfile(item.uid, true);
+                          }}
+                        />
+                      );
+                    }}
+                    keyExtractor={item => item.img} // change to key later
+                  />
+                </List>
+              </View>
+            ) : null}
             <Text>Friends</Text>
             <List>
               <FlatList

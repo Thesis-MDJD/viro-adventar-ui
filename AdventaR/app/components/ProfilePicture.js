@@ -46,8 +46,6 @@ export default class ProfilePicture extends Component {
       this.setState({
         uploading: true
       }, () => {
-        firebaseApp.storage().setMaxOperationRetryTime(Infinity);
-        firebaseApp.storage().setMaxUploadRetryTime(Infinity);
   
         console.log('2');
         let data = "";
@@ -75,6 +73,7 @@ export default class ProfilePicture extends Component {
             console.log('5');
             const userId = await AsyncStorage.getItem("dbId");
             const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture")
+            console.log(data);
             storageRef
             .putString(data)
             .then( (data) => {

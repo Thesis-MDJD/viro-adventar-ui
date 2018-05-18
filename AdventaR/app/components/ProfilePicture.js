@@ -14,6 +14,8 @@ import {
 } from "react-native";
 import { firebaseApp } from "./FireBase";
 import RNFetchBlob from "react-native-fetch-blob";
+import ImageResizer from 'react-native-image-resizer';
+
 
 //https://facebook.github.io/react-native/docs/cameraroll.html
 //https://github.com/joltup/react-native-fetch-blob
@@ -33,86 +35,77 @@ export default class ProfilePicture extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit() {
-    this.setState(
-      {
+  onSubmit(){
+    console.log('1', ImageResizer);
+    ImageResizer.createResizedImage(this.state.currentPhoto, 200, 200, 'JPEG', 100, 0, null).then((response) => {
+      // response.uri is the URI of the new image that can now be displayed, uploaded...
+      // response.path is the path of the new image
+      // response.name is the name of the new image with the extension
+      // response.size is the size of the new image
+    
+      this.setState({
         uploading: true
-      },
-      () => {
+      }, () => {
+        firebaseApp.storage().setMaxOperationRetryTime(Infinity);
+        firebaseApp.storage().setMaxUploadRetryTime(Infinity);
+  
+        console.log('2');
         let data = "";
-        RNFetchBlob.fs
-          .stat(this.state.currentPhoto)
-          .then(stats => {
-            let filetype;
-            alert(`Stats ${JSON.stringify(stats)}`);
-            alert(`Object Entries ${JSON.stringify(Object.entries(stats))}`);
-            if (!stats.filetype) {
-              Object.entries(stats).forEach(entry => {
-                if (typeof entry[1] === "object") {
-                  filetype = entry[0];
-                }
-              });
-            } else {
-              filetype = stats.filename.split(".")[1];
-            }
-            RNFetchBlob.fs
-              .readStream(
-                // file path
-                this.state.currentPhoto,
-                // encoding, should be one of `base64`, `utf8`, `ascii`
-                "base64",
-                // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
-                // when reading file in BASE64 encoding, buffer size must be multiples of 3.
-                4095
-              )
-              .then(ifstream => {
-                ifstream.open();
-                ifstream.onData(chunk => {
-                  // when encoding is `ascii`, chunk will be an array contains numbers
-                  // otherwise it will be a string
-                  data += chunk;
-                });
-                ifstream.onError(err => {
-                  console.log("oops", err);
-                });
-                ifstream.onEnd(async () => {
-                  const userId = await AsyncStorage.getItem("dbId");
-                  const storageRef = firebaseApp
-                    .storage()
-                    .ref()
-                    .child(userId + "/profilePicture");
-
-                  storageRef.putString(data).then(data => {
-                    this.setState(
-                      {
-                        uploading: false
-                      },
-                      () => {
-                        storageRef.updateMetadata({
-                          contentType: "image/" + filetype
-                        });
-                        this.props.setProfilePicture();
-                        this.props.hideModal();
-                      }
-                    );
-                  });
-                });
-              });
+        let filetype = 'jpeg';
+        RNFetchBlob.fs.readStream(
+          // file path
+          response.uri,
+          // encoding, should be one of `base64`, `utf8`, `ascii`
+          "base64",
+          // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
+          // when reading file in BASE64 encoding, buffer size must be multiples of 3.
+          4095)
+        .then((ifstream) => {
+          console.log('4');
+          ifstream.open()
+          ifstream.onData((chunk) => {
+            // when encoding is `ascii`, chunk will be an array contains numbers
+            // otherwise it will be a string
+            data += chunk
           })
-          .catch(err => {
-            alert(`Error ${JSON.stringify(err.message)}`);
-            console.log(err);
+          ifstream.onError((err) => {
+            console.log("oops", err)
+          })
+          ifstream.onEnd(async () => {
+            console.log('5');
+            const userId = await AsyncStorage.getItem("dbId");
+            const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture")
+            storageRef
+            .putString(data)
+            .then( (data) => {
+              console.log('6');
+                this.setState({
+                  uploading: false
+                }, () => {
+                  storageRef.updateMetadata({ contentType: 'image/' + filetype })
+                  RNFetchBlob.fs.unlink(response.uri)
+                  this.props.setProfilePicture();
+                  this.props.hideModal();
+                })
+              });
           });
-      }
-    );
+        });
+      })
+    }).catch((err) => {
+      // Oops, something went wrong. Check that the filename is correct and
+      // inspect err to get more details.
+      console.log(err);
+    });
   }
 
   getLibraryPhoto() {
     CameraRoll.getPhotos({
-      first: 40,
-      assetType: "Photos"
-    })
+        first: 40,
+        assetType: "Photos",
+        mimeTypes: ["image/jpeg", "image/jpg"]
+      })
       .then(r => {
+        console.log(r);
         this.setState({ photos: r.edges, hideCameraRoll: false });
       })
       .catch(err => {

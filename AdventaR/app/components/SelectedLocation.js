@@ -23,7 +23,8 @@ import { REST_SERVER_IP } from "react-native-dotenv";
        restaurantId: this.props.navigation.state.params.restaurantId,
        distance: this.props.navigation.state.params.distance,
        updateFavoritedLocations: this.props.navigation.state.params.updateFavoritedLocations,
-       updateCheckedInLocations: this.props.navigation.state.params.updateCheckedInLocations
+       updateCheckedInLocations: this.props.navigation.state.params.updateCheckedInLocations,
+      tabbed: this.props.navigation.state.params.tabbed
      }
    };
 
@@ -56,7 +57,7 @@ import { REST_SERVER_IP } from "react-native-dotenv";
         fontWeight: "bold"
       },
       headerLeft: (
-        <Text onPress={() => this.props.navigation.goBack()} title="Back" color="#fff" />
+        <Button onPress={() => navigation.goBack()} title="Back" color="#fff" />
       )
     };
   };
@@ -98,7 +99,7 @@ import { REST_SERVER_IP } from "react-native-dotenv";
               updateCheckedIn={this.state.updateCheckedInLocations}
               />: null}          
           </View>
-          
+
           <View style={styles.addressContainer}>
             <View style={styles.address}>
               <Text style={styles.addressText}>{address}</Text>

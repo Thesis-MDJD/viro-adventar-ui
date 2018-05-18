@@ -76,16 +76,21 @@ class HelloWorldSceneAR extends Component {
         .orderByChild('yelpId')
         CheckedInId.once('value', snapshot => {
         let storage = {};
-        let checkedInYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
-        this.setState({checkedIn: storage});
+        if (snapshot.val()) {
+          let checkedInYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
+          this.setState({checkedIn: storage});
+        }
       })
     } catch (error) {
-      console.log('Error on favorite fetch', error)
+      console.log('Error on checked in fetch', error)
     }
   }
 
-  updateCheckedInLocations(yelpId){
+  updateCheckedInLocations(yelpId) {
     this.state.checkedIn[yelpId] ? delete this.state.checkedIn[yelpId] : this.state.checkedIn[yelpId] = yelpId;
+    this.setState({
+      checkedIn: Object.assign({}, this.state.checkedIn)
+    })
   }
 
   getFavoritedLocations = async () => {
@@ -98,16 +103,21 @@ class HelloWorldSceneAR extends Component {
         .orderByChild('yelpId')
       favoritedId.once('value', snapshot => {
         let storage = {};
-        let favoritedYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
-        this.setState({favorited: storage});
+        if(snapshot.val()) {
+          let favoritedYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
+          this.setState({favorited: storage});
+        }
       })
     } catch (error) {
       console.log('Error on favorite fetch', error)
     }
   }
 
-  updateFavoritedLocations(yelpId){
+  updateFavoritedLocations(yelpId) {
     this.state.favorited[yelpId] ? delete this.state.favorited[yelpId] : this.state.favorited[yelpId] = yelpId;
+    this.setState({
+      favorited: Object.assign({}, this.state.favorited)
+    })
   }
 
   componentDidMount() {

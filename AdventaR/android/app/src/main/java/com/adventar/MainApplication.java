@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -31,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
         new MainReactPackage(),
         new RNFetchBlobPackage(),
         new A0Auth0Package(),
-        new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
+        new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM)),
+        new ImageResizerPackage()
       );
     }
 

@@ -59,14 +59,22 @@ export default class User extends Component {
 
   setProfilePicture() {
     let data = '';
-    firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture.jpeg").getDownloadURL().then( (url) => {
-      let task = RNFetchBlob.fetch('GET', url)
-      .then( (data) => {
-        let string = data.data;
-        let stringData = String.fromCharCode(...string.split(","));
-          this.setState({
-            profilePicture: "data:image/jpeg;base64," + stringData
-          })
+    let pictureStor = firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture");
+
+    pictureStor.getMetadata()
+    .then((metadata) => {
+      console.log(metadata);
+      pictureStor.getDownloadURL().then( (url) => {
+        let task = RNFetchBlob.fetch('GET', url)
+        .then( (data) => {
+          let string = data.data;
+          let stringData = string.split(",").map( (item)=> {
+            return String.fromCharCode(item);
+          }).join("");
+            this.setState({
+              profilePicture: "data:" + metadata.contentType + ";base64," + stringData
+            })
+        })
       })
     })
     .catch( err => {
@@ -98,7 +106,7 @@ export default class User extends Component {
           visible={this.state.modalVisible}
           onRequestClose={( () => this.setState({ modalVisible: false })).bind(this)}
         >
-          <ProfilePicture setProfilePicture={this.setProfilePicture} hideModal={( () => this.setState({ modalVisible: false })).bind(this)} />
+          <ProfilePicture setProfilePicture={this.setProfilePicture} hideModal={( () => this.setState({ modalVisible: false })).bind(this)} profPic={this.state.profilePicture} />
         </Modal>
         <View style={styles.centered}>
           <TouchableHighlight onPress={( () => this.setState({ modalVisible: true })).bind(this)}>

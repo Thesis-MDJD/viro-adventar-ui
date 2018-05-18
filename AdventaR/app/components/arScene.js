@@ -116,7 +116,6 @@ class HelloWorldSceneAR extends Component {
       }
     })
 
-
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color="#FFFFFF" />
@@ -167,7 +166,6 @@ class HelloWorldSceneAR extends Component {
                     )
                     : null
                   }
-
                 </ViroNode>
               );
             }

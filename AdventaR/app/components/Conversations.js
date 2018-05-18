@@ -58,10 +58,11 @@ export default class Conversations extends Component {
   componentDidMount() {
     this.getUserProfile();
   }
-  goToConversation = id => {
+  goToConversation = (id, people) => {
     this.props.navigation.navigate("chat", {
       convId: id,
-      loggedInUser: this.state.loggedInUser
+      loggedInUser: this.state.loggedInUser,
+      people
     });
   };
   render() {
@@ -83,7 +84,10 @@ export default class Conversations extends Component {
                           key={item.conversationId}
                           title={item.participants}
                           onPress={() => {
-                            this.goToConversation(item.conversationId);
+                            this.goToConversation(
+                              item.conversationId,
+                              item.participants
+                            );
                           }}
                         />
                       );

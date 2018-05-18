@@ -7,7 +7,8 @@ import {
   Button,
   AsyncStorage,
   ActivityIndicator,
-  FlatList
+  FlatList,
+  TextInput
 } from "react-native";
 import { SearchBar, ListItem, List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
@@ -18,7 +19,9 @@ export default class Chat extends Component {
     this.state = {
       messages: [],
       loggedInUser: {},
-      loading: true
+      loading: true,
+      newChat: false,
+      text: ""
     };
     this.rootRef = firebaseApp
       .database()
@@ -34,6 +37,20 @@ export default class Chat extends Component {
   goBackToPrevious = () => {
     this.props.navigation.goBack();
   };
+  sendChat = () => {
+    this.rootRef
+      .child("Messages")
+      .push()
+      .set({
+        content: this.state.text,
+        conversation: this.props.navigation.state.params.convId,
+        sender: this.state.loggedInUser.curUid,
+        createdAt: Date.now()
+      });
+    this.setState({
+      text: ""
+    });
+  };
   getUserProfile = async () => {
     const self = this;
     try {
@@ -43,28 +60,39 @@ export default class Chat extends Component {
         .child("Messages")
         .orderByChild("conversation")
         .equalTo(convId);
-      result.once("value", async snap => {
-        const messages = Object.values(snap.val());
-        if (messages) {
-          self.setState({
-            messages,
-            loggedInUser: {
-              curUid,
-              email: await AsyncStorage.getItem("email"),
-              username: await AsyncStorage.getItem("username")
-            },
-            loading: false
-          });
-        } else {
-          self.setState({
-            loggedInUser: {
-              curUid,
-              email: await AsyncStorage.getItem("email"),
-              username: await AsyncStorage.getItem("username")
-            },
-            loading: false
-          });
-        }
+      // result.once("value", async snap => {
+      //   const messages = Object.values(snap.val());
+      //   if (messages) {
+      //     self.setState({
+      //       messages,
+      // loggedInUser: {
+      //   curUid,
+      //   email: await AsyncStorage.getItem("email"),
+      //   username: await AsyncStorage.getItem("username")
+      // },
+      //       loading: false
+      //     });
+      //   } else {
+      //     self.setState({
+      //       loggedInUser: {
+      //         curUid,
+      //         email: await AsyncStorage.getItem("email"),
+      //         username: await AsyncStorage.getItem("username")
+      //       },
+      //       loading: false
+      //     });
+      //   }
+      // });
+      result.on("child_added", snap => {
+        const updateMessages = self.state.messages.slice();
+        updateMessages.push(snap.val());
+        self.setState({
+          loggedInUser: {
+            curUid
+          },
+          loading: false,
+          messages: updateMessages
+        });
       });
     } catch (error) {
       console.log("Fetching Current User Error: ", error);
@@ -73,7 +101,7 @@ export default class Chat extends Component {
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
-      title: "",
+      title: params.people,
       headerStyle: {
         backgroundColor: "#f4511e"
       },
@@ -107,6 +135,15 @@ export default class Chat extends Component {
                 }}
               />
             </List>
+            <View>
+              <TextInput
+                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+                onChangeText={text => this.setState({ text })}
+                onSubmitEditing={this.sendChat}
+                returnKeyType="send"
+                value={this.state.text}
+              />
+            </View>
           </View>
         )}
       </View>

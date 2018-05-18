@@ -29,70 +29,70 @@ export default class YelpRestaurants extends Component {
         { headers: myHeaders }
       );
       const results = await data.json();
-      this.setState({ places: results })
+      this.setState({ places: results });
     } catch (error) {
       console.log("Fetch Error = ", error);
     }
   };
 
-componentDidMount() {
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        error: null
-      });
-      this.getPlaces(position.coords.latitude, position.coords.longitude);
-    },
-    error => this.setState({ error: error.message }),
-    { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
-  );
-  this.watchId = navigator.geolocation.watchPosition(
-    position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        error: null
-      });
-      this.getPlaces(position.coords.latitude, position.coords.longitude);
-    },
-    error => this.setState({ error: error.message }),
-    {
-      enableHighAccuracy: true,
-      timeout: 200000,
-      maximumAge: 1000,
-      distanceFilter: 10
-    }
-  );
-  this.props.navigation.setParams({ goToRestaurants: this.goToRestaurants });
-}
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        this.getPlaces(position.coords.latitude, position.coords.longitude);
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
+    );
+    this.watchId = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        this.getPlaces(position.coords.latitude, position.coords.longitude);
+      },
+      error => this.setState({ error: error.message }),
+      {
+        enableHighAccuracy: true,
+        timeout: 200000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
+    );
+    this.props.navigation.setParams({ goToRestaurants: this.goToRestaurants });
+  }
 
-goToSelectedRestaurants(id) {
-  this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
-}
+  goToSelectedRestaurants(id) {
+    this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
+  }
 
-componentWillUnmount() {
-  navigator.geolocation.clearWatch(this.watchId);
-}
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
 
-render() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.instructions}>{this.state.latitude}</Text>
-      <Text style={styles.instructions}>{this.state.longitude}</Text>
-      <ScrollView style={list.container}>
-        {this.state.places.businesses ? this.state.places.businesses.map(place => {
-          return (
-            <Text style={list.item} key={place.id} onPress={() => this.goToSelectedRestaurants(place.id)}>
-              {place.name}
-            </Text>
-          );
-        }) : null }
-      </ScrollView>
-    </View>
-  );
-}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.instructions}>{this.state.latitude}</Text>
+        <Text style={styles.instructions}>{this.state.longitude}</Text>
+        <ScrollView style={list.container}>
+          {this.state.places.businesses ? this.state.places.businesses.map(place => {
+            return (
+              <Text style={list.item} key={place.id} onPress={() => this.goToSelectedRestaurants(place.id)}>
+                {place.name}
+              </Text>
+            );
+          }) : null }
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

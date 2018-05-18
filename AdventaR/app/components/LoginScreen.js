@@ -38,7 +38,7 @@ export default class LoginScreen extends Component {
       await AsyncStorage.setItem("email", user.name);
       const dbId = "";
       const userId = this.rootRef
-        .child(`Users`)
+        .child("Users")
         .orderByChild("username")
         .equalTo(user.nickname);
       userId.once("value", async snap => {

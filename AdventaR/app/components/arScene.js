@@ -92,21 +92,21 @@ class HelloWorldSceneAR extends Component {
     });
     this.filteredPlaces = this.filteredPlaces
       .map((place, index, array) => {
-      if (place.processed) {
-        return;
-      }
-      place.processed = true;
-      for (let i = 0; i < array.length; i++) {
-        if (!array[i].processed
+        if (place.processed) {
+          return;
+        }
+        place.processed = true;
+        for (let i = 0; i < array.length; i++) {
+          if (!array[i].processed
           && i !== index
           && place.polarCoor.degrees > array[i].polarCoor.degrees - 10
           && place.polarCoor.degrees < array[i].polarCoor.degrees + 10) {
-          place.locationsBehind.push(array[i]);
-          array[i].processed = true;
+            place.locationsBehind.push(array[i]);
+            array[i].processed = true;
+          }
         }
-      }
-      return place;
-    })
+        return place;
+      })
       .filter(place => place);
 
     return (
@@ -131,15 +131,15 @@ class HelloWorldSceneAR extends Component {
                   position={polarToCartesian([75, turn, 0])}>
                   {!this.state.expandedPlace ?
                     [<ViroText onClick={() => this.touched(place.id)}
-                               text={place.name + ',' + place.locationsBehind.length} scale={[15, 15, 15]}
-                               position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
-                      <Viro3DObject source={require('./res/OrangePeel_v4.vrx')}
-                                    rotation={[0, 0, 0]}
-                                    position={[0, -3.5, 0]}
-                                    scale={[0.1, 0.1, 0.1]}
-                                    onClick={() => this.touched(place.id, true)}
-                                    type="VRX"
-                                    animation={{name: 'animateMarker', run: true, loop: true}}/>]
+                      text={place.name + "," + place.locationsBehind.length} scale={[15, 15, 15]}
+                      position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
+                    <Viro3DObject source={require("./res/OrangePeel_v4.vrx")}
+                      rotation={[0, 0, 0]}
+                      position={[0, -3.5, 0]}
+                      scale={[0.1, 0.1, 0.1]}
+                      onClick={() => this.touched(place.id, true)}
+                      type="VRX"
+                      animation={{name: "animateMarker", run: true, loop: true}}/>]
                     : null
                   }
                   {this.state.expandedPlace && this.state.expandedPlace === place.id && place.locationsBehind ?
@@ -157,7 +157,7 @@ class HelloWorldSceneAR extends Component {
                         )}
                       </ViroFlexView>
                     )
-                      : null}
+                    : null}
                 </ViroNode>
               );
             }
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   expandedPlaceContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
     backgroundColor: "#000000",
     padding: .2,
     justifyContent: "space-evenly"
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
 });
 
 ViroAnimations.registerAnimations({
-  animateMarker:{
-    properties: {rotateY: '+=45'},
+  animateMarker: {
+    properties: {rotateY: "+=45"},
     duration: 1000
   }
 });

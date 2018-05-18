@@ -58,27 +58,27 @@ export default class User extends Component {
   }
 
   setProfilePicture() {
-    let data = '';
+    let data = "";
     let pictureStor = firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture");
 
     pictureStor.getMetadata()
-    .then((metadata) => {
-      console.log(metadata);
-      pictureStor.getDownloadURL().then( (url) => {
-        let task = RNFetchBlob.fetch('GET', url)
-        .then( (data) => {
-          let string = data.data;
-          let stringData = string.split(",").map( (item)=> {
-            return String.fromCharCode(item);
-          }).join("");
-            this.setState({
-              profilePicture: "data:" + metadata.contentType + ";base64," + stringData
-            })
-        })
+      .then((metadata) => {
+        console.log(metadata);
+        pictureStor.getDownloadURL().then( (url) => {
+          let task = RNFetchBlob.fetch("GET", url)
+            .then( (data) => {
+              let string = data.data;
+              let stringData = string.split(",").map( (item)=> {
+                return String.fromCharCode(item);
+              }).join("");
+              this.setState({
+                profilePicture: "data:" + metadata.contentType + ";base64," + stringData
+              });
+            });
+        });
       })
-    })
-    .catch( err => {
-    })
+      .catch( err => {
+      });
   }
 
   goToFriends = () => {

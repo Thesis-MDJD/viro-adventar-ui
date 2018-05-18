@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Button
+  ScrollView
 } from "react-native";
 import { YELP_API_KEY } from "react-native-dotenv";
 
@@ -31,7 +29,7 @@ export default class YelpRestaurants extends Component {
         { headers: myHeaders }
       );
       const results = await data.json();
-      this.setState({ places: results })
+      this.setState({ places: results });
     } catch (error) {
       console.log("Fetch Error = ", error);
     }

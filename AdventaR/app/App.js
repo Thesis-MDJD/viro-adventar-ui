@@ -5,7 +5,6 @@ import {
   TabNavigator
 } from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Restaurants from "./components/Restaurants";
 import Camera from "./components/Camera";
 import LoginScreen from "./components/LoginScreen";
 import AuthLoadingScreen from "./components/AuthLoadingScreen";
@@ -16,6 +15,8 @@ import DevTools from "./components/DevTools";
 import SearchFriend from "./components/SearchFriend";
 import OtherProfile from "./components/OtherProfile";
 import Friends from "./components/Friends";
+import Conversations from "./components/Conversations";
+import Chat from "./components/Chat";
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(
@@ -23,7 +24,7 @@ const AppStack = StackNavigator({
         Camera: Camera,
         User: Profile,
         Friend: Friends,
-        Convo: YelpRestaurants
+        Convo: Conversations
       },
       {
         tabBarPosition: "bottom",
@@ -62,7 +63,8 @@ const AppStack = StackNavigator({
   otherProfile: {
     screen: OtherProfile
   },
-  Search: SearchFriend
+  Search: SearchFriend,
+  chat: Chat
 });
 
 const AuthStack = StackNavigator({ Login: LoginScreen });
@@ -72,5 +74,3 @@ export default SwitchNavigator({
   App: AppStack,
   Auth: AuthStack
 });
-
-//rebase

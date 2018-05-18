@@ -14,13 +14,15 @@ import SelectedLocation from "./components/SelectedLocation";
 import Profile from "./components/Profile";
 import DevTools from "./components/DevTools";
 import SearchFriend from "./components/SearchFriend";
+import OtherProfile from "./components/OtherProfile";
+import Friends from "./components/Friends";
 const AppStack = StackNavigator({
   Camera: {
     screen: TabNavigator(
       {
         Camera: Camera,
         User: Profile,
-        Friend: SearchFriend,
+        Friend: Friends,
         Convo: YelpRestaurants
       },
       {
@@ -56,7 +58,11 @@ const AppStack = StackNavigator({
   },
   SelectedLocation: {
     screen: SelectedLocation
-  }
+  },
+  otherProfile: {
+    screen: OtherProfile
+  },
+  Search: SearchFriend
 });
 
 const AuthStack = StackNavigator({ Login: LoginScreen });

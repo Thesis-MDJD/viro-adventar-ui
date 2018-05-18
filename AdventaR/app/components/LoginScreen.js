@@ -21,8 +21,6 @@ export default class LoginScreen extends Component {
     this._onLogin();
   }
 
-  getUserProfile = (username, email) => {};
-
   _onLogin = async () => {
     const self = this;
     try {
@@ -48,15 +46,17 @@ export default class LoginScreen extends Component {
         if (!a) {
           const id = this.rootRef.child("Users").push({
             username: user.nickname,
-            email: user.name
+            email: user.name,
+            image: "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
           });
           id = id.toString().slice(48);
           await AsyncStorage.setItem("dbId", id);
+          self.props.navigation.navigate("App");
         } else {
           await AsyncStorage.setItem("dbId", Object.keys(snap.val())[0]);
           const id = await AsyncStorage.getItem("dbId");
+          self.props.navigation.navigate("App");
         }
-        self.props.navigation.navigate("App");
       });
     } catch (error) {
       console.log("login failed", error);

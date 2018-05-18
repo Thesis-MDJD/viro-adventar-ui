@@ -5,9 +5,13 @@ import {
   StyleSheet,
   Image,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Modal,
+  TouchableHighlight
 } from "react-native";
 import { firebaseApp } from "./FireBase";
+import ProfilePicture from "./ProfilePicture";
+import RNFetchBlob from "react-native-fetch-blob";
 
 export default class User extends Component {
   constructor(props) {
@@ -15,8 +19,13 @@ export default class User extends Component {
     this.state = {
       username: "",
       dbId: "",
-      email: ""
+      email: "",
+      modalVisible: false,
+      profilePicture: undefined
     };
+
+    this.setProfilePicture = this.setProfilePicture.bind(this);
+
     //Database
     this.rootRef = firebaseApp
       .database()
@@ -35,14 +44,41 @@ export default class User extends Component {
         username,
         dbId: userId,
         email
+      }, () => {
+        this.setProfilePicture();
       });
     } catch (error) {
       alert("error", JSON.stringify(error));
       console.log("Profile Fetch Error: ", error);
     }
   };
+
   componentDidMount() {
     this.getUserProfile();
+  }
+
+  setProfilePicture() {
+    let data = '';
+    let pictureStor = firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture");
+
+    pictureStor.getMetadata()
+    .then((metadata) => {
+      console.log(metadata);
+      pictureStor.getDownloadURL().then( (url) => {
+        let task = RNFetchBlob.fetch('GET', url)
+        .then( (data) => {
+          let string = data.data;
+          let stringData = string.split(",").map( (item)=> {
+            return String.fromCharCode(item);
+          }).join("");
+            this.setState({
+              profilePicture: "data:" + metadata.contentType + ";base64," + stringData
+            })
+        })
+      })
+    })
+    .catch( err => {
+    })
   }
 
   goToFriends = () => {
@@ -64,14 +100,24 @@ export default class User extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={( () => this.setState({ modalVisible: false })).bind(this)}
+        >
+          <ProfilePicture setProfilePicture={this.setProfilePicture} hideModal={( () => this.setState({ modalVisible: false })).bind(this)} profPic={this.state.profilePicture} />
+        </Modal>
         <View style={styles.centered}>
-          <Image
-            style={styles.image}
-            source={{
-              uri:
-                "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
-            }}
-          />
+          <TouchableHighlight onPress={( () => this.setState({ modalVisible: true })).bind(this)}>
+            <Image
+              style={styles.image}
+              source={{
+                uri:
+                  this.state.profilePicture || "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+              }}
+            />
+          </TouchableHighlight>
           <Text style={styles.name}>{this.state.username}</Text>
         </View>
         <View style={{ marginLeft: 20 }}>

@@ -21,17 +21,19 @@
   [FIRApp configure];
   BOOL enterVrImmediately = YES;
   BOOL usingNgrok = YES;
-
+  
   if(enterVrImmediately) {
     NSURL *jsCodeLocation = nil;
 #ifdef DEBUG
     if(usingNgrok) {
       VRTBundleURLProvider *bundleProvider = [[VRTBundleURLProvider alloc] init];
       jsCodeLocation = [bundleProvider jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+//      jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     }
 #endif
     if(jsCodeLocation == nil) {
       jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+//      jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     }
 
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
@@ -46,6 +48,8 @@
     self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
   }
+  
+  
   return YES;
 }
 

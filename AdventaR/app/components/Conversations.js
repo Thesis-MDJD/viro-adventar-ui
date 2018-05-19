@@ -33,14 +33,14 @@ export default class Conversations extends Component {
         .child("Conversations")
         .orderByChild(curUid)
         .equalTo(true);
-      let col = [];
-      result.once("value", async snap => {
-        Object.keys(snap.val()).forEach(key => {
-          col.push({ conversationId: key });
-        });
-        Object.values(snap.val()).forEach((room, i) => {
-          col[i]["participants"] = room.name;
-        });
+      result.on("child_added", async snap => {
+        const room = {
+          conversationId: snap.key,
+          participants: snap.val()["people"]
+        };
+        let col = self.state.conversations;
+        col.push(room);
+        alert(JSON.stringify(col));
         self.setState({
           conversations: col,
           loggedInUser: {
@@ -58,42 +58,52 @@ export default class Conversations extends Component {
   componentDidMount() {
     this.getUserProfile();
   }
-  goToConversation = id => {
+  makeNewConversation = () => {
+    this.props.navigation.navigate("NewConvo", {
+      loggedInUser: this.state.loggedInUser
+    });
+  };
+  goToConversation = (id, people) => {
     this.props.navigation.navigate("chat", {
       convId: id,
-      loggedInUser: this.state.loggedInUser
+      loggedInUser: this.state.loggedInUser,
+      people
     });
   };
   render() {
     return (
       <View styles={loadingScreen.container}>
-        {this.state.loading ? (
-          <ActivityIndicator />
-        ) : (
+        {this.state.conversations.length > 0 ? (
           <View>
-            {this.state.conversations.length > 0 ? (
-              <View>
-                <Text>Conversations</Text>
-                <List>
-                  <FlatList
-                    data={this.state.conversations}
-                    renderItem={({ item }) => {
-                      return (
-                        <ListItem
-                          key={item.conversationId}
-                          title={item.participants}
-                          onPress={() => {
-                            this.goToConversation(item.conversationId);
-                          }}
-                        />
-                      );
-                    }}
-                    keyExtractor={item => item.img} // change to key later
-                  />
-                </List>
-              </View>
-            ) : null}
+            <Text>Conversations</Text>
+            <List>
+              <FlatList
+                data={this.state.conversations}
+                renderItem={({ item }) => {
+                  return (
+                    <ListItem
+                      key={item.conversationId}
+                      title={item.participants}
+                      onPress={() => {
+                        this.goToConversation(
+                          item.conversationId,
+                          item.participants
+                        );
+                      }}
+                    />
+                  );
+                }}
+                keyExtractor={item => item.img} // change to key later
+              />
+            </List>
+            <Button
+              onPress={this.makeNewConversation}
+              title="My Friends"
+              color="blue"
+            />
           </View>
+        ) : (
+          <Text> Chat With Friends! </Text>
         )}
       </View>
     );

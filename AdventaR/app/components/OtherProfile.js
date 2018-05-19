@@ -31,6 +31,7 @@ export default class User extends Component {
   getUserProfile = async () => {
     const self = this;
     const { userId } = this.props.navigation.state.params;
+    const { reqId } = this.props.navigation.state.params;
     const result = this.rootRef.child("Users").child(userId);
     try {
       result.once("value", async snap => {
@@ -44,6 +45,7 @@ export default class User extends Component {
             email: await AsyncStorage.getItem("email"),
             username: await AsyncStorage.getItem("username")
           },
+          reqId,
           loading: false
         });
       });
@@ -60,53 +62,39 @@ export default class User extends Component {
 
   addFriend = async userId => {
     try {
-      this.rootRef
+      const add = this.rootRef
         .child("Users")
         .child(userId)
         .child("Friends")
-        .push()
-        .set({
-          status: 0,
-          uid: this.state.loggedInUser.uid,
-          email: this.state.loggedInUser.email,
-          username: this.state.loggedInUser.username
-        });
+        .push();
+      const reqId = add.key;
+      add.set({
+        status: 0,
+        uid: this.state.loggedInUser.uid,
+        email: this.state.loggedInUser.email,
+        username: this.state.loggedInUser.username,
+        reqId
+      });
     } catch (error) {
       console.log("Add Friend Error: ", error);
     }
   };
 
   acceptFriend = uid => {
-    const self = this;
     const loggedIn = this.state.loggedInUser;
-    let loginUserId = loggedIn.uid;
+    // alert(`uid ${JSON.stringify(uid)}`);
+    // alert(`loggedin ${JSON.stringify(loggedIn)}`);
     const request = this.rootRef
       .child("Users")
       .child(loggedIn.uid)
       .child("Friends")
-      .orderByChild("uid")
-      .equalTo(uid);
-    request.once("value", snap => {
-      snap.ref.remove();
-      self.rootRef
-        .child("Users")
-        .child(loggedIn.uid)
-        .child("Friends")
-        .push()
-        .set({
-          status: 1,
-          uid: self.state.userId,
-          email: self.state.email,
-          username: self.state.username
-        });
-      const newAdd = self.rootRef
-        .child("Users")
-        .child(loggedIn.uid)
-        .child("Friends");
-      newAdd.once("value", snap => {
-        alert(`NewAdd ${snap.val()}`);
+      .child(this.state.reqId)
+      .set({
+        status: 1,
+        uid: this.state.userId,
+        email: this.state.email,
+        username: this.state.username
       });
-    });
     this.rootRef
       .child("Users")
       .child(this.state.userId)

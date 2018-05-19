@@ -68,9 +68,10 @@ export default class FavoritePlaces extends Component {
   goToSearch = () => {
     this.props.navigation.navigate("Search");
   };
-  goToOtherProfile = (id, isRequested = false, isAccepted = false) => {
+  goToOtherProfile = (id, reqId, isRequested = false, isAccepted = false) => {
     this.props.navigation.navigate("otherProfile", {
       userId: id,
+      reqId,
       isRequested,
       isAccepted
     });
@@ -105,7 +106,7 @@ export default class FavoritePlaces extends Component {
                           title={item.username}
                           avatar={{ uri: item.img }}
                           onPress={() => {
-                            this.goToOtherProfile(item.uid, true);
+                            this.goToOtherProfile(item.uid, item.reqId, true);
                           }}
                         />
                       );

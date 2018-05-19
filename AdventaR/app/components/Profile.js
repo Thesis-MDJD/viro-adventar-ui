@@ -63,7 +63,6 @@ export default class User extends Component {
 
     pictureStor.getMetadata()
       .then((metadata) => {
-        console.log(metadata);
         pictureStor.getDownloadURL().then( (url) => {
           let task = RNFetchBlob.fetch("GET", url)
             .then( (data) => {

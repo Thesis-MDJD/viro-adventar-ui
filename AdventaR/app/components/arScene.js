@@ -84,6 +84,7 @@ class HelloWorldSceneAR extends Component {
   }
 
   render() {
+    let forceRerender = false;
     this.filteredPlaces = this.state.places.slice(0, 20).map(place => {
       place.polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
       place.locationsBehind = [];
@@ -109,6 +110,12 @@ class HelloWorldSceneAR extends Component {
       })
       .filter(place => place);
 
+    this.filteredPlaces.forEach( place => {
+      if (place.id === this.state.expandedPlace && place.locationsBehind.length === 0) {
+         forceRerender = true;
+      }
+    })
+
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color="#FFFFFF" />
@@ -129,8 +136,8 @@ class HelloWorldSceneAR extends Component {
                   key={place.id}
                   rotation={[0, turn * -1, 0]}
                   position={polarToCartesian([75, turn, 0])}>
-                  {!this.state.expandedPlace ?
-                    [<ViroText onClick={() => this.touched(place.id)}
+                  {!this.state.expandedPlace || forceRerender ?
+                    [<ViroText key={place.id} onClick={() => this.touched(place.id)}
                       text={place.name + "," + place.locationsBehind.length} scale={[15, 15, 15]}
                       position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
                     <Viro3DObject source={require("./res/OrangePeel_v4.vrx")}
@@ -142,22 +149,23 @@ class HelloWorldSceneAR extends Component {
                       animation={{name: "animateMarker", run: true, loop: true}}/>]
                     : null
                   }
-                  {this.state.expandedPlace && this.state.expandedPlace === place.id && place.locationsBehind ?
+                  {this.state.expandedPlace && this.state.expandedPlace === place.id && place.locationsBehind && place.locationsBehind.length > 0 ?
                     (
                       <ViroFlexView transformBehaviors={["billboard"]} style={styles.expandedPlaceContainer} height={2} width={0} scale={[10, 10, 10]} position={[0, 3.5, 30]}>
-                        <ViroFlexView height={1} position={[0, 0, -10]} width={2} flex={.5} onClick={() => this.setState({expandedPlace: 0})}>
+                        <ViroFlexView height={1} width={1} flex={.5} onClick={() => this.setState({expandedPlace: 0})} style={styles.expandedPlaceContainer}>
                           <ViroText height={1} textLineBreakMode={"wordwrap"} text={"Close"} style={styles.expandedLocationText}/>
                         </ViroFlexView>
-                        {place.locationsBehind.map(location =>
+                        {place.locationsBehind.slice(0, 5).map(location =>
                           (
-                            <ViroFlexView height={1} position={[0, 0, -10]} width={3} flex={.5} onClick={() => this.touched(location.id)}>
+                            <ViroFlexView height={1} width={3} flex={.5} onClick={() => this.touched(location.id)} >
                               <ViroText key={location.id} height={1} textLineBreakMode={"wordwrap"} text={location.name} style={styles.expandedLocationText}/>
                             </ViroFlexView>
                           )
                         )}
                       </ViroFlexView>
                     )
-                    : null}
+                    : null
+                  }
                 </ViroNode>
               );
             }
@@ -202,7 +210,6 @@ const styles = StyleSheet.create({
   },
   expandedPlaceContainer: {
     flexDirection: "column",
-    backgroundColor: "#000000",
     padding: .2,
     justifyContent: "space-evenly"
   },

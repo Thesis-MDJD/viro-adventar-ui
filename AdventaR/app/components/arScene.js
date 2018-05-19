@@ -1,9 +1,6 @@
 "use strict";
 
 import React, { Component, Text } from "react";
-
-import {StyleSheet} from "react-native";
-
 import {
   ViroARScene,
   ViroText,
@@ -16,10 +13,11 @@ import {
   ViroSpinner,
   ViroFlexView
 } from "react-viro";
-import { DeviceEventEmitter } from "react-native";
+import { DeviceEventEmitter, AsyncStorage, StyleSheet } from "react-native";
 import ReactNativeHeading from "react-native-heading";
 import { withNavigation } from "react-navigation";
 import getDegreesDistance from "./util/getDegreesDistance";
+import { firebaseApp } from "./FireBase";
 
 const polarToCartesian = ViroUtils.polarToCartesian;
 
@@ -36,7 +34,9 @@ class HelloWorldSceneAR extends Component {
       longitude: this.props.arSceneNavigator.viroAppProps.longitude,
       latitude: this.props.arSceneNavigator.viroAppProps.latitude,
       initialized: false,
-      expandedPlace: 0
+      expandedPlace: 0,
+      favorited: {},
+      checkedIn: {}
     };
     this.filteredPlaces = [];
 
@@ -46,15 +46,76 @@ class HelloWorldSceneAR extends Component {
     // bind "this" to functions
     this._onInitialized = this._onInitialized.bind(this);
     this.touched = this.touched.bind(this);
+    this.updateFavoritedLocations = this.updateFavoritedLocations.bind(this);
+    this.updateCheckedInLocations = this.updateCheckedInLocations.bind(this);
+
+    this.rootRef = firebaseApp
+      .database()
+      .ref()
+      .child("Features");
   }
 
-  touched(id, behind = false) {
+  touched(id, name, distance, behind = false) {
     let currentPlace = this.filteredPlaces.filter(place => place && place.id === id);
     if (currentPlace && currentPlace.length && currentPlace[0].locationsBehind && currentPlace[0].locationsBehind.length && behind) {
       this.setState({expandedPlace: id});
     } else {
-      this.props.navigation.navigate("SelectedLocation", {restaurantId: id});
+      this.props.navigation.navigate("SelectedLocation", {restaurantId: id, name: name, distance: distance, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
     }
+  }
+
+  getCheckedInLocations = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("dbId");
+      let CheckedInId = this.rootRef
+        .child("Users")
+        .child(userId)
+        .child("CheckedInPlaces")
+        .orderByChild("yelpId");
+      CheckedInId.once("value", snapshot => {
+        let storage = {};
+        if (snapshot.val()) {
+          let checkedInYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
+          this.setState({checkedIn: storage});
+        }
+      });
+    } catch (error) {
+      console.log("Error on checked in fetch", error);
+    }
+  }
+
+  updateCheckedInLocations(yelpId) {
+    this.state.checkedIn[yelpId] ? delete this.state.checkedIn[yelpId] : this.state.checkedIn[yelpId] = yelpId;
+    this.setState({
+      checkedIn: Object.assign({}, this.state.checkedIn)
+    });
+  }
+
+  getFavoritedLocations = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("dbId");
+      let favoritedId = this.rootRef
+        .child("Users")
+        .child(userId)
+        .child("FavoritePlaces")
+        .orderByChild("yelpId");
+      favoritedId.once("value", snapshot => {
+        let storage = {};
+        if (snapshot.val()) {
+          let favoritedYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
+          this.setState({favorited: storage});
+        }
+      });
+    } catch (error) {
+      console.log("Error on favorite fetch", error);
+    }
+  }
+
+  updateFavoritedLocations(yelpId) {
+    this.state.favorited[yelpId] ? delete this.state.favorited[yelpId] : this.state.favorited[yelpId] = yelpId;
+    this.setState({
+      favorited: Object.assign({}, this.state.favorited)
+    });
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -76,6 +137,8 @@ class HelloWorldSceneAR extends Component {
     DeviceEventEmitter.addListener("headingUpdated", data => {
       this.heading = data.heading || data;
     });
+    this.getFavoritedLocations();
+    this.getCheckedInLocations();
   }
 
   componentWillUnmount() {
@@ -112,9 +175,9 @@ class HelloWorldSceneAR extends Component {
 
     this.filteredPlaces.forEach( place => {
       if (place.id === this.state.expandedPlace && place.locationsBehind.length === 0) {
-         forceRerender = true;
+        forceRerender = true;
       }
-    })
+    });
 
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized}>
@@ -123,7 +186,7 @@ class HelloWorldSceneAR extends Component {
           (
             <ViroNode position={[0, 0, -1]}>
               <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
-              <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+              <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} />
             </ViroNode>
           )
           :
@@ -131,20 +194,43 @@ class HelloWorldSceneAR extends Component {
             if (place && place.polarCoor) {
               let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
               let turn = polarCoor.degrees - this.cameraHead;
+              let distance = polarCoor.distance;
+              let marker = place.locationsBehind.length > 0 ?
+                require("./res/Square.vrx")
+                :
+                (this.state.favorited[place.id] && this.state.checkedIn[place.id]) ?
+                  require("./res/CircledHeart.vrx")
+                  :
+                  this.state.favorited[place.id] ?
+                    require("./res/Heart.vrx")
+                    :
+                    this.state.checkedIn[place.id] ?
+                      require("./res/Circle.vrx")
+                      :
+                      require("./res/Triangle.vrx");
+
+              let moreLocations = place.locationsBehind.length > 0 ?
+                (<ViroText onClick={() => this.touched(place.id, place.name, distance)}
+                text={place.locationsBehind.length + " more"} scale={[15, 15, 15]}
+                position={[0, -1.5, 0]} style={styles.morePlaceTextStyle} />)
+                :
+                null;
+
               return (
                 <ViroNode
                   key={place.id}
                   rotation={[0, turn * -1, 0]}
                   position={polarToCartesian([75, turn, 0])}>
                   {!this.state.expandedPlace || forceRerender ?
-                    [<ViroText key={place.id} onClick={() => this.touched(place.id)}
-                      text={place.name + "," + place.locationsBehind.length} scale={[15, 15, 15]}
-                      position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
-                    <Viro3DObject source={require("./res/OrangePeel_v4.vrx")}
+                    [<ViroText key={place.id} width={1.2} onClick={() => this.touched(place.id, place.name, distance)}
+                      text={place.name} scale={[15, 15, 15]}
+                      position={[0, 3.5, 0]} style={styles.placeTextStyle} shadowCastingBitMask={2} />,
+                    moreLocations,
+                    <Viro3DObject source={marker}
                       rotation={[0, 0, 0]}
-                      position={[0, -3.5, 0]}
-                      scale={[0.1, 0.1, 0.1]}
-                      onClick={() => this.touched(place.id, true)}
+                      position={[0, -4.5, 0]}
+                      scale={[0.4, 0.4, 0.4]}
+                      onClick={() => this.touched(place.id, place.name, distance, true)}
                       type="VRX"
                       animation={{name: "animateMarker", run: true, loop: true}}/>]
                     : null
@@ -157,7 +243,7 @@ class HelloWorldSceneAR extends Component {
                         </ViroFlexView>
                         {place.locationsBehind.slice(0, 5).map(location =>
                           (
-                            <ViroFlexView height={1} width={3} flex={.5} onClick={() => this.touched(location.id)} >
+                            <ViroFlexView height={1} width={3} flex={.5} onClick={() => this.touched(location.id, location.name, distance)} >
                               <ViroText key={location.id} height={1} textLineBreakMode={"wordwrap"} text={location.name} style={styles.expandedLocationText}/>
                             </ViroFlexView>
                           )
@@ -205,6 +291,13 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     fontSize: 20,
     color: "#ffffff",
+    textAlignVertical: "center",
+    textAlign: "center",
+  },
+  morePlaceTextStyle: {
+    fontFamily: "Helvetica",
+    fontSize: 16,
+    color: "#999999",
     textAlignVertical: "center",
     textAlign: "center",
   },

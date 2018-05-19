@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, View, StyleSheet, AsyncStorage } from "react-native";
+import { Linking, View, Button, StyleSheet, AsyncStorage } from "react-native";
 import { Icon } from "react-native-elements";
 import call from "react-native-phone-call";
 import { withNavigation } from "react-navigation";
@@ -14,7 +14,6 @@ class LocContactInfo extends Component {
     };
     this.onPhonePress = this.onPhonePress.bind(this);
     this.onYelpPress = this.onYelpPress.bind(this);
-    this.onLogOutPress = this.onLogOutPress.bind(this);
   }
 
   onPhonePress() {
@@ -36,11 +35,6 @@ class LocContactInfo extends Component {
     }).catch(err => console.error("An error occurred", err));
   }
 
-  onLogOutPress = async () => {
-    await AsyncStorage.removeItem("userToken");
-    this.props.navigation.navigate("Auth");
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -52,14 +46,7 @@ class LocContactInfo extends Component {
           color='#00d36d'
           onPress={this.onPhonePress}
         />
-        {/*  Log Out */}
-        <Icon
-          raised
-          name='log-out'
-          type='feather'
-          color='#00a7de'
-          onPress={this.onLogOutPress}
-        />
+
         {/* YELP redirect */}
         <Icon
           name='yelp'

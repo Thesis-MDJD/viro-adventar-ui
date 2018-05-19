@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  StackNavigator,
+  createStackNavigator,
   SwitchNavigator,
   TabNavigator
 } from "react-navigation";
@@ -17,7 +17,7 @@ import OtherProfile from "./components/OtherProfile";
 import Friends from "./components/Friends";
 import Conversations from "./components/Conversations";
 import Chat from "./components/Chat";
-const AppStack = StackNavigator({
+const AppStack = createStackNavigator({
   Camera: {
     screen: TabNavigator(
       {
@@ -46,10 +46,14 @@ const AppStack = StackNavigator({
           }
         }),
         tabBarOptions: {
-          activeTintColor: "white",
-          activeBackgroundColor: "green",
-          inactiveTintColor: "black",
-          inactiveBackgroundColor: "green"
+          showIcon: true,
+          activeTintColor: "#f4511e",
+          activeBackgroundColor: "#f5f5f5",
+          inactiveTintColor: "#999999",
+          inactiveBackgroundColor: "#f5f5f5",
+          style: {
+            backgroundColor: "#f5f5f5"
+          }
         }
       }
     ),
@@ -67,7 +71,7 @@ const AppStack = StackNavigator({
   chat: Chat
 });
 
-const AuthStack = StackNavigator({ Login: LoginScreen });
+const AuthStack = createStackNavigator({ Login: LoginScreen });
 
 export default SwitchNavigator({
   AuthLoading: AuthLoadingScreen,

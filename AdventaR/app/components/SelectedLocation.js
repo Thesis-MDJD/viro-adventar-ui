@@ -57,7 +57,7 @@ export default class SelectedLocation extends Component {
          fontWeight: "bold"
        },
        headerLeft: (
-         <Button onPress={() => navigation.goBack()} title="Back" color="#fff" />
+         <Button onPress={() => navigation.goBack()} title="Back" color="white" backgroundColor="f4511e"/>
        )
      };
    };

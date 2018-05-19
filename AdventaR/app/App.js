@@ -47,12 +47,12 @@ const AppStack = StackNavigator({
         }),
         tabBarOptions: {
           showIcon: true,
-          activeTintColor: "white",
-          activeBackgroundColor: "#f4511e",
-          inactiveTintColor: "#6d6968",
-          inactiveBackgroundColor: "#f25d30",
+          activeTintColor: "#f4511e",
+          activeBackgroundColor: "#f5f5f5",
+          inactiveTintColor: "#999999",
+          inactiveBackgroundColor: "#f5f5f5",
           style: {
-            backgroundColor: "#f4511e"
+            backgroundColor: "#f5f5f5"
           }
         }
       }

@@ -17,7 +17,7 @@ import { DeviceEventEmitter, AsyncStorage, StyleSheet } from "react-native";
 import ReactNativeHeading from "react-native-heading";
 import { withNavigation } from "react-navigation";
 import getDegreesDistance from "./util/getDegreesDistance";
-import { firebaseApp } from './FireBase';
+import { firebaseApp } from "./FireBase";
 
 const polarToCartesian = ViroUtils.polarToCartesian;
 
@@ -52,10 +52,10 @@ class HelloWorldSceneAR extends Component {
     this.rootRef = firebaseApp
       .database()
       .ref()
-      .child('Features');
+      .child("Features");
   }
 
-  touched(id, behind = false, name, distance) {
+  touched(id, name, distance, behind = false) {
     let currentPlace = this.filteredPlaces.filter(place => place && place.id === id);
     if (currentPlace && currentPlace.length && currentPlace[0].locationsBehind && currentPlace[0].locationsBehind.length && behind) {
       this.setState({expandedPlace: id});
@@ -66,21 +66,21 @@ class HelloWorldSceneAR extends Component {
 
   getCheckedInLocations = async () => {
     try {
-      const userId = await AsyncStorage.getItem('dbId');
+      const userId = await AsyncStorage.getItem("dbId");
       let CheckedInId = this.rootRef
-        .child('Users')
+        .child("Users")
         .child(userId)
-        .child('CheckedInPlaces')
-        .orderByChild('yelpId')
-        CheckedInId.once('value', snapshot => {
+        .child("CheckedInPlaces")
+        .orderByChild("yelpId");
+      CheckedInId.once("value", snapshot => {
         let storage = {};
         if (snapshot.val()) {
           let checkedInYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
           this.setState({checkedIn: storage});
         }
-      })
+      });
     } catch (error) {
-      console.log('Error on checked in fetch', error)
+      console.log("Error on checked in fetch", error);
     }
   }
 
@@ -88,26 +88,26 @@ class HelloWorldSceneAR extends Component {
     this.state.checkedIn[yelpId] ? delete this.state.checkedIn[yelpId] : this.state.checkedIn[yelpId] = yelpId;
     this.setState({
       checkedIn: Object.assign({}, this.state.checkedIn)
-    })
+    });
   }
 
   getFavoritedLocations = async () => {
     try {
-      const userId = await AsyncStorage.getItem('dbId');
+      const userId = await AsyncStorage.getItem("dbId");
       let favoritedId = this.rootRef
-        .child('Users')
+        .child("Users")
         .child(userId)
-        .child('FavoritePlaces')
-        .orderByChild('yelpId')
-      favoritedId.once('value', snapshot => {
+        .child("FavoritePlaces")
+        .orderByChild("yelpId");
+      favoritedId.once("value", snapshot => {
         let storage = {};
-        if(snapshot.val()) {
+        if (snapshot.val()) {
           let favoritedYelpId = Object.values(snapshot.val()).forEach( place => storage[place.yelpId] = place.yelpId );
           this.setState({favorited: storage});
         }
-      })
+      });
     } catch (error) {
-      console.log('Error on favorite fetch', error)
+      console.log("Error on favorite fetch", error);
     }
   }
 
@@ -115,7 +115,7 @@ class HelloWorldSceneAR extends Component {
     this.state.favorited[yelpId] ? delete this.state.favorited[yelpId] : this.state.favorited[yelpId] = yelpId;
     this.setState({
       favorited: Object.assign({}, this.state.favorited)
-    })
+    });
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -175,9 +175,9 @@ class HelloWorldSceneAR extends Component {
 
     this.filteredPlaces.forEach( place => {
       if (place.id === this.state.expandedPlace && place.locationsBehind.length === 0) {
-         forceRerender = true;
+        forceRerender = true;
       }
-    })
+    });
 
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized}>
@@ -222,7 +222,7 @@ class HelloWorldSceneAR extends Component {
                       rotation={[0, 0, 0]}
                       position={[0, -3.5, 0]}
                       scale={[0.4, 0.4, 0.4]}
-                      onClick={() => this.touched(place.id, true, place.name, distance)}
+                      onClick={() => this.touched(place.id, place.name, distance, true)}
                       type="VRX"
                       animation={{name: "animateMarker", run: true, loop: true}}/>]
                     : null

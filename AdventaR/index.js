@@ -15,4 +15,4 @@ console.disableYellowBox = true;
 AppRegistry.registerComponent("AdventaR", () => App);
 
 // The below line is necessary for use with the TestBed App
-AppRegistry.registerComponent("ViroSample", () => App);
+// AppRegistry.registerComponent("ViroSample", () => App);

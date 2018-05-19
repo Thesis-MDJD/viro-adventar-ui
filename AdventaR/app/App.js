@@ -16,6 +16,7 @@ import SearchFriend from "./components/SearchFriend";
 import OtherProfile from "./components/OtherProfile";
 import Friends from "./components/Friends";
 import Conversations from "./components/Conversations";
+import NewConvo from "./components/NewConvo";
 import Chat from "./components/Chat";
 const AppStack = createStackNavigator({
   Camera: {
@@ -68,7 +69,8 @@ const AppStack = createStackNavigator({
     screen: OtherProfile
   },
   Search: SearchFriend,
-  chat: Chat
+  chat: Chat,
+  NewConvo: NewConvo
 });
 
 const AuthStack = createStackNavigator({ Login: LoginScreen });

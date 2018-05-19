@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Platform,
   Text,
   View,
   StyleSheet,
@@ -36,30 +37,27 @@ export default class ProfilePicture extends Component {
   }
 
   onSubmit(){
-    console.log('1', ImageResizer);
     ImageResizer.createResizedImage(this.state.currentPhoto, 200, 200, 'JPEG', 100, 0, null).then((response) => {
       // response.uri is the URI of the new image that can now be displayed, uploaded...
       // response.path is the path of the new image
       // response.name is the name of the new image with the extension
       // response.size is the size of the new image
-    
+      let path = Platform.OS === 'android' ? response.uri : response.path;
+
       this.setState({
         uploading: true
       }, () => {
-  
-        console.log('2');
         let data = "";
         let filetype = 'jpeg';
         RNFetchBlob.fs.readStream(
           // file path
-          response.uri,
+          path,
           // encoding, should be one of `base64`, `utf8`, `ascii`
           "base64",
           // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
           // when reading file in BASE64 encoding, buffer size must be multiples of 3.
           4095)
         .then((ifstream) => {
-          console.log('4');
           ifstream.open()
           ifstream.onData((chunk) => {
             // when encoding is `ascii`, chunk will be an array contains numbers
@@ -70,19 +68,17 @@ export default class ProfilePicture extends Component {
             console.log("oops", err)
           })
           ifstream.onEnd(async () => {
-            console.log('5');
             const userId = await AsyncStorage.getItem("dbId");
             const storageRef = firebaseApp.storage().ref().child(userId + "/profilePicture")
             console.log(data);
             storageRef
             .putString(data)
             .then( (data) => {
-              console.log('6');
                 this.setState({
                   uploading: false
                 }, () => {
                   storageRef.updateMetadata({ contentType: 'image/' + filetype })
-                  RNFetchBlob.fs.unlink(response.uri)
+                  RNFetchBlob.fs.unlink(path)
                   this.props.setProfilePicture();
                   this.props.hideModal();
                 })

@@ -137,7 +137,7 @@ class HelloWorldSceneAR extends Component {
                   rotation={[0, turn * -1, 0]}
                   position={polarToCartesian([75, turn, 0])}>
                   {!this.state.expandedPlace || forceRerender ?
-                    [<ViroText onClick={() => this.touched(place.id)}
+                    [<ViroText key={place.id} onClick={() => this.touched(place.id)}
                       text={place.name + "," + place.locationsBehind.length} scale={[15, 15, 15]}
                       position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
                     <Viro3DObject source={require("./res/OrangePeel_v4.vrx")}

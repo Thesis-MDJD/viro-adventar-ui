@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* AdventaRTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AdventaRTests.m */; };
+		071822FB67DF86E722BCE9BA /* Pods_AdventaR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BAEE8183FD385CF9F49DF06 /* Pods_AdventaR.framework */; };
 		0D36C0DE109F42D99CD27B37 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03F25EC1713548C6BD33D20E /* MaterialCommunityIcons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -40,7 +41,6 @@
 		382054C9B48344978C9416F9 /* libA0Auth0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 771217257C3742DE9FC60250 /* libA0Auth0.a */; };
 		3BA96CF14F7F4A4C8CB078F5 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DD6062B30FC4EAF94E0FB76 /* MaterialIcons.ttf */; };
 		45F086BCF29B44FDB15C8272 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9D38CC1CB1E47688F381B50 /* Feather.ttf */; };
-		56126E5C806757B1F9FDEDF6 /* Pods_AdventaR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06339D360557F70193EDA7D4 /* Pods_AdventaR.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		669DDA3AB91E432797666DD4 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4A6E8C53C9D4A41B6AD2E29 /* Octicons.ttf */; };
 		7D2FC90FF29A4BBCBFE48223 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABAAA808D24B4540B18B2BFD /* EvilIcons.ttf */; };
@@ -54,6 +54,7 @@
 		AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */; };
 		AFC3046E20AA185000BE0C6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */; };
 		C7194F86EA274C61BB429D7C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F244CA536EAD4BFD951A1957 /* Foundation.ttf */; };
+		CDF95AFC20AFB54C003C853F /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF95ADC20AFB520003C853F /* libRCTImageResizer.a */; };
 		CF0598BDD1C6416DA90BAF43 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73064C3F659A4460B716395E /* SimpleLineIcons.ttf */; };
 /* End PBXBuildFile section */
 
@@ -366,6 +367,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = A0Auth0;
 		};
+		CDF95ADB20AFB520003C853F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CDF95ACD20AFB520003C853F /* RCTImageResizer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
+			remoteInfo = RCTImageResizer;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -379,7 +387,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AdventaRTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdventaRTests.m; sourceTree = "<group>"; };
 		03F25EC1713548C6BD33D20E /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		06339D360557F70193EDA7D4 /* Pods_AdventaR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdventaR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BAEE8183FD385CF9F49DF06 /* Pods_AdventaR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdventaR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AdventaR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdventaR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -396,15 +404,16 @@
 		2D02E4901E0B4A5D006451C7 /* AdventaR-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AdventaR-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C334D320710480684966AFB /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
-		58B2A86896B7DD7DF223423D /* Pods-AdventaR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.debug.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		671125BDCD794AD4886365B8 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		6C36E64496749D54B331158B /* Pods-AdventaR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.release.xcconfig"; sourceTree = "<group>"; };
 		6C8FFD091E8D4645908D88C6 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		6DD6062B30FC4EAF94E0FB76 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		73064C3F659A4460B716395E /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		771217257C3742DE9FC60250 /* libA0Auth0.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libA0Auth0.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A1721204B3ADFA7CF14C3D13 /* Pods-AdventaR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.debug.xcconfig"; sourceTree = "<group>"; };
 		A3DEE720E18E41E5A49133AC /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		A9AF5D9C98414445AE1BA345 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		ABAAA808D24B4540B18B2BFD /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -413,10 +422,10 @@
 		AF524E4520AE3A3B00EE04A0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
 		AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CDF95ACD20AFB520003C853F /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		E4A6E8C53C9D4A41B6AD2E29 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		E9D38CC1CB1E47688F381B50 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		F244CA536EAD4BFD951A1957 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		FAF3EBB7BBABF68C7CEE31F6 /* Pods-AdventaR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventaR.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +445,7 @@
 				AF524E1520AE32B800EE04A0 /* libRNFetchBlob.a in Frameworks */,
 				AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
+				CDF95AFC20AFB54C003C853F /* libRCTImageResizer.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -448,8 +458,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				56126E5C806757B1F9FDEDF6 /* Pods_AdventaR.framework in Frameworks */,
 				382054C9B48344978C9416F9 /* libA0Auth0.a in Frameworks */,
+				071822FB67DF86E722BCE9BA /* Pods_AdventaR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,7 +628,7 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				06339D360557F70193EDA7D4 /* Pods_AdventaR.framework */,
+				0BAEE8183FD385CF9F49DF06 /* Pods_AdventaR.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -630,6 +640,15 @@
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6153581F2D4F9E098781633C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A1721204B3ADFA7CF14C3D13 /* Pods-AdventaR.debug.xcconfig */,
+				6C36E64496749D54B331158B /* Pods-AdventaR.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -644,6 +663,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CDF95ACD20AFB520003C853F /* RCTImageResizer.xcodeproj */,
 				AF524E4520AE3A3B00EE04A0 /* RCTCameraRoll.xcodeproj */,
 				AF524DE820AE327200EE04A0 /* RNFetchBlob.xcodeproj */,
 				AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */,
@@ -682,9 +702,9 @@
 				00E356EF1AD99517003FC87E /* AdventaRTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				8B720F2AD50211BDE741D1C4 /* Pods */,
 				AFA7CD5F20A4B5B9002F3560 /* Recovered References */,
 				0CE07D253F47448DA162CFD6 /* Resources */,
+				6153581F2D4F9E098781633C /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -700,15 +720,6 @@
 				2D02E4901E0B4A5D006451C7 /* AdventaR-tvOSTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		8B720F2AD50211BDE741D1C4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				58B2A86896B7DD7DF223423D /* Pods-AdventaR.debug.xcconfig */,
-				FAF3EBB7BBABF68C7CEE31F6 /* Pods-AdventaR.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
@@ -769,6 +780,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CDF95ACE20AFB520003C853F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CDF95ADC20AFB520003C853F /* libRCTImageResizer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -794,19 +813,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AdventaR" */;
 			buildPhases = (
-				D59ABDF9D6099197BEB4ED8F /* [CP] Check Pods Manifest.lock */,
+				33D7C66138D26ABF99C83652 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				D6BBCAEB2D4709820524A737 /* [CP] Embed Pods Frameworks */,
-				DC20BF752581C3D53250C9B8 /* [CP] Copy Pods Resources */,
 				41C1C469F2B05D83F5F703BD /* Execute Ngrok */,
 				D1B6F6590EE80FB75169ECC7 /* Copy ngrok endpoint */,
 				3E5A4FE71F2F1DA4CFD189B3 /* Execute Ngrok */,
 				F226B6CA35B5EDBC329C9284 /* Copy ngrok endpoint */,
 				D341A18C733F876C299E331C /* Execute Ngrok */,
 				252AA955D0DF3CCC9D2936D6 /* Copy ngrok endpoint */,
+				FD7607F9613CBA7B0EE1CBBF /* [CP] Embed Pods Frameworks */,
+				E0FDE352C2738E22BE457A5C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -921,6 +940,10 @@
 				{
 					ProductGroup = 00C302BC1ABCB91800DB3ED1 /* Products */;
 					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
+				},
+				{
+					ProductGroup = CDF95ACE20AFB520003C853F /* Products */;
+					ProjectRef = CDF95ACD20AFB520003C853F /* RCTImageResizer.xcodeproj */;
 				},
 				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
@@ -1268,6 +1291,13 @@
 			remoteRef = AFA7CED320A4C7F8002F3560 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CDF95ADC20AFB520003C853F /* libRCTImageResizer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTImageResizer.a;
+			remoteRef = CDF95ADB20AFB520003C853F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1359,6 +1389,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		33D7C66138D26ABF99C83652 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AdventaR-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3E5A4FE71F2F1DA4CFD189B3 /* Execute Ngrok */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1415,55 +1463,7 @@
 			shellPath = /bin/sh;
 			shellScript = $SRCROOT/ngrok_launch.sh;
 		};
-		D59ABDF9D6099197BEB4ED8F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AdventaR-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D6BBCAEB2D4709820524A737 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${PODS_ROOT}/../../node_modules/react-viro/ios/dist/ViroRenderer/ViroKit.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViroKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DC20BF752581C3D53250C9B8 /* [CP] Copy Pods Resources */ = {
+		E0FDE352C2738E22BE457A5C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1502,6 +1502,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\nendpointfile=\"ngrokendpoint.txt\"\nif [[ -e \"$SRCROOT/$endpointfile\" ]]; then\necho \"Ngrok endpoint file found, copying over...\"\ncp \"$SRCROOT/$endpointfile\" \"$DEST/$endpointfile\"\nbreak;\nfi";
+		};
+		FD7607F9613CBA7B0EE1CBBF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${PODS_ROOT}/../../node_modules/react-viro/ios/dist/ViroRenderer/ViroKit.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViroKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdventaR/Pods-AdventaR-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1633,7 +1663,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58B2A86896B7DD7DF223423D /* Pods-AdventaR.debug.xcconfig */;
+			baseConfigurationReference = A1721204B3ADFA7CF14C3D13 /* Pods-AdventaR.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1668,7 +1698,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAF3EBB7BBABF68C7CEE31F6 /* Pods-AdventaR.release.xcconfig */;
+			baseConfigurationReference = 6C36E64496749D54B331158B /* Pods-AdventaR.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

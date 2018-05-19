@@ -187,9 +187,9 @@ class HelloWorldSceneAR extends Component {
         <ViroAmbientLight color="#FFFFFF" />
 
         {/*Ads*/}
-        <ViroARImageMarker target={"hackreactor"} >
+        {/* <ViroARImageMarker target={"hackreactor"} >
           <Advertisement />
-        </ViroARImageMarker>
+        </ViroARImageMarker> */}
 
         {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ?
           (

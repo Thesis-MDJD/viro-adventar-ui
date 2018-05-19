@@ -11,7 +11,10 @@ import {
   ViroUtils,
   ViroNode,
   ViroSpinner,
-  ViroFlexView
+  ViroFlexView,
+  ViroARTrackingTargets,
+  ViroARImageMarker,
+  ViroParticleEmitter
 } from "react-viro";
 import { DeviceEventEmitter, AsyncStorage, StyleSheet } from "react-native";
 import ReactNativeHeading from "react-native-heading";
@@ -182,6 +185,12 @@ class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene ref={component => this.scene = component} onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color="#FFFFFF" />
+
+        {/*Ads*/}
+        <ViroARImageMarker target={"hackreactor"} >
+          <Advertisement />
+        </ViroARImageMarker>
+
         {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ?
           (
             <ViroNode position={[0, 0, -1]}>
@@ -211,8 +220,8 @@ class HelloWorldSceneAR extends Component {
 
               let moreLocations = place.locationsBehind.length > 0 ?
                 (<ViroText onClick={() => this.touched(place.id, place.name, distance)}
-                text={place.locationsBehind.length + " more"} scale={[15, 15, 15]}
-                position={[0, -1.5, 0]} style={styles.morePlaceTextStyle} />)
+                  text={place.locationsBehind.length + " more"} scale={[15, 15, 15]}
+                  position={[0, -1.5, 0]} style={styles.morePlaceTextStyle} />)
                 :
                 null;
 
@@ -317,6 +326,14 @@ ViroAnimations.registerAnimations({
   animateMarker: {
     properties: {rotateY: "+=45"},
     duration: 1000
+  }
+});
+
+ViroARTrackingTargets.createTargets({
+  "hackreactor": {
+    source: require("./res/hackreactor.png"),
+    orientation: "Up",
+    physicalWidth: 1 // real world width in meters
   }
 });
 

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   StatusBar
 } from "react-native";
+import { Icon } from 'react-native-elements';
 import LocPics from "./SelectedLocationSubComponents/LocPics";
 import LocBasicInfo from "./SelectedLocationSubComponents/LocBasicInfo";
 import LocContactInfo from "./SelectedLocationSubComponents/LocContactInfo";
@@ -57,7 +58,8 @@ export default class SelectedLocation extends Component {
          fontWeight: "bold"
        },
        headerLeft: (
-         <Button onPress={() => navigation.goBack()} title="Back" color="white" backgroundColor="f4511e"/>
+        //  <Button onPress={() => navigation.goBack()} title="Back" color="white" backgroundColor="f4511e"/>
+         <Icon name="arrow-left-thick" type="material-community" color="white" onPress={() => navigation.goBack()} />
        )
      };
    };

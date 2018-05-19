@@ -186,7 +186,7 @@ class HelloWorldSceneAR extends Component {
           (
             <ViroNode position={[0, 0, -1]}>
               <ViroText text={"Initializing AR..."} scale={[0.5, 0.5, 0.5]} />
-              <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} position={[0, -0.5, 0]} />
+              <ViroSpinner type='Light' scale={[0.5, 0.5, 0.5]} />
             </ViroNode>
           )
           :
@@ -209,18 +209,26 @@ class HelloWorldSceneAR extends Component {
                       :
                       require("./res/Triangle.vrx");
 
+              let moreLocations = place.locationsBehind.length > 0 ?
+                (<ViroText onClick={() => this.touched(place.id, place.name, distance)}
+                text={place.locationsBehind.length + " more"} scale={[15, 15, 15]}
+                position={[0, -1.5, 0]} style={styles.morePlaceTextStyle} />)
+                :
+                null;
+
               return (
                 <ViroNode
                   key={place.id}
                   rotation={[0, turn * -1, 0]}
                   position={polarToCartesian([75, turn, 0])}>
                   {!this.state.expandedPlace || forceRerender ?
-                    [<ViroText key={place.id} onClick={() => this.touched(place.id, place.name, distance)}
-                      text={place.name + "," + place.locationsBehind.length} scale={[15, 15, 15]}
-                      position={[0, 3.5, 0]} style={styles.placeTextStyle}/>,
+                    [<ViroText key={place.id} width={1.2} onClick={() => this.touched(place.id, place.name, distance)}
+                      text={place.name} scale={[15, 15, 15]}
+                      position={[0, 3.5, 0]} style={styles.placeTextStyle} shadowCastingBitMask={2} />,
+                    moreLocations,
                     <Viro3DObject source={marker}
                       rotation={[0, 0, 0]}
-                      position={[0, -3.5, 0]}
+                      position={[0, -4.5, 0]}
                       scale={[0.4, 0.4, 0.4]}
                       onClick={() => this.touched(place.id, place.name, distance, true)}
                       type="VRX"
@@ -283,6 +291,13 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     fontSize: 20,
     color: "#ffffff",
+    textAlignVertical: "center",
+    textAlign: "center",
+  },
+  morePlaceTextStyle: {
+    fontFamily: "Helvetica",
+    fontSize: 16,
+    color: "#999999",
     textAlignVertical: "center",
     textAlign: "center",
   },

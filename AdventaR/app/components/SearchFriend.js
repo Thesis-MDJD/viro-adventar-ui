@@ -42,7 +42,6 @@ export default class SearchFriend extends Component {
       .orderByChild("username")
       .startAt(username);
     let col = [];
-    //creates array of object containing room id and participants
     result.once("value", snap => {
       Object.keys(snap.val()).forEach(key => {
         col.push({ userId: key });

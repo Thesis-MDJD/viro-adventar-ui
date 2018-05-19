@@ -7,7 +7,7 @@ import {
   Button,
   AsyncStorage,
   ActivityIndicator,
-  FlatList,
+  ScrollView,
   TextInput
 } from "react-native";
 import { SearchBar, ListItem, List } from "react-native-elements";
@@ -18,9 +18,7 @@ export default class Chat extends Component {
     super(props);
     this.state = {
       messages: [],
-      loggedInUser: {},
-      loading: true,
-      newChat: false,
+      loggedInUser: this.props.navigation.state.params.loggedInUser,
       text: ""
     };
     this.rootRef = firebaseApp
@@ -28,76 +26,48 @@ export default class Chat extends Component {
       .ref()
       .child("Features");
   }
+
   componentDidMount() {
     this.props.navigation.setParams({
       goBackToPrevious: this.goBackToPrevious
     });
     this.getUserProfile();
   }
+
   goBackToPrevious = () => {
     this.props.navigation.goBack();
   };
+
   sendChat = () => {
-    this.rootRef
-      .child("Messages")
-      .push()
-      .set({
-        content: this.state.text,
-        conversation: this.props.navigation.state.params.convId,
-        sender: this.state.loggedInUser.curUid,
-        createdAt: Date.now()
-      });
+    const msgContent = {
+      content: this.state.text,
+      conversation: this.props.navigation.state.params.convId,
+      sender: this.state.loggedInUser.curUid,
+      createdAt: Date.now()
+    };
+    const msg = this.rootRef.child("Messages").push();
+    msg.set(msgContent);
     this.setState({
       text: ""
     });
   };
+
   getUserProfile = async () => {
     const self = this;
-    try {
-      const curUid = await AsyncStorage.getItem("dbId");
-      const { convId } = this.props.navigation.state.params;
-      const result = this.rootRef
-        .child("Messages")
-        .orderByChild("conversation")
-        .equalTo(convId);
-      // result.once("value", async snap => {
-      //   const messages = Object.values(snap.val());
-      //   if (messages) {
-      //     self.setState({
-      //       messages,
-      // loggedInUser: {
-      //   curUid,
-      //   email: await AsyncStorage.getItem("email"),
-      //   username: await AsyncStorage.getItem("username")
-      // },
-      //       loading: false
-      //     });
-      //   } else {
-      //     self.setState({
-      //       loggedInUser: {
-      //         curUid,
-      //         email: await AsyncStorage.getItem("email"),
-      //         username: await AsyncStorage.getItem("username")
-      //       },
-      //       loading: false
-      //     });
-      //   }
-      // });
-      result.on("child_added", snap => {
-        const updateMessages = self.state.messages.slice();
-        updateMessages.push(snap.val());
-        self.setState({
-          loggedInUser: {
-            curUid
-          },
-          loading: false,
-          messages: updateMessages
-        });
+    const { convId } = this.props.navigation.state.params;
+    const result = this.rootRef
+      .child("Messages")
+      .orderByChild("conversation")
+      .equalTo(convId);
+    result.on("child_added", snap => {
+      const updateMessages = self.state.messages.slice();
+      updateMessages.push(snap.val());
+      self.setState({
+        messages: updateMessages
       });
-    } catch (error) {
-      console.log("Fetching Current User Error: ", error);
-    }
+    });
   };
+
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
@@ -117,35 +87,28 @@ export default class Chat extends Component {
   render() {
     return (
       <View styles={loadingScreen.container}>
-        {this.state.loading ? (
-          <ActivityIndicator />
-        ) : (
-          <View>
-            <Text>{this.state.participants}</Text>
-            <List>
-              <FlatList
-                data={this.state.messages}
-                renderItem={({ item }) => {
-                  return (
-                    <Text key={item.conversation}>
-                      sender: {item.sender} conversation: {item.conversation}
-                      content: {item.content}
-                    </Text>
-                  );
-                }}
-              />
-            </List>
-            <View>
-              <TextInput
-                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-                onChangeText={text => this.setState({ text })}
-                onSubmitEditing={this.sendChat}
-                returnKeyType="send"
-                value={this.state.text}
-              />
-            </View>
-          </View>
-        )}
+        <Text>{this.state.participants}</Text>
+        <List>
+          <ScrollView>
+            {this.state.messages.map(item => {
+              return (
+                <Text key={item.conversation}>
+                  sender: {item.sender} conversation: {item.conversation}
+                  content: {item.content}
+                </Text>
+              );
+            })}
+          </ScrollView>
+        </List>
+        <View>
+          <TextInput
+            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+            onChangeText={text => this.setState({ text })}
+            onSubmitEditing={this.sendChat}
+            returnKeyType="send"
+            value={this.state.text}
+          />
+        </View>
       </View>
     );
   }

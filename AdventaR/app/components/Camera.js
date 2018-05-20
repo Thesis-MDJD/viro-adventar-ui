@@ -4,11 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
+  Platform,
+  PermissionsAndroid
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
 import dummyData from "./res/dummyData";
-import {VIRO_KEY} from "react-native-dotenv";
+import {VIRO_KEY, REST_SERVER_IP} from "react-native-dotenv";
 import getDegreesDistance from "./util/getDegreesDistance.js";
 
 export default class Camera extends Component {
@@ -20,6 +22,7 @@ export default class Camera extends Component {
       latitude: "",
       longitude: "",
       places: [],
+      permissionsGranted: false
     };
 
     this.remount = this.remount.bind(this);
@@ -41,15 +44,45 @@ export default class Camera extends Component {
   }
 
   getPlaces = async (latitude, longitude) => {
-    console.log("GET PLACES WAS CALLED");
+    console.log('hello');
+    let data = await fetch(`http://${REST_SERVER_IP}/yelp/nearby?latitude=${this.state.latitude}&longitude=${this.state.longitude}`);
+    let result = await data.json();
     this.setState({
-      places: dummyData.businesses,
-      previousLatitude: latitude,
-      previousLongitude: longitude,
+      places: result.businesses
     });
   };
 
   componentDidMount() {
+    const requestPermissions = async () => {
+      let permissions = [];
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)) && permissions.push(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)) && permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
+      if (permissions.length > 0) {
+        try {
+          await PermissionsAndroid.requestMultiple(permissions);
+          this.setState({
+            permissionsGranted: true
+          });
+          this.setGPS();
+        } catch (err) {
+          console.warn(err);
+        }
+      } else {
+        this.setState({
+          permissionsGranted: true
+        });
+        this.setGPS();
+      }
+      
+    };
+    
+    
+    if (Platform.OS === "android") {
+      requestPermissions();
+    }
+  }
+
+  setGPS() {
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -92,7 +125,7 @@ export default class Camera extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.cameraMounted ? (
+        {this.state.cameraMounted && this.state.permissionsGranted ? (
           <ViroARSceneNavigator
             apiKey={VIRO_KEY}
             ref={((component)=> component)}

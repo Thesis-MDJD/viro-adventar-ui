@@ -113,14 +113,14 @@ export default class ProfilePicture extends Component {
       });
   }
 
-  getLibraryPhoto() {
+  getLibraryPhoto() {  
+    this.askPermission();
     CameraRoll.getPhotos({
       first: 40,
       assetType: "Photos",
       mimeTypes: ["image/jpeg", "image/jpg"]
     })
       .then(r => {
-        console.log(r);
         this.setState({ photos: r.edges, hideCameraRoll: false });
       })
       .catch(err => {
@@ -133,6 +133,33 @@ export default class ProfilePicture extends Component {
       this.setState({ currentPhoto: url, hideCameraRoll: true });
     };
   }
+
+  askPermission() {
+    const requestPermissions = async () => {
+      let permissions = [];
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+      if (permissions.length > 0) {
+        try {
+          const granted = await PermissionsAndroid.requestMultiple(permissions);
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can use all");
+          } else {
+            console.log("Read/Write permission denied");
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+      
+    };
+    
+    
+    if (Platform.OS === "android") {
+      requestPermissions();
+    }
+  }
+
 
   render() {
     return (

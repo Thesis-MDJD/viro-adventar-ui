@@ -49,8 +49,7 @@ export default class LoginScreen extends Component {
             email: user.name,
             image: "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
           });
-          id = id.toString().slice(48);
-          await AsyncStorage.setItem("dbId", id);
+          await AsyncStorage.setItem("dbId", id.toString().slice(48));
           self.props.navigation.navigate("App");
         } else {
           await AsyncStorage.setItem("dbId", Object.keys(snap.val())[0]);

@@ -148,7 +148,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.removeUser(item);
                             }}
@@ -168,7 +168,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.addToSelected(item);
                             }}
@@ -186,7 +186,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.addToSelected(item);
                             }}

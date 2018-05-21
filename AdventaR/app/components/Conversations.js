@@ -90,7 +90,7 @@ export default class Conversations extends Component {
                     />
                   );
                 }}
-                keyExtractor={item => item.img} // change to key later
+                keyExtractor={item => item.image} // change to key later
               />
             </List>
             <Button
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
 const loadingScreen = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
     justifyContent: "center"
   },
   horizontal: {

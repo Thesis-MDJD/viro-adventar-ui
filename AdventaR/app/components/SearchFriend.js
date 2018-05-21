@@ -9,59 +9,50 @@ export default class SearchFriend extends Component {
     this.state = {
       loading: false,
       term: "",
-      searched: [
-        {
-          name: "Lady1WOIENW",
-          img: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-        },
-        {
-          name: "Lady2",
-          img:
-            "https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"
-        },
-        {
-          name: "Lady3",
-          img: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"
-        }
-      ]
+      searched: []
     };
     this.rootRef = firebaseApp
       .database()
       .ref()
       .child("Features");
   }
+
   componentDidMount() {
     this.props.navigation.setParams({
       goBackToPrevious: this.goBackToPrevious
     });
   }
+
   searchUser = () => {
+    const self = this;
     const username = this.state.term.toLowerCase();
     const result = this.rootRef
       .child("Users")
       .orderByChild("username")
-      .startAt(username);
+      .startAt(username)
+      .endAt(`${username}\uf8ff`);
     let col = [];
     result.once("value", snap => {
-      Object.keys(snap.val()).forEach(key => {
-        col.push({ userId: key });
-      });
-      Object.values(snap.val()).forEach((user, i) => {
-        let values = Object.values(user);
-        let keys = Object.keys(user);
-        col[i][keys[0]] = values[0];
-        col[i][keys[1]] = values[1];
-      });
-      col.sort(function(a, b) {
-        if (a.username < b.username) {
-          return -1;
-        }
-        if (a.username > b.username) {
-          return 1;
-        }
-        return 0;
-      });
-      this.setState({
+      if (snap.val()) {
+        Object.keys(snap.val()).forEach(key => {
+          col.push({ userId: key });
+        });
+        Object.values(snap.val()).forEach((user, i) => {
+          Object.entries(user).forEach(prop => {
+            col[i][prop[0]] = prop[1];
+          });
+        });
+        col.sort(function(a, b) {
+          if (a.username < b.username) {
+            return -1;
+          }
+          if (a.username > b.username) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      self.setState({
         searched: col
       });
     });
@@ -114,14 +105,14 @@ export default class SearchFriend extends Component {
                   key={item.userId}
                   roundAvatar
                   title={item.username}
-                  avatar={{ uri: item.img }}
+                  avatar={{ uri: item.image }}
                   onPress={() => {
                     this.goToOtherProfile(item.userId);
                   }}
                 />
               );
             }}
-            keyExtractor={item => item.img} // change to key later
+            keyExtractor={item => item.image} // change to key later
           />
         </List>
       </View>

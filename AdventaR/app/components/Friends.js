@@ -75,6 +75,22 @@ export default class FavoritePlaces extends Component {
       isAccepted
     });
   };
+  // static navigationOptions = ({ navigation }) => {
+  //   const params = navigation.state.params || {};
+  //   return {
+  //     title: "",
+  //     headerStyle: {
+  //       backgroundColor: "#f4511e"
+  //     },
+  //     headerTintColor: "#fff",
+  //     headerTitleStyle: {
+  //       fontWeight: "bold"
+  //     },
+  //     headerRight: (
+  //       <Button onPress={params.goToSearch} title="Search" color="#fff" />
+  //     )
+  //   };
+  // };
   componentWillUnmount() {
     this.rootRef.off();
   }
@@ -103,14 +119,14 @@ export default class FavoritePlaces extends Component {
                           key={item.uid}
                           roundAvatar
                           title={item.username}
-                          avatar={{ uri: item.img }}
+                          avatar={{ uri: item.image }}
                           onPress={() => {
                             this.goToOtherProfile(item.uid, item.reqId, true);
                           }}
                         />
                       );
                     }}
-                    keyExtractor={item => item.img} // change to key later
+                    keyExtractor={item => item.image} // change to key later
                   />
                 </List>
               </View>
@@ -125,14 +141,14 @@ export default class FavoritePlaces extends Component {
                       key={item.uid}
                       roundAvatar
                       title={item.username}
-                      avatar={{ uri: item.img }}
+                      avatar={{ uri: item.image }}
                       onPress={() => {
                         this.goToOtherProfile(item.uid, false, true);
                       }}
                     />
                   );
                 }}
-                keyExtractor={item => item.img} // change to key later
+                keyExtractor={item => item.image} // change to key later
               />
             </List>
           </View>
@@ -153,6 +169,7 @@ const styles = StyleSheet.create({
 const loadingScreen = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
     justifyContent: "center"
   },
   horizontal: {

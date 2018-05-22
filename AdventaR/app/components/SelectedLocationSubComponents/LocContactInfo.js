@@ -3,6 +3,7 @@ import { Linking, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 import call from "react-native-phone-call";
 import { withNavigation } from "react-navigation";
+import redirectToYelp from "../util/redirectToYelp";
 
 class LocContactInfo extends Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class LocContactInfo extends Component {
       url: "", //String, URL for business page onYelp
     };
     this.onPhonePress = this.onPhonePress.bind(this);
-    this.onYelpPress = this.onYelpPress.bind(this);
   }
 
   onPhonePress() {
@@ -24,17 +24,6 @@ class LocContactInfo extends Component {
     this.props.phone === "" ? alert("No phone number available") : call(args).catch(console.error);
   }
 
-  onYelpPress() {
-    const url = this.props.url;
-    Linking.canOpenURL(url).then(supported => {
-      if (!supported) {
-        console.log("Can't handle url: " + url);
-      } else {
-        return Linking.openURL(url);
-      }
-    }).catch(err => console.error("An error occurred", err));
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -43,6 +32,7 @@ class LocContactInfo extends Component {
           raised
           name='phone'
           type='font-awesome'
+          size={36}
           color='#00d36d'
           onPress={this.onPhonePress}
         />
@@ -51,8 +41,9 @@ class LocContactInfo extends Component {
         <Icon
           name='yelp'
           type='font-awesome'
+          size={36}
           color='#d32323'
-          onPress={this.onYelpPress}
+          onPress={() => redirectToYelp(this.props.url)}
           raised
         />
       </View>
@@ -65,7 +56,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#f68055",
     paddingVertical: 15,
-    
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly"

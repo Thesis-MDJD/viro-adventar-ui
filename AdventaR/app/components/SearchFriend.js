@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, FlatList, Button } from "react-native";
+import { View, StyleSheet, FlatList, Button } from "react-native";
 import { SearchBar, ListItem, List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
 

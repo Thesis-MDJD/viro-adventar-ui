@@ -3,14 +3,11 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   Button,
-  AsyncStorage,
-  ActivityIndicator,
   ScrollView,
   TextInput
 } from "react-native";
-import { SearchBar, ListItem, List } from "react-native-elements";
+import { List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
 
 export default class Chat extends Component {

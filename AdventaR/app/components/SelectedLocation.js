@@ -3,8 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  Image,
-  Button,
   StyleSheet,
   StatusBar
 } from "react-native";
@@ -12,7 +10,7 @@ import { Icon } from 'react-native-elements';
 import LocPics from "./SelectedLocationSubComponents/LocPics";
 import LocBasicInfo from "./SelectedLocationSubComponents/LocBasicInfo";
 import LocContactInfo from "./SelectedLocationSubComponents/LocContactInfo";
-import { REST_SERVER_IP } from "react-native-dotenv";
+import { REST_SERVER_IP, REST_API_KEY } from "react-native-dotenv";
 
 
 export default class SelectedLocation extends Component {
@@ -33,7 +31,7 @@ export default class SelectedLocation extends Component {
    getPlace = async (id) => {
      try {
        const data = await fetch(
-         `http://${REST_SERVER_IP}/yelp/business/${id}`,
+         `http://${REST_SERVER_IP}/yelp/business/${id}?API_KEY=${REST_API_KEY}`,
        );
        const result = await data.json();
        this.setState({ data: result });

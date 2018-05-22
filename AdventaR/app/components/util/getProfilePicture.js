@@ -1,5 +1,4 @@
 import { firebaseApp } from "./FireBase";
-import ProfilePicture from "./ProfilePicture";
 import RNFetchBlob from "react-native-fetch-blob";
 
 export default (userId, success, error) => {

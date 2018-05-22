@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, View, Button, StyleSheet, AsyncStorage } from "react-native";
+import { Linking, View, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 import call from "react-native-phone-call";
 import { withNavigation } from "react-navigation";

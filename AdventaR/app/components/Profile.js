@@ -8,8 +8,6 @@ import {
   AsyncStorage,
   Modal,
   TouchableHighlight,
-  PermissionsAndroid,
-  Platform
 } from "react-native";
 import { firebaseApp } from "./FireBase";
 import ProfilePicture from "./ProfilePicture";

@@ -13,8 +13,6 @@ import {
   ViroSpinner,
   ViroFlexView,
   ViroARTrackingTargets,
-  ViroARImageMarker,
-  ViroParticleEmitter
 } from "react-viro";
 import { DeviceEventEmitter, AsyncStorage, StyleSheet } from "react-native";
 import ReactNativeHeading from "react-native-heading";

@@ -3,13 +3,11 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   Button,
   AsyncStorage,
-  ActivityIndicator,
   FlatList
 } from "react-native";
-import { SearchBar, ListItem, List } from "react-native-elements";
+import { ListItem, List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
 
 export default class Conversations extends Component {

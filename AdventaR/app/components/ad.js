@@ -3,10 +3,7 @@ import React, { Component, Text } from "react";
 import {
   Viro3DObject,
   ViroARTrackingTargets,
-  ViroARImageMarker,
-  ViroParticleEmitter
 } from "react-viro";
-import getDegreesDistance from "./util/getDegreesDistance";
 
 export default class Advertisement extends Component {
 

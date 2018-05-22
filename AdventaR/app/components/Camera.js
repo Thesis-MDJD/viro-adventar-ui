@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
-import dummyData from "./res/dummyData";
-import {VIRO_KEY, REST_SERVER_IP} from "react-native-dotenv";
+import {VIRO_KEY, REST_SERVER_IP, REST_API_KEY} from "react-native-dotenv";
 import getDegreesDistance from "./util/getDegreesDistance.js";
 
 export default class Camera extends Component {
@@ -43,9 +42,8 @@ export default class Camera extends Component {
     });
   }
 
-  getPlaces = async (latitude, longitude) => {
-    console.log('hello');
-    let data = await fetch(`http://${REST_SERVER_IP}/yelp/nearby?latitude=${this.state.latitude}&longitude=${this.state.longitude}`);
+  getPlaces = async () => {
+    let data = await fetch(`http://${REST_SERVER_IP}/yelp/nearby?latitude=${this.state.latitude}&longitude=${this.state.longitude}&API_KEY=${REST_API_KEY}`);
     let result = await data.json();
     this.setState({
       places: result.businesses
@@ -90,7 +88,7 @@ export default class Camera extends Component {
           longitude: position.coords.longitude,
           error: null,
         });
-        this.getPlaces(position.coords.latitude, position.coords.longitude);
+        this.getPlaces();
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
@@ -105,7 +103,7 @@ export default class Camera extends Component {
         });
 
         if (position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000) {
-          this.getPlaces(position.coords.latitude, position.coords.longitude);
+          this.getPlaces();
         }
       },
       error => this.setState({ error: error.message }),

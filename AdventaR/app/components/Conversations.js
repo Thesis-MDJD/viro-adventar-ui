@@ -38,7 +38,6 @@ export default class Conversations extends Component {
         };
         let col = self.state.conversations;
         col.push(room);
-        alert(JSON.stringify(col));
         self.setState({
           conversations: col,
           loggedInUser: {

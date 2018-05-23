@@ -21,10 +21,12 @@ export default class User extends Component {
       dbId: "",
       email: "",
       modalVisible: false,
-      profilePicture: undefined
+      profilePicture: undefined,
+      lastCheckedIn: null,
     };
 
     this.setProfilePicture = this.setProfilePicture.bind(this);
+    this.getLastCheckedIn = this.getLastCheckedIn.bind(this);
 
     //Database
     this.rootRef = firebaseApp
@@ -46,6 +48,7 @@ export default class User extends Component {
         email
       }, () => {
         this.setProfilePicture();
+        this.getLastCheckedIn();
       });
     } catch (error) {
       alert("error", JSON.stringify(error));
@@ -53,8 +56,28 @@ export default class User extends Component {
     }
   };
 
+  getLastCheckedIn() {
+    let lastCheckedIn = this.rootRef
+      .child("Users")
+      .child(this.state.dbId)
+      .child("CheckedInPlaces")
+      .orderByChild("createAt")
+      .limitToLast(1);
+
+    lastCheckedIn.on("value", snapshot => {
+      snapshot.val() !== null ?
+        this.setState({lastCheckedIn: Object.values(snapshot.val())[0].name})
+        :
+        this.setState({lastCheckedIn: null});
+    });
+  }
+
   componentDidMount() {
     this.getUserProfile();
+  }
+
+  componentWillUnmount() {
+    this.rootRef.off();
   }
 
   setProfilePicture() {
@@ -85,11 +108,11 @@ export default class User extends Component {
   };
 
   goToPlaces = () => {
-    this.props.navigation.navigate("Places");
+    this.props.navigation.navigate("Places", { username: this.state.username, dbId: this.state.dbId, });
   };
 
   goToHistory = () => {
-    this.props.navigation.navigate("History");
+    this.props.navigation.navigate("History", { username: this.state.username, dbId: this.state.dbId, });
   };
 
   onLogOutPress = async () => {
@@ -97,6 +120,14 @@ export default class User extends Component {
     this.props.navigation.navigate("Auth");
   };
   render() {
+    const lastCheckedIn = this.state.lastCheckedIn ?
+      <Text style={{ fontSize: 20 }} onPress={this.test}>
+        Last Check In At: 
+        <Text style={{fontSize: 20, fontWeight: "bold"}}> {this.state.lastCheckedIn}</Text>
+      </Text>
+      :
+      null;
+
     return (
       <View style={styles.container}>
         <Modal
@@ -120,7 +151,7 @@ export default class User extends Component {
           <Text style={styles.name}>{this.state.username}</Text>
         </View>
         <View style={{ marginLeft: 20 }}>
-          <Text style={{ fontSize: 20 }}>Last Check In At:</Text>
+          {lastCheckedIn}
         </View>
         <Button onPress={this.goToFriends} title="My Friends" color="blue" />
         <Button

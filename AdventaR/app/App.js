@@ -16,6 +16,9 @@ import Friends from "./components/Friends";
 import Conversations from "./components/Conversations";
 import NewConvo from "./components/NewConvo";
 import Chat from "./components/Chat";
+import FavoritePlaces from "./components/FavoritePlaces";
+import VisitHistory from "./components/VisitHistory";
+
 const AppStack = createStackNavigator({
   Camera: {
     screen: TabNavigator(
@@ -60,15 +63,13 @@ const AppStack = createStackNavigator({
       header: null
     }
   },
-  SelectedLocation: {
-    screen: SelectedLocation
-  },
-  otherProfile: {
-    screen: OtherProfile
-  },
+  SelectedLocation: SelectedLocation,
+  otherProfile: OtherProfile,
   Search: SearchFriend,
   chat: Chat,
-  NewConvo: NewConvo
+  NewConvo: NewConvo,
+  Places: FavoritePlaces,
+  History: VisitHistory,
 });
 
 const AuthStack = createStackNavigator({ Login: LoginScreen });

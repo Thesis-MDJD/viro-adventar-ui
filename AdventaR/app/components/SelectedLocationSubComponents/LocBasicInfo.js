@@ -34,7 +34,7 @@ export default class LocBasicInfo extends Component {
       this.state.checkedIn ?
         this.removeCheckedInPlace(this.props.yelpId)
         :
-        this.addCheckedInPlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId);
+        this.addCheckedInPlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId, this.props.url);
         
       this.props.updateCheckedIn(this.props.yelpId);
     } catch (error) {
@@ -60,12 +60,14 @@ export default class LocBasicInfo extends Component {
     }
   }
 
-  addCheckedInPlace = (userId, name, rating, image, yelpId) => {
+  addCheckedInPlace = (userId, name, rating, image, yelpId, url) => {
     const place = {
       name,
       image,
       rating,
-      yelpId
+      yelpId,
+      url,
+      createdAt: Date.now()
     };
     this.rootRef
       .child("Users")
@@ -106,7 +108,7 @@ export default class LocBasicInfo extends Component {
       this.state.favorite ?
         this.removeFavoritePlace(this.props.yelpId)
         :
-        this.addFavoritePlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId);
+        this.addFavoritePlace(userId, this.props.name, this.props.rating, this.props.photo, this.props.yelpId, this.props.url);
         
       this.props.updateFavorite(this.props.yelpId);
     } catch (error) {
@@ -132,12 +134,14 @@ export default class LocBasicInfo extends Component {
     }
   }
 
-  addFavoritePlace = (userId, name, rating, image, yelpId) => {
+  addFavoritePlace = (userId, name, rating, image, yelpId, url) => {
     const place = {
       name,
       image,
       rating,
-      yelpId
+      yelpId,
+      url,
+      createdAt: Date.now()
     };
     this.rootRef
       .child("Users")
@@ -228,7 +232,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     paddingVertical: 15,
-    marginVertical: 5
+    marginVertical: 5,
+    borderRadius: 10
   },
 
   nameFavContainer: {

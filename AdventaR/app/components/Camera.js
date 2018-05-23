@@ -77,6 +77,11 @@ export default class Camera extends Component {
     
     if (Platform.OS === "android") {
       requestPermissions();
+    } else {
+      this.setState({
+        permissionsGranted: true
+      });
+      this.setGPS();
     }
   }
 

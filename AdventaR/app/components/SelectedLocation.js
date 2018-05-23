@@ -6,7 +6,7 @@ import {
   StyleSheet,
   StatusBar
 } from "react-native";
-import { Icon } from 'react-native-elements';
+import { Icon } from "react-native-elements";
 import LocPics from "./SelectedLocationSubComponents/LocPics";
 import LocBasicInfo from "./SelectedLocationSubComponents/LocBasicInfo";
 import LocContactInfo from "./SelectedLocationSubComponents/LocContactInfo";

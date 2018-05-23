@@ -61,15 +61,15 @@ export default class User extends Component {
       .child("Users")
       .child(this.state.dbId)
       .child("CheckedInPlaces")
-      .orderByChild('createAt')
-      .limitToLast(1)
+      .orderByChild("createAt")
+      .limitToLast(1);
 
     lastCheckedIn.on("value", snapshot => {
       snapshot.val() !== null ?
         this.setState({lastCheckedIn: Object.values(snapshot.val())[0].name})
         :
         this.setState({lastCheckedIn: null});
-    })
+    });
   }
 
   componentDidMount() {
@@ -108,11 +108,11 @@ export default class User extends Component {
   };
 
   goToPlaces = () => {
-    this.props.navigation.navigate("Places", { username: this.state.username, dbId: this.state.dbId,});
+    this.props.navigation.navigate("Places", { username: this.state.username, dbId: this.state.dbId, });
   };
 
   goToHistory = () => {
-    this.props.navigation.navigate("History", { username: this.state.username, dbId: this.state.dbId,});
+    this.props.navigation.navigate("History", { username: this.state.username, dbId: this.state.dbId, });
   };
 
   onLogOutPress = async () => {

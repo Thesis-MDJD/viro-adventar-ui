@@ -25,7 +25,7 @@ export default class FavoritePlaces extends Component {
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
-      title: 'My Favorite Places',
+      title: "My Favorite Places",
       headerStyle: {
         backgroundColor: "#f4511e"
       },
@@ -103,15 +103,15 @@ export default class FavoritePlaces extends Component {
 const styles = StyleSheet.create({
   status: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   placeContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 4,
     paddingVertical: 6,
     paddingLeft: 6,
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
   },
   nameRatingContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    flexDirection: "column",
+    justifyContent: "space-around",
     paddingLeft: 8
   },
   name: {
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   yelpIcon: {
     paddingRight: 8
   }
-})
+});
 // See what my favorite places are
 
 // - Select favorite places from users where user is username

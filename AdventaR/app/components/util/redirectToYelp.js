@@ -8,4 +8,4 @@ export default (url) => {
       return Linking.openURL(url);
     }
   }).catch(err => console.error("An error occurred", err));
-}
+};

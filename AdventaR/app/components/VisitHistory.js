@@ -20,13 +20,13 @@ export default class FavoritePlaces extends Component {
       .child("Users")
       .child(this.state.dbId)
       .child("CheckedInPlaces")
-      .orderByChild("createdAt")
+      .orderByChild("createdAt");
   }
 
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
-      title: 'My Checked In Places',
+      title: "My Checked In Places",
       headerStyle: {
         backgroundColor: "#f4511e"
       },
@@ -59,7 +59,7 @@ export default class FavoritePlaces extends Component {
 
   render() {
     const status = this.state.places.length > 0 ?
-    <ScrollView>
+      <ScrollView>
         {this.state.places.slice().reverse().map(place => {
           return (
             <View key={place.yelpId} style={styles.placeContainer}>
@@ -87,11 +87,11 @@ export default class FavoritePlaces extends Component {
             </View>
           );
         })}
-    </ScrollView>
-    :
-    <View>
-      <Text style={styles.name}>You have not checked.</Text>
-    </View>
+      </ScrollView>
+      :
+      <View>
+        <Text style={styles.name}>You have not checked.</Text>
+      </View>;
 
     return (
       <View>
@@ -104,15 +104,15 @@ export default class FavoritePlaces extends Component {
 const styles = StyleSheet.create({
   status: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   placeContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 4,
     paddingVertical: 6,
     paddingLeft: 6,
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
   },
   nameRatingContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    flexDirection: "column",
+    justifyContent: "space-around",
     paddingLeft: 8
   },
   name: {
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   yelpIcon: {
     paddingRight: 8
   }
-})
+});

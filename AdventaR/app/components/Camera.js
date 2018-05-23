@@ -52,7 +52,6 @@ export default class Camera extends Component {
       }&longitude=${this.state.longitude}&API_KEY=${REST_API_KEY}`
     );
     let result = await data.json();
-    console.log('after');
     this.setState({
       places: result.businesses
     });
@@ -102,13 +101,9 @@ export default class Camera extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-<<<<<<< HEAD
-          error: null
-=======
           error: null,
         }, () => {
           this.getPlaces();
->>>>>>> fixing location update on ar
         });
       },
       error => this.setState({ error: error.message }),
@@ -130,21 +125,6 @@ export default class Camera extends Component {
             });
           }
         });
-<<<<<<< HEAD
-
-        if (
-          position.speed <= 3 &&
-          getDegreesDistance(
-            this.state.previousLatitude,
-            position.coords.latitude,
-            this.state.previousLongitude,
-            position.coords.longitude
-          ).distance > 1000
-        ) {
-          this.getPlaces();
-        }
-=======
->>>>>>> fixing location update on ar
       },
       error => this.setState({ error: error.message }),
       {
@@ -166,7 +146,6 @@ export default class Camera extends Component {
         {this.state.cameraMounted && this.state.permissionsGranted ? (
           <ViroARSceneNavigator
             apiKey={VIRO_KEY}
-<<<<<<< HEAD
             ref={component => component}
             viroAppProps={{
               unmount: this.unmount,
@@ -175,11 +154,6 @@ export default class Camera extends Component {
               places: this.state.places
             }}
             initialScene={{ scene: arScene }}
-=======
-            ref={((component)=> component)}
-            viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
-            initialScene={{scene: arScene}}
->>>>>>> fixing location update on ar
             autofocus={false}
             debug={true} // set this to true
           />

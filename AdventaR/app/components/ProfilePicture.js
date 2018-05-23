@@ -18,8 +18,6 @@ import { firebaseApp } from "./FireBase";
 import RNFetchBlob from "react-native-fetch-blob";
 import ImageResizer from "react-native-image-resizer";
 
-//https://facebook.github.io/react-native/docs/cameraroll.html
-//https://github.com/joltup/react-native-fetch-blob
 export default class ProfilePicture extends Component {
   constructor(props) {
     super(props);
@@ -114,7 +112,7 @@ export default class ProfilePicture extends Component {
       });
   }
 
-  getLibraryPhoto() {  
+  getLibraryPhoto() { 
     this.askPermission();
     CameraRoll.getPhotos({
       first: 40,

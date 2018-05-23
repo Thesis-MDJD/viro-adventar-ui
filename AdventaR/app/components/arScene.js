@@ -12,13 +12,13 @@ import {
   ViroNode,
   ViroSpinner,
   ViroFlexView,
-  ViroARTrackingTargets,
 } from "react-viro";
 import { DeviceEventEmitter, AsyncStorage, StyleSheet } from "react-native";
 import ReactNativeHeading from "react-native-heading";
 import { withNavigation } from "react-navigation";
 import getDegreesDistance from "./util/getDegreesDistance";
 import { firebaseApp } from "./FireBase";
+import Advertisement from "./ad";
 
 const polarToCartesian = ViroUtils.polarToCartesian;
 
@@ -185,9 +185,7 @@ class HelloWorldSceneAR extends Component {
         <ViroAmbientLight color="#FFFFFF" />
 
         {/*Ads*/}
-        {/* <ViroARImageMarker target={"hackreactor"} >
-          <Advertisement />
-        </ViroARImageMarker> */}
+        <Advertisement place={this.props.arSceneNavigator.viroAppProps.ad} />
 
         {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ?
           (
@@ -326,15 +324,6 @@ ViroAnimations.registerAnimations({
     duration: 1000
   }
 });
-
-ViroARTrackingTargets.createTargets({
-  "hackreactor": {
-    source: require("./res/hackreactor.png"),
-    orientation: "Up",
-    physicalWidth: 1 // real world width in meters
-  }
-});
-
 
 
 export default withNavigation(HelloWorldSceneAR);

@@ -21,7 +21,8 @@ export default class Camera extends Component {
       latitude: "",
       longitude: "",
       places: [],
-      permissionsGranted: false
+      permissionsGranted: false,
+      ad: undefined
     };
 
     this.remount = this.remount.bind(this);
@@ -54,6 +55,23 @@ export default class Camera extends Component {
     let result = await data.json();
     this.setState({
       places: result.businesses
+    }, ()=> {
+
+      //Check to see if ad will be rendered
+      if (this.state.places[0].name === "Starbucks") {
+        this.setState({
+          ad: Object.assign({}, this.state.places[0], {ad: "starbucks"})
+        });
+      } else if (this.state.places[0].name === "Ben & Jerry's") {
+        this.setState({
+          ad: Object.assign({}, this.state.places[0], {ad: "benandjerry"})
+        });
+      } else {
+        this.setState({
+          ad: undefined
+        });
+      }
+
     });
   };
 
@@ -134,7 +152,7 @@ export default class Camera extends Component {
         enableHighAccuracy: false,
         timeout: 200000,
         maximumAge: 1000,
-        distanceFilter: 10
+        distanceFilter: 5
       }
     );
   }

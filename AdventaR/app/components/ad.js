@@ -2,8 +2,12 @@ import React, { Component, Text } from "react";
 
 import {
   Viro3DObject,
-  ViroARTrackingTargets,
+  ViroARPlane,
+  ViroParticleEmitter,
+  ViroAmbientLight,
 } from "react-viro";
+import getDegreesDistance from "./util/getDegreesDistance";
+import RNFetchBlob from "react-native-fetch-blob";
 
 export default class Advertisement extends Component {
 
@@ -11,31 +15,35 @@ export default class Advertisement extends Component {
     super(props);
 
     this.state = {
-      markerSize: this.props.markerSize || 1,
       places: this.props.places || [],
       latitude: this.props.latitude || "",
       longitude: this.props.longitude || "",
-      markerName: this.props.markerName || "hackreactor",
-      source: this.props.source || "./res/OrangePeel_v4.vrx"
+      image: this.props.place && this.getAd(this.props.place.ad)
     };
+
+    var ads = {benandjerry: require("./res/benandjerry/test.png"), hackreactor: require("./res/hackreactor/test.png"), starbucks: require("./res/starbucks/test.png")}
+  }
+
+  getAd(place) {
+    console.log(require("./res/test.png"));
+    this.setState({
+      image: (<Viro3DObject
+        source={require("./res/sign.vrx")}
+        resources={ads[place] || ads["hackreactor"]}
+        position={[0, 0, 0]}
+        scale={[0.3, 0.3, 0.3]}
+        rotation={[0, 0, 0]}
+        type="VRX"/>)
+    });
+  }
+
+  componentDidMount() {
   }
 
   render() {
     return (
-      <Viro3DObject
-        source={require("./res/OrangePeel_v4.vrx")}
-        highAccuracyGaze={true}
-        position={[0, 2, 0]}
-        scale={[0.01, 0.01, 0.01]}
-        rotation={[-90, 0, 0]}
-        type="VRX"/>);
+      <ViroARPlane minHeight={0.5} minWidth={0.5} >
+        {this.state.image}
+      </ViroARPlane>);
   }
 }
-
-ViroARTrackingTargets.createTargets({
-  "hackreactor": {
-    source: require("./res/hackreactor.png"),
-    orientation: "Up",
-    physicalWidth: 1 // real world width in meters
-  }
-});

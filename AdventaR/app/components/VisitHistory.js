@@ -90,7 +90,7 @@ export default class FavoritePlaces extends Component {
       </ScrollView>
       :
       <View>
-        <Text style={styles.name}>You have not checked.</Text>
+        <Text style={styles.name}>You have not checked in to any places.</Text>
       </View>;
 
     return (

@@ -185,6 +185,38 @@ export default class User extends Component {
     await AsyncStorage.removeItem("userToken");
     this.props.navigation.navigate("Auth");
   };
+
+  askPermission() {
+    const requestPermissions = async () => {
+      let permissions = [];
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+      if (permissions.length > 0) {
+        try {
+          const granted = await PermissionsAndroid.requestMultiple(permissions);
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can use all");
+          } else {
+            console.log("Read/Write permission denied");
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+      
+    };
+    
+    
+    if (Platform.OS === "android") {
+      requestPermissions();
+    }
+  }
+
+  showProfile() {
+    this.askPermission();
+    this.setState({ modalVisible: true });
+  }
+
   render() {
     const lastCheckedIn = this.state.lastCheckedIn ? (
       <Text style={styles.lastCheckedIn}>
@@ -214,10 +246,15 @@ export default class User extends Component {
             profPic={this.state.profilePicture}
           />
         </Modal>
+<<<<<<< HEAD
         <View style={styles.imageContainer}>
           <TouchableOpacity
             onPress={(() => this.setState({ modalVisible: true })).bind(this)}
           >
+=======
+        <View style={styles.centered}>
+          <TouchableHighlight onPress={this.showProfile.bind(this)}>
+>>>>>>> fixing location update on ar
             <Image
               style={styles.image}
               source={{

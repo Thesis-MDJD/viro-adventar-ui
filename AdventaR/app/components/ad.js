@@ -15,29 +15,28 @@ export default class Advertisement extends Component {
     super(props);
 
     this.state = {
-      places: this.props.places || [],
-      latitude: this.props.latitude || "",
-      longitude: this.props.longitude || "",
-      image: this.props.place && this.getAd(this.props.place.ad)
+      image: undefined
     };
 
-    var ads = {benandjerry: require("./res/benandjerry/test.png"), hackreactor: require("./res/hackreactor/test.png"), starbucks: require("./res/starbucks/test.png")}
   }
 
-  getAd(place) {
-    console.log(require("./res/test.png"));
-    this.setState({
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (place === undefined) {
+      return {
+        image: undefined
+      };
+    }
+    let place = nextProps.ad === "Starbucks" ? require("./res/starbucks/test.png") : (nextProps.ad === "Ben & Jerry's" ? require("./res/benandjerry/test.png") : require("./res/hackreactor/test.png"));
+    
+    return {
       image: (<Viro3DObject
         source={require("./res/sign.vrx")}
-        resources={ads[place] || ads["hackreactor"]}
+        resources={[place]}
         position={[0, 0, 0]}
         scale={[0.3, 0.3, 0.3]}
         rotation={[0, 0, 0]}
         type="VRX"/>)
-    });
-  }
-
-  componentDidMount() {
+    };
   }
 
   render() {

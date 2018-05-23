@@ -37,7 +37,8 @@ class HelloWorldSceneAR extends Component {
       initialized: false,
       expandedPlace: 0,
       favorited: {},
-      checkedIn: {}
+      checkedIn: {},
+      ad: undefined
     };
     this.filteredPlaces = [];
 
@@ -49,6 +50,7 @@ class HelloWorldSceneAR extends Component {
     this.touched = this.touched.bind(this);
     this.updateFavoritedLocations = this.updateFavoritedLocations.bind(this);
     this.updateCheckedInLocations = this.updateCheckedInLocations.bind(this);
+    this.setAd = this.setAd.bind(this);
 
     this.rootRef = firebaseApp
       .database()
@@ -63,6 +65,14 @@ class HelloWorldSceneAR extends Component {
     } else {
       this.props.navigation.navigate("SelectedLocation", {restaurantId: id, name: name, distance: distance, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
     }
+  }
+
+  setAd(ad) {
+    this.setState({
+      ad
+    }, () => {
+      alert(`changed to ${ad}`);
+    });
   }
 
   getCheckedInLocations = async () => {
@@ -120,10 +130,32 @@ class HelloWorldSceneAR extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    let ad = undefined;
+    let closest = undefined;
+
+    let sortedPlaces = nextProps.arSceneNavigator.viroAppProps.places.map( (place)=> {
+      let polarCoord = getDegreesDistance(parseFloat(nextProps.arSceneNavigator.viroAppProps.latitude), parseFloat(place.coordinates.latitude), parseFloat(nextProps.arSceneNavigator.viroAppProps.longitude), parseFloat(place.coordinates.longitude));
+      
+      return Object.assign({}, place, {polarCoord});
+    });
+    
+    sortedPlaces.sort(function(a, b) { 
+      return a.polarCoord.distance - b.polarCoord.distance; 
+    });
+    for (let i = 0; i < sortedPlaces.length; i++) {
+      if (sortedPlaces[i].polarCoord.distance < 20 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
+        if (ad !== undefined && closest > sortedPlaces[i].polarCoord.distance) {
+          ad = sortedPlaces[i].name;
+          closest = a.polarCoord.distance;
+        }
+      }
+    }
+
     return Object.assign(prevState, {
-      places: nextProps.arSceneNavigator.viroAppProps.places,
+      places: sortedPlaces,
       longitude: nextProps.arSceneNavigator.viroAppProps.longitude,
       latitude: nextProps.arSceneNavigator.viroAppProps.latitude,
+      ad
     });
   }
 
@@ -150,7 +182,6 @@ class HelloWorldSceneAR extends Component {
   render() {
     let forceRerender = false;
     this.filteredPlaces = this.state.places.slice(0, 20).map(place => {
-      place.polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
       place.locationsBehind = [];
       place.processed = false;
       return place;
@@ -164,8 +195,8 @@ class HelloWorldSceneAR extends Component {
         for (let i = 0; i < array.length; i++) {
           if (!array[i].processed
           && i !== index
-          && place.polarCoor.degrees > array[i].polarCoor.degrees - 10
-          && place.polarCoor.degrees < array[i].polarCoor.degrees + 10) {
+          && place.polarCoord.degrees > array[i].polarCoord.degrees - 10
+          && place.polarCoord.degrees < array[i].polarCoord.degrees + 10) {
             place.locationsBehind.push(array[i]);
             array[i].processed = true;
           }
@@ -185,7 +216,7 @@ class HelloWorldSceneAR extends Component {
         <ViroAmbientLight color="#FFFFFF" />
 
         {/*Ads*/}
-        <Advertisement place={this.props.arSceneNavigator.viroAppProps.ad} />
+        <Advertisement place={this.state.ad} />
 
         {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ?
           (
@@ -196,10 +227,9 @@ class HelloWorldSceneAR extends Component {
           )
           :
           (this.filteredPlaces.map( (place, index) => {
-            if (place && place.polarCoor) {
-              let polarCoor = getDegreesDistance(parseFloat(this.state.latitude), parseFloat(place.coordinates.latitude), parseFloat(this.state.longitude), parseFloat(place.coordinates.longitude));
-              let turn = polarCoor.degrees - this.cameraHead;
-              let distance = polarCoor.distance;
+            if (place && place.polarCoord) {
+              let turn = place.polarCoord.degrees - this.cameraHead;
+
               let marker = place.locationsBehind.length > 0 ?
                 require("./res/Square.vrx")
                 :
@@ -215,7 +245,7 @@ class HelloWorldSceneAR extends Component {
                       require("./res/Triangle.vrx");
 
               let moreLocations = place.locationsBehind.length > 0 ?
-                (<ViroText onClick={() => this.touched(place.id, place.name, distance)}
+                (<ViroText key={"2" + place.id} onClick={() => this.touched(place.id, place.name, place.polarCoord.distance)}
                   text={place.locationsBehind.length + " more"} scale={[15, 15, 15]}
                   position={[0, -1.5, 0]} style={styles.morePlaceTextStyle} />)
                 :
@@ -227,15 +257,15 @@ class HelloWorldSceneAR extends Component {
                   rotation={[0, turn * -1, 0]}
                   position={polarToCartesian([75, turn, 0])}>
                   {!this.state.expandedPlace || forceRerender ?
-                    [<ViroText key={place.id} width={1.2} onClick={() => this.touched(place.id, place.name, distance)}
+                    [<ViroText key={"1" + place.id} width={1.2} onClick={() => this.touched(place.id, place.name, place.polarCoord.distance)}
                       text={place.name} scale={[15, 15, 15]}
                       position={[0, 3.5, 0]} style={styles.placeTextStyle} shadowCastingBitMask={2} />,
                     moreLocations,
-                    <Viro3DObject source={marker}
+                    <Viro3DObject key={"3" + place.id} source={marker}
                       rotation={[0, 0, 0]}
                       position={[0, -4.5, 0]}
                       scale={[0.4, 0.4, 0.4]}
-                      onClick={() => this.touched(place.id, place.name, distance, true)}
+                      onClick={() => this.touched(place.id, place.name, place.polarCoord.distance, true)}
                       type="VRX"
                       animation={{name: "animateMarker", run: true, loop: true}}/>]
                     : null
@@ -248,7 +278,7 @@ class HelloWorldSceneAR extends Component {
                         </ViroFlexView>
                         {place.locationsBehind.slice(0, 5).map(location =>
                           (
-                            <ViroFlexView height={1} width={3} flex={.5} onClick={() => this.touched(location.id, location.name, distance)} >
+                            <ViroFlexView height={1} width={3} flex={.5} onClick={() => this.touched(location.id, location.name, place.polarCoord.distance)} >
                               <ViroText key={location.id} height={1} textLineBreakMode={"wordwrap"} text={location.name} style={styles.expandedLocationText}/>
                             </ViroFlexView>
                           )

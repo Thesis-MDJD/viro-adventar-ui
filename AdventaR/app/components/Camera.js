@@ -16,7 +16,7 @@ export default class Camera extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = { 
       cameraMounted: true,
       latitude: "",
       longitude: "",

@@ -70,6 +70,7 @@ const AppStack = createStackNavigator({
   NewConvo: NewConvo,
   Places: FavoritePlaces,
   History: VisitHistory,
+  Friends: Friends,
 });
 
 const AuthStack = createStackNavigator({ Login: LoginScreen });

@@ -82,8 +82,6 @@ export default class User extends Component {
 
   acceptFriend = uid => {
     const loggedIn = this.state.loggedInUser;
-    // alert(`uid ${JSON.stringify(uid)}`);
-    // alert(`loggedin ${JSON.stringify(loggedIn)}`);
     const request = this.rootRef
       .child("Users")
       .child(loggedIn.uid)

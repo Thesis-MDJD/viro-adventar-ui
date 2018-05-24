@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Button,
   AsyncStorage,
+  ActivityIndicator,
   FlatList
 } from "react-native";
 import { ListItem, List } from "react-native-elements";
@@ -56,7 +57,6 @@ export default class Conversations extends Component {
         });
       } else {
         result.on("child_added", snap => {
-          alert(JSON.stringify(snap.val()));
           if (snap.val()) {
             const room = {
               conversationId: snap.key,

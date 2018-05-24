@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     paddingRight: 15,
     borderRadius: 5,
-    backgroundColor: "#66db30"
+    backgroundColor: "#f4511e"
   },
 
   //MessageBubble
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   },
 
   messageBubbleRight: {
-    backgroundColor: "#66db30"
+    backgroundColor: "#f4511e"
   },
 
   messageBubbleTextRight: {

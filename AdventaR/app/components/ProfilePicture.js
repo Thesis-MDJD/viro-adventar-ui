@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Platform,
+  Dimensions,
   Text,
   View,
   StyleSheet,
@@ -9,7 +10,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Modal,
-  TouchableHighlight,
+  TouchableOpacity,
   CameraRoll,
   ScrollView
 } from "react-native";
@@ -163,12 +164,12 @@ export default class ProfilePicture extends Component {
 
   render() {
     return (
-      <View style={{ alignItems: "center" }}>
-        <View style={{ marginBottom: 30 }}>
+      <View style={{ alignItems: "center", backgroundColor: "#F5FCFF"}}>
+        <View style={{ marginVertical: 30 }}>
           <Text style={styles.modalText}> Change Profile Picture </Text>
         </View>
 
-        <Text style={styles.modalText}>
+        <Text style={styles.modalText2}>
           {this.state.currentPhoto === this.props.profPic
             ? "Current Profile Picture"
             : "New Profile Picture"}
@@ -188,16 +189,21 @@ export default class ProfilePicture extends Component {
             {this.state.uploading ? (
               undefined
             ) : (
-              <Button onPress={this.props.hideModal} title="Go Back" />
+              <View style={styles.buttonContainer}>
+                <Button onPress={this.props.hideModal} title="Go Back" color="black"/>
+              </View>
             )}
           </View>
           {this.state.uploading ? (
             undefined
           ) : (
-            <Button
-              onPress={this.getLibraryPhoto}
-              title="Upload from Library"
-            />
+            <View style={styles.buttonContainer}>
+              <Button
+                onPress={this.getLibraryPhoto}
+                title="Upload from Library"
+                color="black"
+              />
+            </View>
           )}
         </View>
 
@@ -212,7 +218,7 @@ export default class ProfilePicture extends Component {
             >
               {this.state.photos.map((p, i) => {
                 return (
-                  <TouchableHighlight
+                  <TouchableOpacity
                     key={i}
                     onPress={this.imageClick(p.node.image.uri)}
                   >
@@ -225,7 +231,7 @@ export default class ProfilePicture extends Component {
                       resizeMode={"cover"}
                       source={{ uri: p.node.image.uri }}
                     />
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
@@ -234,8 +240,8 @@ export default class ProfilePicture extends Component {
           {this.state.uploading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : this.state.currentPhoto !== this.props.profPic ? (
-            <View>
-              <Button title="Submit" onPress={this.onSubmit} />
+            <View style={styles.buttonContainer}>
+              <Button title="Submit" onPress={this.onSubmit} color="black"/>
             </View>
           ) : (
             undefined
@@ -246,11 +252,16 @@ export default class ProfilePicture extends Component {
   }
 }
 
+let screenWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   image: {
-    width: 150,
-    height: 150,
-    marginBottom: 20
+    width: screenWidth / 1.5,
+    height: screenWidth / 1.5,
+    marginVertical: 20,
+    borderWidth: 2,
+    borderColor: "#f4511e",
+    borderRadius: 75
   },
   center: {
     alignItems: "center",
@@ -258,5 +269,17 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 20
+  },
+  modalText2: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textDecorationLine: "underline"
+  },
+  buttonContainer: {
+    backgroundColor: "rgba(255,255,255,0.8)",
+    borderStyle: "solid",
+    borderWidth: 3,
+    borderRadius: 50,
+    borderColor: "#f4511e",
   }
 });

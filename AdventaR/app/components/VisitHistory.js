@@ -72,6 +72,9 @@ export default class FavoritePlaces extends Component {
                   <Text style={styles.name}> {place.name} </Text>
                 </View>
                 <LocRating rating={place.rating} />
+                <View>
+                  <Text>{Date(place.createdAt).toString().slice(4, 15)}</Text>
+                </View>
               </View>
 
               <View style={styles.yelpIcon}>

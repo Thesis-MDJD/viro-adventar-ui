@@ -34,7 +34,7 @@ export default class User extends Component {
     this.getLastCheckedIn = this.getLastCheckedIn.bind(this);
     this.getCheckedInCount = this.getCheckedInCount.bind(this);
     this.getFavoritedCount = this.getFavoritedCount.bind(this);
-    this.getFriendCount = this.getFriendCount.bind(this)
+    this.getFriendCount = this.getFriendCount.bind(this);
 
     //Database
     this.rootRef = firebaseApp
@@ -87,42 +87,42 @@ export default class User extends Component {
     let checkedIns = this.rootRef
       .child("Users")
       .child(this.state.dbId)
-      .child("CheckedInPlaces")
+      .child("CheckedInPlaces");
 
     checkedIns.on("value", snapshot => {
       snapshot.val() !== null ?
         this.setState({checkedInCount: Object.keys(snapshot.val()).length})
         :
         this.setState({checkedInCount: 0});
-    })
+    });
   }
 
   getFavoritedCount() {
     let favorites = this.rootRef
       .child("Users")
       .child(this.state.dbId)
-      .child("FavoritePlaces")
+      .child("FavoritePlaces");
 
     favorites.on("value", snapshot => {
       snapshot.val() !== null ?
         this.setState({favoritedCount: Object.keys(snapshot.val()).length})
         :
         this.setState({favoritedCount: 0});
-    })
+    });
   }
 
   getFriendCount() {
     let friends = this.rootRef
       .child("Users")
       .child(this.state.dbId)
-      .child("Friends")
+      .child("Friends");
 
     friends.on("value", snapshot => {
       snapshot.val() !== null ?
         this.setState({friendCount: Object.keys(snapshot.val()).length})
         :
         this.setState({friendCount: 0});
-    })
+    });
   }
 
   componentDidMount() {
@@ -235,7 +235,7 @@ export default class User extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={{ flexDirection: "row", justifyContent:"center" }}>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <TouchableOpacity style={styles.logOutContainer} onPress={this.onLogOutPress}>
             <Icon name="logout-variant" type="material-community" color="54575b"/>
             <View>
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   statContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     width: screenWidth / 4,
@@ -301,9 +301,9 @@ const styles = StyleSheet.create({
   },
   stat: {
     flex: 0.5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   statText: {
     fontSize: 20

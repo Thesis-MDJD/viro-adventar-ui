@@ -209,7 +209,7 @@ export default class ProfilePicture extends Component {
 
         <View style={{ marginTop: 30 }}>
           {this.state.hideCameraRoll ? (
-            undefined
+            <View style={{backgroundColor: "#F5FCFF", width: screenWidth, height: 200}}></View>
           ) : (
             <ScrollView
               horizontal={true}

@@ -38,7 +38,8 @@ class HelloWorldSceneAR extends Component {
       expandedPlace: 0,
       favorited: {},
       checkedIn: {},
-      ad: undefined
+      ad: undefined,
+      cameraPosition: [0, 0, 0]
     };
     this.filteredPlaces = [];
 
@@ -50,7 +51,6 @@ class HelloWorldSceneAR extends Component {
     this.touched = this.touched.bind(this);
     this.updateFavoritedLocations = this.updateFavoritedLocations.bind(this);
     this.updateCheckedInLocations = this.updateCheckedInLocations.bind(this);
-    this.setAd = this.setAd.bind(this);
 
     this.rootRef = firebaseApp
       .database()
@@ -65,14 +65,6 @@ class HelloWorldSceneAR extends Component {
     } else {
       this.props.navigation.navigate("SelectedLocation", {restaurantId: id, name: name, distance: distance, updateFavoritedLocations: this.updateFavoritedLocations, updateCheckedInLocations: this.updateCheckedInLocations});
     }
-  }
-
-  setAd(ad) {
-    this.setState({
-      ad
-    }, () => {
-      alert(`changed to ${ad}`);
-    });
   }
 
   getCheckedInLocations = async () => {
@@ -130,26 +122,41 @@ class HelloWorldSceneAR extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    
     let ad = undefined;
     let closest = undefined;
-
     let sortedPlaces = nextProps.arSceneNavigator.viroAppProps.places.map( (place)=> {
       let polarCoord = getDegreesDistance(parseFloat(nextProps.arSceneNavigator.viroAppProps.latitude), parseFloat(place.coordinates.latitude), parseFloat(nextProps.arSceneNavigator.viroAppProps.longitude), parseFloat(place.coordinates.longitude));
-      
       return Object.assign({}, place, {polarCoord});
     });
     
     sortedPlaces.sort(function(a, b) { 
       return a.polarCoord.distance - b.polarCoord.distance; 
     });
+
     for (let i = 0; i < sortedPlaces.length; i++) {
-      if (sortedPlaces[i].polarCoord.distance < 20 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
-        if (ad !== undefined && closest > sortedPlaces[i].polarCoord.distance) {
+      if (sortedPlaces[i].polarCoord.distance < 150 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
+        if (!ad) {
+          console.log("NEW AD", sortedPlaces[i].name);
           ad = sortedPlaces[i].name;
-          closest = a.polarCoord.distance;
+          closest = sortedPlaces[i].polarCoord.distance;
         }
+        //  else if ( closest > sortedPlaces[i].polarCoord.distance) {
+        //   console.log("REPLACED AD");
+        //   ad = sortedPlaces[i].name;
+        //   closest = sortedPlaces[i].polarCoord.distance;
+        // }
       }
     }
+
+    // if (prevState.longitude !== nextProps.arSceneNavigator.viroAppProps.longitude || prevState.latitude !== nextProps.arSceneNavigator.viroAppProps.latitude) {
+    //   this.scene.getCameraOrientationAsync()
+    //     .then((orientation) => {
+    //       this.setState({
+    //         cameraPosition: orienation.position
+    //       });
+    //     });
+    // }
 
     return Object.assign(prevState, {
       places: sortedPlaces,
@@ -216,7 +223,7 @@ class HelloWorldSceneAR extends Component {
         <ViroAmbientLight color="#FFFFFF" />
 
         {/*Ads*/}
-        <Advertisement place={this.state.ad} />
+        <Advertisement ad={this.state.ad} />
 
         {this.state.latitude === "" || !this.state.initialized || this.state.places.length === 0 ?
           (
@@ -251,11 +258,13 @@ class HelloWorldSceneAR extends Component {
                 :
                 null;
 
+              let [coorX, coorY, coorZ] = polarToCartesian([75, turn, 0]);
+
               return (
                 <ViroNode
                   key={place.id}
                   rotation={[0, turn * -1, 0]}
-                  position={polarToCartesian([75, turn, 0])}>
+                  position={[coorX + this.state.cameraPosition[0], coorY + this.state.cameraPosition[1], coorZ + this.state.cameraPosition[2]]}>
                   {!this.state.expandedPlace || forceRerender ?
                     [<ViroText key={"1" + place.id} width={1.2} onClick={() => this.touched(place.id, place.name, place.polarCoord.distance)}
                       text={place.name} scale={[15, 15, 15]}

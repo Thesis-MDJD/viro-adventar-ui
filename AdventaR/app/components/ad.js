@@ -21,17 +21,17 @@ export default class Advertisement extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (place === undefined) {
+    if (nextProps.ad === undefined) {
       return {
         image: undefined
       };
     }
-    let place = nextProps.ad === "Starbucks" ? require("./res/starbucks/test.png") : (nextProps.ad === "Ben & Jerry's" ? require("./res/benandjerry/test.png") : require("./res/hackreactor/test.png"));
+    let place = {Starbucks: require("./res/starbucks/test.png"), "Ben & Jerry's": require("./res/benandjerry/test.png"), other: require("./res/hackreactor/test.png")};
     
     return {
       image: (<Viro3DObject
         source={require("./res/sign.vrx")}
-        resources={[place]}
+        resources={[place[nextProps.ad]]}
         position={[0, 0, 0]}
         scale={[0.3, 0.3, 0.3]}
         rotation={[0, 0, 0]}

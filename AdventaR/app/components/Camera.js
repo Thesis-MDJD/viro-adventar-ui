@@ -122,6 +122,7 @@ export default class Camera extends Component {
           } else {
             this.setState({
               places: this.state.places.slice()
+            }, () => {
             });
           }
         });

@@ -164,7 +164,7 @@ export default class ProfilePicture extends Component {
 
   render() {
     return (
-      <View style={{ alignItems: "center", backgroundColor: "#F5FCFF"}}>
+      <View style={{ alignItems: "center" }}>
         <View style={{ marginVertical: 30 }}>
           <Text style={styles.modalText}> Change Profile Picture </Text>
         </View>
@@ -207,9 +207,9 @@ export default class ProfilePicture extends Component {
           )}
         </View>
 
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 30}}>
           {this.state.hideCameraRoll ? (
-            <View style={{backgroundColor: "#F5FCFF", width: screenWidth, height: 200}}></View>
+            null
           ) : (
             <ScrollView
               horizontal={true}
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline"
   },
   buttonContainer: {
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: "rgba(245,252,255,0.8)",
     borderStyle: "solid",
     borderWidth: 3,
     borderRadius: 50,

@@ -49,9 +49,9 @@
 		88DB481DA1D4497091BAF0D1 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9AF5D9C98414445AE1BA345 /* FontAwesome.ttf */; };
 		AAFDAE6FAE3E4468B8896DE8 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3DEE720E18E41E5A49133AC /* Ionicons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		AF47A9D720B5DDC60033CA85 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = AF47A9D620B5DDC60033CA85 /* main.jsbundle */; };
 		AF524E1520AE32B800EE04A0 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF524E1420AE327300EE04A0 /* libRNFetchBlob.a */; };
 		AF524E7320AE3A4200EE04A0 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF524E5020AE3A3B00EE04A0 /* libRCTCameraRoll.a */; };
-		AF65CAAA20B0975D00959F09 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = AF65CA8020B0975C00959F09 /* main.jsbundle */; };
 		AFA7CD5120A4AA9C002F3560 /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA7CD5020A4AA8A002F3560 /* libReactNativeHeading.a */; };
 		AFC3046E20AA185000BE0C6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */; };
 		C7194F86EA274C61BB429D7C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F244CA536EAD4BFD951A1957 /* Foundation.ttf */; };
@@ -418,9 +418,9 @@
 		A9AF5D9C98414445AE1BA345 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		ABAAA808D24B4540B18B2BFD /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		AF47A9D620B5DDC60033CA85 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = AdventaR/main.jsbundle; sourceTree = "<group>"; };
 		AF524DE820AE327200EE04A0 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		AF524E4520AE3A3B00EE04A0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
-		AF65CA8020B0975C00959F09 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = AdventaR/main.jsbundle; sourceTree = "<group>"; };
 		AFA7CD2620A4AA8A002F3560 /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
 		AFC3046D20AA185000BE0C6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CDF95ACD20AFB520003C853F /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
@@ -590,7 +590,7 @@
 		13B07FAE1A68108700A75B9A /* AdventaR */ = {
 			isa = PBXGroup;
 			children = (
-				AF65CA8020B0975C00959F09 /* main.jsbundle */,
+				AF47A9D620B5DDC60033CA85 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1325,7 +1325,7 @@
 				3BA96CF14F7F4A4C8CB078F5 /* MaterialIcons.ttf in Resources */,
 				669DDA3AB91E432797666DD4 /* Octicons.ttf in Resources */,
 				CF0598BDD1C6416DA90BAF43 /* SimpleLineIcons.ttf in Resources */,
-				AF65CAAA20B0975D00959F09 /* main.jsbundle in Resources */,
+				AF47A9D720B5DDC60033CA85 /* main.jsbundle in Resources */,
 				34991F910EDA4B92883EDB98 /* Zocial.ttf in Resources */,
 				AFC3046E20AA185000BE0C6B /* GoogleService-Info.plist in Resources */,
 			);

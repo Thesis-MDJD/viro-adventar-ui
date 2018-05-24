@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Button,
   AsyncStorage,
+  ActivityIndicator,
   FlatList
 } from "react-native";
 import { ListItem, List } from "react-native-elements";
@@ -26,38 +27,65 @@ export default class Conversations extends Component {
   getUserProfile = async () => {
     const self = this;
     try {
-      const curUid = await AsyncStorage.getItem("dbId");
-      const result = this.rootRef
-        .child("Conversations")
-        .orderByChild(curUid)
-        .equalTo(true);
-      result.on("child_added", async snap => {
-        const room = {
-          conversationId: snap.key,
-          participants: snap.val()["people"]
-        };
-        let col = self.state.conversations;
-        col.push(room);
-        self.setState({
-          conversations: col,
+      this.setState(
+        {
           loggedInUser: {
-            curUid,
+            curUid: await AsyncStorage.getItem("dbId"),
             email: await AsyncStorage.getItem("email"),
             username: await AsyncStorage.getItem("username")
-          },
-          loading: false
-        });
-      });
+          }
+        },
+        () => {
+          self.loadConversations(self.state.loggedInUser.curUid);
+        }
+      );
     } catch (error) {
       console.log("Fetching Current User Error: ", error);
     }
+  };
+
+  loadConversations = curUid => {
+    const self = this;
+    const result = this.rootRef
+      .child("Conversations")
+      .orderByChild(curUid)
+      .equalTo(true);
+    result.once("value", snap => {
+      if (!snap.val()) {
+        self.setState({
+          loading: false
+        });
+      } else {
+        result.on("child_added", snap => {
+          if (snap.val()) {
+            const room = {
+              conversationId: snap.key,
+              participants: snap.val()["people"]
+            };
+            let col = self.state.conversations;
+            col.push(room);
+            self.setState({
+              conversations: col,
+              loading: false
+            });
+          } else {
+            self.setState({
+              loading: false
+            });
+          }
+        });
+      }
+    });
   };
   componentDidMount() {
     this.getUserProfile();
   }
   makeNewConversation = () => {
     this.props.navigation.navigate("NewConvo", {
-      loggedInUser: this.state.loggedInUser
+      loggedInUser: this.state.loggedInUser,
+      updateConversation: () => {
+        this.loadConversations(this.state.loggedInUser.curUid);
+      }
     });
   };
   goToConversation = (id, people) => {
@@ -70,9 +98,8 @@ export default class Conversations extends Component {
   render() {
     return (
       <View styles={loadingScreen.container}>
-        {this.state.conversations.length > 0 ? (
+        {!this.state.loading ? (
           <View>
-            <Text>Conversations</Text>
             <List>
               <FlatList
                 data={this.state.conversations}
@@ -90,17 +117,17 @@ export default class Conversations extends Component {
                     />
                   );
                 }}
-                keyExtractor={item => item.img} // change to key later
+                keyExtractor={item => item.image} // change to key later
               />
             </List>
             <Button
               onPress={this.makeNewConversation}
-              title="My Friends"
+              title="New Conversation"
               color="blue"
             />
           </View>
         ) : (
-          <Text> Chat With Friends! </Text>
+          <ActivityIndicator />
         )}
       </View>
     );
@@ -118,6 +145,7 @@ const styles = StyleSheet.create({
 const loadingScreen = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
     justifyContent: "center"
   },
   horizontal: {

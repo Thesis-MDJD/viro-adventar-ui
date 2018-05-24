@@ -65,7 +65,7 @@ DEPENDENCIES:
   - ViroReact (from `../node_modules/react-viro/ios/`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AWSCore
     - AWSDynamoDB
     - Firebase
@@ -109,4 +109,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f90fd09134d7cda9040d73ee155d391f1fc0f0d6
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.0

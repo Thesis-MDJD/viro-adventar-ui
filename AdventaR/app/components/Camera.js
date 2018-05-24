@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { ViroARSceneNavigator } from "react-viro";
 import arScene from "./arScene";
-import {VIRO_KEY, REST_SERVER_IP, REST_API_KEY} from "react-native-dotenv";
+import { VIRO_KEY, REST_SERVER_IP, REST_API_KEY } from "react-native-dotenv";
 import getDegreesDistance from "./util/getDegreesDistance.js";
 
 export default class Camera extends Component {
@@ -29,11 +29,14 @@ export default class Camera extends Component {
   }
 
   unmount() {
-    this.setState({
-      cameraMounted: false
-    }, ()=> {
-      setTimeout(this.remount, 1000);
-    });
+    this.setState(
+      {
+        cameraMounted: false
+      },
+      () => {
+        setTimeout(this.remount, 1000);
+      }
+    );
   }
 
   remount() {
@@ -43,7 +46,11 @@ export default class Camera extends Component {
   }
 
   getPlaces = async () => {
-    let data = await fetch(`http://${REST_SERVER_IP}/yelp/nearby?latitude=${this.state.latitude}&longitude=${this.state.longitude}&API_KEY=${REST_API_KEY}`);
+    let data = await fetch(
+      `http://${REST_SERVER_IP}/yelp/nearby?latitude=${
+        this.state.latitude
+      }&longitude=${this.state.longitude}&API_KEY=${REST_API_KEY}`
+    );
     let result = await data.json();
     this.setState({
       places: result.businesses
@@ -53,8 +60,13 @@ export default class Camera extends Component {
   componentDidMount() {
     const requestPermissions = async () => {
       let permissions = [];
-      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)) && permissions.push(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)) && permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
+      !(await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      )) &&
+        permissions.push(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+      !(await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.CAMERA
+      )) && permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
       if (permissions.length > 0) {
         try {
           await PermissionsAndroid.requestMultiple(permissions);
@@ -71,10 +83,8 @@ export default class Camera extends Component {
         });
         this.setGPS();
       }
-      
     };
-    
-    
+
     if (Platform.OS === "android") {
       requestPermissions();
     } else {
@@ -91,7 +101,7 @@ export default class Camera extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          error: null,
+          error: null
         });
         this.getPlaces();
       },
@@ -107,7 +117,15 @@ export default class Camera extends Component {
           error: null
         });
 
-        if (position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000) {
+        if (
+          position.speed <= 3 &&
+          getDegreesDistance(
+            this.state.previousLatitude,
+            position.coords.latitude,
+            this.state.previousLongitude,
+            position.coords.longitude
+          ).distance > 1000
+        ) {
           this.getPlaces();
         }
       },
@@ -131,14 +149,20 @@ export default class Camera extends Component {
         {this.state.cameraMounted && this.state.permissionsGranted ? (
           <ViroARSceneNavigator
             apiKey={VIRO_KEY}
-            ref={((component)=> component)}
-            viroAppProps={{unmount: this.unmount, latitude: this.state.latitude, longitude: this.state.longitude, places: this.state.places}}
-            initialScene={{scene: arScene}}
+            ref={component => component}
+            viroAppProps={{
+              unmount: this.unmount,
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              places: this.state.places
+            }}
+            initialScene={{ scene: arScene }}
             autofocus={false}
             debug={true} // set this to true
-          />) 
-          : 
-          <Text style={styles.placeTextStyle}>Tracking lost...</Text>}
+          />
+        ) : (
+          <Text style={styles.placeTextStyle}>Tracking lost...</Text>
+        )}
       </View>
     );
   }

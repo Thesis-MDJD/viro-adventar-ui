@@ -27,7 +27,7 @@ export default class User extends Component {
       lastCheckedIn: null,
       checkedInCount: 0,
       favoritedCount: 0,
-      friendCount: 0,
+      friendCount: 0
     };
 
     this.setProfilePicture = this.setProfilePicture.bind(this);
@@ -50,17 +50,20 @@ export default class User extends Component {
       const username = await AsyncStorage.getItem("username");
       const email = await AsyncStorage.getItem("email");
       const userId = await AsyncStorage.getItem("dbId");
-      this.setState({
-        username,
-        dbId: userId,
-        email
-      }, () => {
-        this.setProfilePicture();
-        this.getLastCheckedIn();
-        this.getCheckedInCount();
-        this.getFavoritedCount();
-        this.getFriendCount();
-      });
+      this.setState(
+        {
+          username,
+          dbId: userId,
+          email
+        },
+        () => {
+          this.setProfilePicture();
+          this.getLastCheckedIn();
+          this.getCheckedInCount();
+          this.getFavoritedCount();
+          this.getFriendCount();
+        }
+      );
     } catch (error) {
       alert("error", JSON.stringify(error));
       console.log("Profile Fetch Error: ", error);
@@ -76,10 +79,11 @@ export default class User extends Component {
       .limitToLast(1);
 
     lastCheckedIn.on("value", snapshot => {
-      snapshot.val() !== null ?
-        this.setState({lastCheckedIn: Object.values(snapshot.val())[0].name})
-        :
-        this.setState({lastCheckedIn: null});
+      snapshot.val() !== null
+        ? this.setState({
+            lastCheckedIn: Object.values(snapshot.val())[0].name
+          })
+        : this.setState({ lastCheckedIn: null });
     });
   }
 
@@ -90,10 +94,9 @@ export default class User extends Component {
       .child("CheckedInPlaces");
 
     checkedIns.on("value", snapshot => {
-      snapshot.val() !== null ?
-        this.setState({checkedInCount: Object.keys(snapshot.val()).length})
-        :
-        this.setState({checkedInCount: 0});
+      snapshot.val() !== null
+        ? this.setState({ checkedInCount: Object.keys(snapshot.val()).length })
+        : this.setState({ checkedInCount: 0 });
     });
   }
 
@@ -104,10 +107,9 @@ export default class User extends Component {
       .child("FavoritePlaces");
 
     favorites.on("value", snapshot => {
-      snapshot.val() !== null ?
-        this.setState({favoritedCount: Object.keys(snapshot.val()).length})
-        :
-        this.setState({favoritedCount: 0});
+      snapshot.val() !== null
+        ? this.setState({ favoritedCount: Object.keys(snapshot.val()).length })
+        : this.setState({ favoritedCount: 0 });
     });
   }
 
@@ -118,10 +120,9 @@ export default class User extends Component {
       .child("Friends");
 
     friends.on("value", snapshot => {
-      snapshot.val() !== null ?
-        this.setState({friendCount: Object.keys(snapshot.val()).length})
-        :
-        this.setState({friendCount: 0});
+      snapshot.val() !== null
+        ? this.setState({ friendCount: Object.keys(snapshot.val()).length })
+        : this.setState({ friendCount: 0 });
     });
   }
 
@@ -135,25 +136,31 @@ export default class User extends Component {
 
   setProfilePicture() {
     let data = "";
-    let pictureStor = firebaseApp.storage().ref().child(this.state.dbId + "/profilePicture");
+    let pictureStor = firebaseApp
+      .storage()
+      .ref()
+      .child(this.state.dbId + "/profilePicture");
 
-    pictureStor.getMetadata()
-      .then((metadata) => {
-        pictureStor.getDownloadURL().then( (url) => {
-          let task = RNFetchBlob.fetch("GET", url)
-            .then( (data) => {
-              let string = data.data;
-              let stringData = string.split(",").map( (item)=> {
+    pictureStor
+      .getMetadata()
+      .then(metadata => {
+        pictureStor.getDownloadURL().then(url => {
+          let task = RNFetchBlob.fetch("GET", url).then(data => {
+            let string = data.data;
+            let stringData = string
+              .split(",")
+              .map(item => {
                 return String.fromCharCode(item);
-              }).join("");
-              this.setState({
-                profilePicture: "data:" + metadata.contentType + ";base64," + stringData
-              });
+              })
+              .join("");
+            this.setState({
+              profilePicture:
+                "data:" + metadata.contentType + ";base64," + stringData
             });
+          });
         });
       })
-      .catch( err => {
-      });
+      .catch(err => {});
   }
 
   goToFriends = () => {
@@ -161,11 +168,17 @@ export default class User extends Component {
   };
 
   goToPlaces = () => {
-    this.props.navigation.navigate("Places", { username: this.state.username, dbId: this.state.dbId, });
+    this.props.navigation.navigate("Places", {
+      username: this.state.username,
+      dbId: this.state.dbId
+    });
   };
 
   goToHistory = () => {
-    this.props.navigation.navigate("History", { username: this.state.username, dbId: this.state.dbId, });
+    this.props.navigation.navigate("History", {
+      username: this.state.username,
+      dbId: this.state.dbId
+    });
   };
 
   onLogOutPress = async () => {
@@ -173,13 +186,15 @@ export default class User extends Component {
     this.props.navigation.navigate("Auth");
   };
   render() {
-    const lastCheckedIn = this.state.lastCheckedIn ?
+    const lastCheckedIn = this.state.lastCheckedIn ? (
       <Text style={styles.lastCheckedIn}>
-        Last Check In At: 
-        <Text style={styles.lastCheckedInName}> {this.state.lastCheckedIn}</Text>
+        Last Check In At:
+        <Text style={styles.lastCheckedInName}>
+          {" "}
+          {this.state.lastCheckedIn}
+        </Text>
       </Text>
-      :
-      null;
+    ) : null;
 
     return (
       <View style={styles.mainContainer}>
@@ -187,33 +202,46 @@ export default class User extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={( () => this.setState({ modalVisible: false })).bind(this)}
+          onRequestClose={(() => this.setState({ modalVisible: false })).bind(
+            this
+          )}
         >
-          <ProfilePicture setProfilePicture={this.setProfilePicture} hideModal={( () => this.setState({ modalVisible: false })).bind(this)} profPic={this.state.profilePicture} />
+          <ProfilePicture
+            setProfilePicture={this.setProfilePicture}
+            hideModal={(() => this.setState({ modalVisible: false })).bind(
+              this
+            )}
+            profPic={this.state.profilePicture}
+          />
         </Modal>
         <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={( () => this.setState({ modalVisible: true })).bind(this)}>
+          <TouchableOpacity
+            onPress={(() => this.setState({ modalVisible: true })).bind(this)}
+          >
             <Image
               style={styles.image}
               source={{
                 uri:
-                  this.state.profilePicture || "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+                  this.state.profilePicture ||
+                  "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
               }}
             />
           </TouchableOpacity>
           <Text style={styles.name}>{this.state.username}</Text>
         </View>
 
-        <View style={{ marginLeft: 20 }}>
-          {lastCheckedIn}
-        </View>
+        <View style={{ marginLeft: 20 }}>{lastCheckedIn}</View>
 
         <View style={styles.statsContainer}>
           <TouchableOpacity onPress={this.goToFriends}>
             <View style={styles.statContainer}>
               <View style={styles.stat}>
                 <Text style={styles.statText}>{this.state.friendCount}</Text>
-                <Icon name='account-group' type='material-community' color='#3b5998'/>         
+                <Icon
+                  name="account-group"
+                  type="material-community"
+                  color="#3b5998"
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -221,7 +249,11 @@ export default class User extends Component {
             <View style={styles.statContainer}>
               <View style={styles.stat}>
                 <Text style={styles.statText}>{this.state.checkedInCount}</Text>
-                <Icon name='check-circle' type='material-community' color='#1aa85d' />
+                <Icon
+                  name="check-circle"
+                  type="material-community"
+                  color="#1aa85d"
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -229,15 +261,22 @@ export default class User extends Component {
             <View style={styles.statContainer}>
               <View style={styles.stat}>
                 <Text style={styles.statText}>{this.state.favoritedCount}</Text>
-                <Icon name='heart' type='material-community' color='#ff4f7d' />
+                <Icon name="heart" type="material-community" color="#ff4f7d" />
               </View>
             </View>
           </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <TouchableOpacity style={styles.logOutContainer} onPress={this.onLogOutPress}>
-            <Icon name="logout-variant" type="material-community" color="54575b"/>
+          <TouchableOpacity
+            style={styles.logOutContainer}
+            onPress={this.onLogOutPress}
+          >
+            <Icon
+              name="logout-variant"
+              type="material-community"
+              color="54575b"
+            />
             <View>
               <Text color="54575b">Log Out</Text>
             </View>
@@ -263,12 +302,12 @@ const styles = StyleSheet.create({
     margin: 10
   },
   lastCheckedIn: {
-    fontSize: 20,
+    fontSize: 20
   },
   lastCheckedInName: {
     fontSize: 20,
     fontWeight: "bold",
-    textDecorationLine: "underline",
+    textDecorationLine: "underline"
   },
   image: {
     width: screenWidth / 1.5,
@@ -285,7 +324,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     paddingVertical: 8,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-around"
   },
   statContainer: {
     flexDirection: "row",
@@ -297,13 +336,13 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 3,
     borderRadius: 50,
-    borderColor: "#f4511e",
+    borderColor: "#f4511e"
   },
   stat: {
     flex: 0.5,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   statText: {
     fontSize: 20
@@ -318,6 +357,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 50,
     borderColor: "#f4511e",
-    padding: 8,
+    padding: 8
   }
 });

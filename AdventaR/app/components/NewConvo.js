@@ -95,6 +95,7 @@ export default class NewConvo extends Component {
     roomInfo.people = name.join(", ");
     const convo = this.rootRef.child("Conversations").push();
     convo.set(roomInfo);
+    this.props.navigation.state.params.updateConversation();
     this.props.navigation.navigate("chat", {
       convId: convo.key,
       loggedInUser: this.state.loggedInUser,
@@ -148,7 +149,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.removeUser(item);
                             }}
@@ -168,7 +169,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.addToSelected(item);
                             }}
@@ -186,7 +187,7 @@ export default class NewConvo extends Component {
                             key={item.userId}
                             roundAvatar
                             title={item.username}
-                            avatar={{ uri: item.img }}
+                            avatar={{ uri: item.image }}
                             onPress={() => {
                               this.addToSelected(item);
                             }}

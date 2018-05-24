@@ -5,9 +5,14 @@ import {
   StyleSheet,
   Button,
   ScrollView,
-  TextInput
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableHighlight,
+  Keyboard
 } from "react-native";
-import { List } from "react-native-elements";
+import KeyboardSpacer from "react-native-keyboard-spacer";
+import AutogrowInput from "react-native-autogrow-input";
+import { SearchBar, ListItem, List } from "react-native-elements";
 import { firebaseApp } from "./FireBase";
 
 export default class Chat extends Component {
@@ -40,6 +45,7 @@ export default class Chat extends Component {
       content: this.state.text,
       conversation: this.props.navigation.state.params.convId,
       sender: this.state.loggedInUser.curUid,
+      username: this.state.loggedInUser.username,
       createdAt: Date.now()
     };
     const msg = this.rootRef.child("Messages").push();
@@ -65,6 +71,14 @@ export default class Chat extends Component {
     });
   };
 
+  onInputSizeChange = () => {
+    setTimeout(
+      function() {
+        this.scrollView.scrollToEnd({ animated: false });
+      }.bind(this)
+    );
+  };
+
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
     return {
@@ -83,50 +97,180 @@ export default class Chat extends Component {
   };
   render() {
     return (
-      <View styles={loadingScreen.container}>
-        <Text>{this.state.participants}</Text>
-        <List>
-          <ScrollView>
-            {this.state.messages.map(item => {
-              return (
-                <Text key={item.conversation}>
-                  sender: {item.sender} conversation: {item.conversation}
-                  content: {item.content}
+      <View style={styles.outer}>
+        <ScrollView
+          ref={ref => {
+            this.scrollView = ref;
+          }}
+          style={styles.messages}
+        >
+          {this.state.messages.map((message, index) => {
+            return message.sender === this.state.loggedInUser.curUid ? (
+              <MessageBubble
+                key={index}
+                direction={"left"}
+                text={message.content}
+              />
+            ) : (
+              <View>
+                <MessageBubble
+                  key={index}
+                  direction={"right"}
+                  text={message.content}
+                />
+                <Text style={styles.messageSenderBottom}>
+                  {message.username}
                 </Text>
-              );
-            })}
-          </ScrollView>
-        </List>
-        <View>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={text => this.setState({ text })}
-            onSubmitEditing={this.sendChat}
-            returnKeyType="send"
-            value={this.state.text}
-          />
+              </View>
+            );
+          })}
+        </ScrollView>
+        <InputBar
+          onSendPressed={() => this.sendChat()}
+          onSizeChange={() => this.onInputSizeChange()}
+          onChangeText={text => this.setState({ text })}
+          text={this.state.text}
+        />
+        <KeyboardSpacer />
+      </View>
+    );
+  }
+}
+
+class InputBar extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.text === "") {
+      this.autogrowInput.resetInputText();
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.inputBar}>
+        <AutogrowInput
+          style={styles.textBox}
+          ref={ref => {
+            this.autogrowInput = ref;
+          }}
+          multiline={true}
+          defaultHeight={30}
+          onChangeText={text => this.props.onChangeText(text)}
+          onContentSizeChange={this.props.onSizeChange}
+          value={this.props.text}
+        />
+        <TouchableHighlight
+          style={styles.sendButton}
+          onPress={() => this.props.onSendPressed()}
+        >
+          <Text style={{ color: "white" }}>Send</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
+
+class MessageBubble extends Component {
+  render() {
+    var leftSpacer =
+      this.props.direction === "left" ? null : <View style={{ width: 70 }} />;
+    var rightSpacer =
+      this.props.direction === "left" ? <View style={{ width: 70 }} /> : null;
+
+    var bubbleStyles =
+      this.props.direction === "left"
+        ? [styles.messageBubble, styles.messageBubbleLeft]
+        : [styles.messageBubble, styles.messageBubbleRight];
+
+    var bubbleTextStyle =
+      this.props.direction === "left"
+        ? styles.messageBubbleTextLeft
+        : styles.messageBubbleTextRight;
+
+    return (
+      <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+        {leftSpacer}
+        <View style={bubbleStyles}>
+          <Text style={bubbleTextStyle}>{this.props.text}</Text>
         </View>
+        {rightSpacer}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  button: {
-    alignSelf: "flex-end",
-    marginTop: -5,
-    position: "absolute"
-  }
-});
+  //ChatView
 
-const loadingScreen = StyleSheet.create({
-  container: {
+  outer: {
     flex: 1,
-    justifyContent: "center"
+    flexDirection: "column",
+    justifyContent: "space-between",
+    backgroundColor: "white"
   },
-  horizontal: {
+
+  messages: {
+    flex: 1
+  },
+
+  //InputBar
+
+  inputBar: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10
+    justifyContent: "space-between",
+    paddingHorizontal: 5,
+    paddingVertical: 3
+  },
+
+  textBox: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "gray",
+    flex: 1,
+    fontSize: 16,
+    paddingHorizontal: 10
+  },
+
+  sendButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 15,
+    marginLeft: 5,
+    paddingRight: 15,
+    borderRadius: 5,
+    backgroundColor: "#f4511e"
+  },
+
+  //MessageBubble
+
+  messageBubble: {
+    borderRadius: 5,
+    marginTop: 8,
+    marginRight: 10,
+    marginLeft: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    flexDirection: "row",
+    flex: 1
+  },
+
+  messageBubbleLeft: {
+    backgroundColor: "#d5d8d4"
+  },
+
+  messageBubbleTextLeft: {
+    color: "black"
+  },
+
+  messageBubbleRight: {
+    backgroundColor: "#f4511e"
+  },
+
+  messageBubbleTextRight: {
+    color: "white"
+  },
+
+  messageSenderBottom: {
+    color: "black",
+    fontSize: 5
   }
 });

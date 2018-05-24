@@ -45,6 +45,7 @@ export default class Chat extends Component {
       content: this.state.text,
       conversation: this.props.navigation.state.params.convId,
       sender: this.state.loggedInUser.curUid,
+      username: this.state.loggedInUser.username,
       createdAt: Date.now()
     };
     const msg = this.rootRef.child("Messages").push();
@@ -111,11 +112,16 @@ export default class Chat extends Component {
                 text={message.content}
               />
             ) : (
-              <MessageBubble
-                key={index}
-                direction={"right"}
-                text={message.content}
-              />
+              <View>
+                <MessageBubble
+                  key={index}
+                  direction={"right"}
+                  text={message.content}
+                />
+                <Text style={styles.messageSenderBottom}>
+                  {message.username}
+                </Text>
+              </View>
             );
           })}
         </ScrollView>
@@ -132,11 +138,6 @@ export default class Chat extends Component {
 }
 
 class InputBar extends Component {
-  //AutogrowInput doesn't change its size when the text is changed from the outside.
-  //Thus, when text is reset to zero, we'll call it's reset function which will take it back to the original size.
-  //Another possible solution here would be if InputBar kept the text as state and only reported it when the Send button
-  //was pressed. Then, resetInputText() could be called when the Send button is pressed. However, this limits the ability
-  //of the InputBar's text to be set from the outside.
   componentWillReceiveProps(nextProps) {
     if (nextProps.text === "") {
       this.autogrowInput.resetInputText();
@@ -170,7 +171,6 @@ class InputBar extends Component {
 
 class MessageBubble extends Component {
   render() {
-    //These spacers make the message bubble stay to the left or the right, depending on who is speaking, even if the message is multiple lines.
     var leftSpacer =
       this.props.direction === "left" ? null : <View style={{ width: 70 }} />;
     var rightSpacer =
@@ -267,5 +267,10 @@ const styles = StyleSheet.create({
 
   messageBubbleTextRight: {
     color: "white"
+  },
+
+  messageSenderBottom: {
+    color: "black",
+    fontSize: 5
   }
 });

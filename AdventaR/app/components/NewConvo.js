@@ -95,6 +95,7 @@ export default class NewConvo extends Component {
     roomInfo.people = name.join(", ");
     const convo = this.rootRef.child("Conversations").push();
     convo.set(roomInfo);
+    this.props.navigation.state.params.updateConversation();
     this.props.navigation.navigate("chat", {
       convId: convo.key,
       loggedInUser: this.state.loggedInUser,

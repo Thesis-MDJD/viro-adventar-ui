@@ -135,17 +135,16 @@ class HelloWorldSceneAR extends Component {
     });
 
     for (let i = 0; i < sortedPlaces.length; i++) {
-      if (sortedPlaces[i].polarCoord.distance < 150 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
+      if (sortedPlaces[i].polarCoord.distance < 180 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
         if (!ad) {
           console.log("NEW AD", sortedPlaces[i].name);
           ad = sortedPlaces[i].name;
           closest = sortedPlaces[i].polarCoord.distance;
+        } else if ( closest > sortedPlaces[i].polarCoord.distance) {
+          console.log("REPLACED AD");
+          ad = sortedPlaces[i].name;
+          closest = sortedPlaces[i].polarCoord.distance;
         }
-        //  else if ( closest > sortedPlaces[i].polarCoord.distance) {
-        //   console.log("REPLACED AD");
-        //   ad = sortedPlaces[i].name;
-        //   closest = sortedPlaces[i].polarCoord.distance;
-        // }
       }
     }
 

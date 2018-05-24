@@ -246,15 +246,10 @@ export default class User extends Component {
             profPic={this.state.profilePicture}
           />
         </Modal>
-<<<<<<< HEAD
         <View style={styles.imageContainer}>
           <TouchableOpacity
             onPress={(() => this.setState({ modalVisible: true })).bind(this)}
           >
-=======
-        <View style={styles.centered}>
-          <TouchableHighlight onPress={this.showProfile.bind(this)}>
->>>>>>> fixing location update on ar
             <Image
               style={styles.image}
               source={{

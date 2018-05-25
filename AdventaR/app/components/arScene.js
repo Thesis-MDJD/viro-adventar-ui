@@ -137,25 +137,23 @@ class HelloWorldSceneAR extends Component {
     for (let i = 0; i < sortedPlaces.length; i++) {
       if (sortedPlaces[i].polarCoord.distance < 180 && (sortedPlaces[i].name === "Starbucks" || sortedPlaces[i].name === "Ben & Jerry's")) {
         if (!ad) {
-          console.log("NEW AD", sortedPlaces[i].name);
           ad = sortedPlaces[i].name;
           closest = sortedPlaces[i].polarCoord.distance;
         } else if ( closest > sortedPlaces[i].polarCoord.distance) {
-          console.log("REPLACED AD");
           ad = sortedPlaces[i].name;
           closest = sortedPlaces[i].polarCoord.distance;
         }
       }
     }
 
-    // if (prevState.longitude !== nextProps.arSceneNavigator.viroAppProps.longitude || prevState.latitude !== nextProps.arSceneNavigator.viroAppProps.latitude) {
-    //   this.scene.getCameraOrientationAsync()
-    //     .then((orientation) => {
-    //       this.setState({
-    //         cameraPosition: orienation.position
-    //       });
-    //     });
-    // }
+    if (prevState.longitude !== nextProps.arSceneNavigator.viroAppProps.longitude || prevState.latitude !== nextProps.arSceneNavigator.viroAppProps.latitude) {
+      this.scene.getCameraOrientationAsync()
+        .then((orientation) => {
+          this.setState({
+            cameraPosition: orienation.position
+          });
+        });
+    }
 
     return Object.assign(prevState, {
       places: sortedPlaces,

@@ -16,7 +16,7 @@ export default class Camera extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = { 
       cameraMounted: true,
       latitude: "",
       longitude: "",
@@ -101,9 +101,10 @@ export default class Camera extends Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          error: null
+          error: null,
+        }, () => {
+          this.getPlaces();
         });
-        this.getPlaces();
       },
       error => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
@@ -115,26 +116,23 @@ export default class Camera extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           error: null
+        }, () => {
+          if (position.speed <= 3 && getDegreesDistance(this.state.previousLatitude, position.coords.latitude, this.state.previousLongitude, position.coords.longitude).distance > 1000) {
+            this.getPlaces();
+          } else {
+            this.setState({
+              places: this.state.places.slice()
+            }, () => {
+            });
+          }
         });
-
-        if (
-          position.speed <= 3 &&
-          getDegreesDistance(
-            this.state.previousLatitude,
-            position.coords.latitude,
-            this.state.previousLongitude,
-            position.coords.longitude
-          ).distance > 1000
-        ) {
-          this.getPlaces();
-        }
       },
       error => this.setState({ error: error.message }),
       {
         enableHighAccuracy: false,
         timeout: 200000,
         maximumAge: 1000,
-        distanceFilter: 10
+        distanceFilter: 5
       }
     );
   }

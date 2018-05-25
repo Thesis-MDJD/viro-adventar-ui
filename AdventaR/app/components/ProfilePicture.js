@@ -18,8 +18,6 @@ import { firebaseApp } from "./FireBase";
 import RNFetchBlob from "react-native-fetch-blob";
 import ImageResizer from "react-native-image-resizer";
 
-//https://facebook.github.io/react-native/docs/cameraroll.html
-//https://github.com/joltup/react-native-fetch-blob
 export default class ProfilePicture extends Component {
   constructor(props) {
     super(props);
@@ -114,8 +112,7 @@ export default class ProfilePicture extends Component {
       });
   }
 
-  getLibraryPhoto() {  
-    this.askPermission();
+  getLibraryPhoto() { 
     CameraRoll.getPhotos({
       first: 40,
       assetType: "Photos",
@@ -133,32 +130,6 @@ export default class ProfilePicture extends Component {
     return () => {
       this.setState({ currentPhoto: url, hideCameraRoll: true });
     };
-  }
-
-  askPermission() {
-    const requestPermissions = async () => {
-      let permissions = [];
-      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-      !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)) && permissions.push(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-      if (permissions.length > 0) {
-        try {
-          const granted = await PermissionsAndroid.requestMultiple(permissions);
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("You can use all");
-          } else {
-            console.log("Read/Write permission denied");
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-      
-    };
-    
-    
-    if (Platform.OS === "android") {
-      requestPermissions();
-    }
   }
 
 
